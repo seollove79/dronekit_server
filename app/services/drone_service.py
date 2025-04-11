@@ -1,8 +1,20 @@
-from dronekit import connect, Command
+from app.libs.dronekit import connect, Command
 from fastapi import HTTPException
 import logging
 import asyncio
 from pymavlink import mavutil
+import os
+
+# 로깅 설정
+log_directory = os.path.join(os.path.dirname(__file__), '../../log')
+os.makedirs(log_directory, exist_ok=True)
+log_file_path = os.path.join(log_directory, 'drone_service.log')
+
+logging.basicConfig(
+    filename=log_file_path,
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 
 # 연결된 드론을 저장하는 딕셔너리
 connected_drones = {}
