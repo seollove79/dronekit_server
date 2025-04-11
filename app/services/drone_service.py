@@ -192,6 +192,38 @@ async def upload_mission(drone_id: str, mission: list[dict]):
         # 오류 처리
         raise HTTPException(status_code=500, detail=f"Failed to upload mission: {str(e)}")
 
+# 드론 텔레메트리 데이터 수집 함수
+async def get_telemetry(drone_id: str):
+    # 드론이 연결되어 있는지 확인
+    if drone_id not in connected_drones:
+        raise HTTPException(status_code=404, detail="Drone not connected")
+    try:
+        # 드론 객체 가져오기
+        vehicle = connected_drones[drone_id]
+
+        # 텔레메트리 데이터 수집
+        telemetry_data = {
+            "drone_id": drone_id,  # 드론 ID 추가
+            "latitude": vehicle.location.global_relative_frame.lat,
+            "longitude": vehicle.location.global_relative_frame.lon,
+            "altitude": vehicle.location.global_relative_frame.alt,
+            "battery": vehicle.battery.level,
+            "airspeed": vehicle.airspeed,
+            "groundspeed": vehicle.groundspeed,
+            "heading": vehicle.heading,
+            "mode": vehicle.mode.name,
+            "armed": vehicle.armed,
+            "pitch": vehicle.attitude.pitch,  # 기체의 피치(앞뒤 기울기)
+            "roll": vehicle.attitude.roll,    # 기체의 롤(좌우 기울기)
+            "yaw": vehicle.attitude.yaw,     # 기체의 요(방향)
+            "signal_strength": vehicle.last_heartbeat  # 수신 감도값 (마지막 신호 수신 시간)
+        }
+
+        return telemetry_data
+    except Exception as e:
+        # 오류 처리
+        raise HTTPException(status_code=500, detail=f"Failed to get telemetry: {str(e)}")
+
 # 연결된 드론 목록을 반환하는 함수
 async def list_connected_drones():
     # connected_drones 딕셔너리에서 모든 드론 ID를 리스트로 반환
