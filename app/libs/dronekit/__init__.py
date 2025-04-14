@@ -1,33 +1,32 @@
-# DroneAPI module
+# DroneAPI 모듈
 """
-This is the API Reference for the DroneKit-Python API.
+DroneKit-Python API에 대한 참조 문서입니다.
 
-The main API is the :py:class:`Vehicle` class.
-The code snippet below shows how to use :py:func:`connect` to obtain an instance of a connected vehicle:
+주요 API는 :py:class:`Vehicle` 클래스입니다.
+아래 코드 스니펫은 :py:func:`connect`를 사용하여 연결된 Vehicle 인스턴스를 얻는 방법을 보여줍니다:
 
 .. code:: python
 
     from dronekit import connect
 
-    # Connect to the Vehicle using "connection string" (in this case an address on network)
+    # "connection string"을 사용하여 Vehicle에 연결 (이 경우 네트워크 주소)
     vehicle = connect('127.0.0.1:14550', wait_ready=True)
 
-:py:class:`Vehicle` provides access to vehicle *state* through python attributes
-(e.g. :py:attr:`Vehicle.mode`)
-and to settings/parameters though the :py:attr:`Vehicle.parameters` attribute.
-Asynchronous notification on vehicle attribute changes is available by registering listeners/observers.
+:py:class:`Vehicle`은 Python 속성(e.g. :py:attr:`Vehicle.mode`)을 통해 Vehicle *상태*에 접근할 수 있도록 하며,
+:py:attr:`Vehicle.parameters` 속성을 통해 설정/매개변수에 접근할 수 있습니다.
+Vehicle 속성 변경에 대한 비동기 알림은 리스너/옵저버를 등록하여 사용할 수 있습니다.
 
-Vehicle movement is primarily controlled using the :py:attr:`Vehicle.armed` attribute and
-:py:func:`Vehicle.simple_takeoff` and :py:attr:`Vehicle.simple_goto` in GUIDED mode.
+Vehicle 이동은 주로 :py:attr:`Vehicle.armed` 속성과
+GUIDED 모드에서 :py:func:`Vehicle.simple_takeoff` 및 :py:attr:`Vehicle.simple_goto`를 사용하여 제어됩니다.
 
-Velocity-based movement and control over other vehicle features can be achieved using custom MAVLink messages
-(:py:func:`Vehicle.send_mavlink`, :py:func:`Vehicle.message_factory`).
+속도 기반 이동 및 기타 Vehicle 기능 제어는 사용자 정의 MAVLink 메시지
+(:py:func:`Vehicle.send_mavlink`, :py:func:`Vehicle.message_factory`)를 사용하여 가능합니다.
 
-It is also possible to work with vehicle "missions" using the :py:attr:`Vehicle.commands` attribute, and run them in AUTO mode.
+"미션"을 사용하여 Vehicle을 제어하는 것도 가능하며, 이는 :py:attr:`Vehicle.commands` 속성을 통해 이루어지며 AUTO 모드에서 실행됩니다.
 
-All the logging is handled through the builtin Python `logging` module.
+모든 로깅은 Python의 내장 `logging` 모듈을 통해 처리됩니다.
 
-A number of other useful classes and methods are listed below.
+아래에는 유용한 클래스와 메서드가 나열되어 있습니다.
 
 ----
 """
@@ -54,6 +53,27 @@ from pymavlink import mavutil, mavwp
 from pymavlink.dialects.v10 import ardupilotmega
 
 from app.libs.dronekit.util import ErrprinterHandler
+
+import os
+
+# 로그 설정
+log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'log')
+os.makedirs(log_dir, exist_ok=True)
+log_file = os.path.join(log_dir, 'dronekit.log')
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler(log_file),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+# 예제 로그 추가
+logger.info("DroneKit 모듈이 초기화되었습니다.")
 
 
 class APIException(Exception):
@@ -2439,7 +2459,8 @@ class Vehicle(HasObservers):
             0,  # param 2, onboard computer (do nothing)
             0,  # param 3, camera (do nothing)
             0,  # param 4, mount (do nothing)
-            0, 0, 0)  # param 5 ~ 7 not used
+            0, 0, 0  # param 5 ~ 7 not used
+        )
 
         self.send_mavlink(reboot_msg)
 

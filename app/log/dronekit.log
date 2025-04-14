@@ -1,0 +1,8 @@
+2025-04-14 16:56:17,557 - app.libs.dronekit - INFO - DroneKit 모듈이 초기화되었습니다.
+2025-04-14 16:56:27,633 - autopilot - INFO - ArduCopter V4.5.7 (b7207551)
+2025-04-14 16:56:27,633 - autopilot - INFO - seol_desktop
+2025-04-14 16:56:27,633 - autopilot - INFO - Frame: QUAD/PLUS
+2025-04-14 16:58:59,213 - app.libs.dronekit - INFO - DroneKit 모듈이 초기화되었습니다.
+2025-04-14 16:59:07,497 - autopilot - INFO - ArduCopter V4.5.7 (b7207551)
+2025-04-14 16:59:07,498 - autopilot - INFO - seol_desktop
+2025-04-14 16:59:07,498 - autopilot - INFO - Frame: QUAD/PLUS

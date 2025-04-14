@@ -1,26 +1,11 @@
 from app.libs.dronekit import connect, Command
 from fastapi import HTTPException
-import logging
 import asyncio
 from pymavlink import mavutil
 import os
 
-# 로깅 설정
-log_directory = os.path.join(os.path.dirname(__file__), '../../log')
-os.makedirs(log_directory, exist_ok=True)
-log_file_path = os.path.join(log_directory, 'drone_service.log')
-
-logging.basicConfig(
-    filename=log_file_path,
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-
 # 연결된 드론을 저장하는 딕셔너리
 connected_drones = {}
-
-# 로깅 설정
-logger = logging.getLogger(__name__)
 
 # 드론 연결 처리 함수
 async def connect_drone(request):
@@ -31,11 +16,9 @@ async def connect_drone(request):
         # 드론 연결 시도
         vehicle = connect(request.connection_string, wait_ready=True)
         connected_drones[request.drone_id] = vehicle  # 연결된 드론 저장
-        logger.info(f"Drone {request.drone_id} connected successfully")
         return {"message": f"Drone {request.drone_id} connected successfully"}
     except Exception as e:
         # 연결 실패 시 예외 처리
-        logger.error(f"Failed to connect to drone {request.drone_id}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Failed to connect to drone: {str(e)}")
 
 # 드론을 Arm 상태로 전환하는 함수
