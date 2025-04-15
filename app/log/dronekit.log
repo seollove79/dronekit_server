@@ -1,8 +1,118 @@
-2025-04-14 16:56:17,557 - app.libs.dronekit - INFO - DroneKit 모듈이 초기화되었습니다.
-2025-04-14 16:56:27,633 - autopilot - INFO - ArduCopter V4.5.7 (b7207551)
-2025-04-14 16:56:27,633 - autopilot - INFO - seol_desktop
-2025-04-14 16:56:27,633 - autopilot - INFO - Frame: QUAD/PLUS
-2025-04-14 16:58:59,213 - app.libs.dronekit - INFO - DroneKit 모듈이 초기화되었습니다.
-2025-04-14 16:59:07,497 - autopilot - INFO - ArduCopter V4.5.7 (b7207551)
-2025-04-14 16:59:07,498 - autopilot - INFO - seol_desktop
-2025-04-14 16:59:07,498 - autopilot - INFO - Frame: QUAD/PLUS
+2025-04-15 16:20:06,355 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:20:06,356 - autopilot.drone1 - INFO - [drone1] - seol_desktop
+2025-04-15 16:20:06,356 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-04-15 16:20:25,365 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:20:25,366 - autopilot.drone2 - INFO - [drone2] - teol_desktop
+2025-04-15 16:20:25,366 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-04-15 16:21:20,059 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-04-15 16:21:54,903 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-04-15 16:21:54,903 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-04-15 16:22:09,432 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-04-15 16:22:09,433 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-04-15 16:22:28,531 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-04-15 16:22:28,531 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-04-15 16:22:42,512 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-04-15 16:22:42,513 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-04-15 16:22:51,425 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:22:51,425 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:22:51,457 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:23:05,342 - autopilot.drone1 - INFO - [drone1] - Reached command #5
+2025-04-15 16:28:16,699 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:28:16,700 - autopilot.drone3 - INFO - [drone3] - ueol_desktop
+2025-04-15 16:28:16,700 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS
+2025-04-15 16:32:01,271 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:32:03,981 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:32:15,983 - autopilot.drone1 - INFO - [system] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:32:15,983 - autopilot.drone1 - INFO - [system] - seol_desktop
+2025-04-15 16:32:15,983 - autopilot.drone1 - INFO - [system] - Frame: QUAD/PLUS
+2025-04-15 16:34:12,524 - autopilot.drone1 - INFO - [system] - Mission: 1 WP
+2025-04-15 16:34:38,229 - autopilot.drone1 - INFO - [system] - Reached command #1
+2025-04-15 16:34:38,229 - autopilot.drone1 - INFO - [system] - Mission: 2 WP
+2025-04-15 16:34:54,074 - autopilot.drone1 - INFO - [system] - Reached command #2
+2025-04-15 16:34:54,075 - autopilot.drone1 - INFO - [system] - Mission: 3 WP
+2025-04-15 16:35:13,165 - autopilot.drone1 - INFO - [system] - Reached command #3
+2025-04-15 16:35:13,166 - autopilot.drone1 - INFO - [system] - Mission: 4 WP
+2025-04-15 16:35:27,154 - autopilot.drone1 - INFO - [system] - Reached command #4
+2025-04-15 16:35:27,155 - autopilot.drone1 - INFO - [system] - Mission: 5 WP
+2025-04-15 16:35:50,106 - autopilot.drone1 - INFO - [system] - Reached command #5
+2025-04-15 16:35:50,685 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:36:06,418 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:36:12,355 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:36:23,013 - autopilot.drone1 - INFO - [system] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:36:23,013 - autopilot.drone1 - INFO - [system] - seol_desktop
+2025-04-15 16:36:23,013 - autopilot.drone1 - INFO - [system] - Frame: QUAD/PLUS
+2025-04-15 16:36:57,508 - autopilot.drone1 - INFO - [system] - Mission: 1 WP
+2025-04-15 16:37:23,306 - autopilot.drone1 - INFO - [system] - Reached command #1
+2025-04-15 16:37:23,306 - autopilot.drone1 - INFO - [system] - Mission: 2 WP
+2025-04-15 16:37:39,153 - autopilot.drone1 - INFO - [system] - Reached command #2
+2025-04-15 16:37:39,154 - autopilot.drone1 - INFO - [system] - Mission: 3 WP
+2025-04-15 16:37:58,248 - autopilot.drone1 - INFO - [system] - Reached command #3
+2025-04-15 16:37:58,248 - autopilot.drone1 - INFO - [system] - Mission: 4 WP
+2025-04-15 16:38:12,240 - autopilot.drone1 - INFO - [system] - Reached command #4
+2025-04-15 16:38:12,241 - autopilot.drone1 - INFO - [system] - Mission: 5 WP
+2025-04-15 16:38:35,098 - autopilot.drone1 - INFO - [system] - Reached command #5
+2025-04-15 16:38:35,718 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:38:52,544 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:38:57,248 - app.libs.dronekit - INFO - [system] - DroneKit 모듈이 초기화되었습니다.
+2025-04-15 16:39:06,621 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:39:06,621 - autopilot.drone1 - INFO - [system] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:39:06,621 - autopilot.drone1 - INFO - [drone1] - seol_desktop
+2025-04-15 16:39:06,621 - autopilot.drone1 - INFO - [system] - seol_desktop
+2025-04-15 16:39:06,621 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-04-15 16:39:06,621 - autopilot.drone1 - INFO - [system] - Frame: QUAD/PLUS
+2025-04-15 16:39:38,624 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-04-15 16:39:38,624 - autopilot.drone1 - INFO - [system] - Mission: 1 WP
+2025-04-15 16:39:57,347 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:39:57,347 - autopilot.drone2 - INFO - [system] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:39:57,348 - autopilot.drone2 - INFO - [drone2] - teol_desktop
+2025-04-15 16:39:57,348 - autopilot.drone2 - INFO - [system] - teol_desktop
+2025-04-15 16:39:57,348 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-04-15 16:39:57,348 - autopilot.drone2 - INFO - [system] - Frame: QUAD/PLUS
+2025-04-15 16:40:04,358 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-04-15 16:40:04,358 - autopilot.drone1 - INFO - [system] - Reached command #1
+2025-04-15 16:40:04,359 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-04-15 16:40:04,359 - autopilot.drone1 - INFO - [system] - Mission: 2 WP
+2025-04-15 16:40:18,325 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:40:18,325 - autopilot.drone2 - WARNING - [system] - Mode change to AUTO failed: init failed
+2025-04-15 16:40:18,325 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:40:18,325 - autopilot.drone2 - WARNING - [system] - Mode change to AUTO failed: init failed
+2025-04-15 16:40:18,325 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:40:18,325 - autopilot.drone2 - WARNING - [system] - Mode change to AUTO failed: init failed
+2025-04-15 16:40:20,197 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-04-15 16:40:20,197 - autopilot.drone1 - INFO - [system] - Reached command #2
+2025-04-15 16:40:20,198 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-04-15 16:40:20,198 - autopilot.drone1 - INFO - [system] - Mission: 3 WP
+2025-04-15 16:40:39,298 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-04-15 16:40:39,298 - autopilot.drone1 - INFO - [system] - Reached command #3
+2025-04-15 16:40:39,299 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-04-15 16:40:39,299 - autopilot.drone1 - INFO - [system] - Mission: 4 WP
+2025-04-15 16:40:53,279 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-04-15 16:40:53,279 - autopilot.drone1 - INFO - [system] - Reached command #4
+2025-04-15 16:40:53,279 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-04-15 16:40:53,279 - autopilot.drone1 - INFO - [system] - Mission: 5 WP
+2025-04-15 16:41:16,154 - autopilot.drone1 - INFO - [drone1] - Reached command #5
+2025-04-15 16:41:16,154 - autopilot.drone1 - INFO - [system] - Reached command #5
+2025-04-15 16:41:56,106 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:41:56,106 - autopilot.drone1 - INFO - [drone1] - seol_desktop
+2025-04-15 16:41:56,106 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-04-15 16:42:11,532 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:42:11,533 - autopilot.drone2 - INFO - [drone2] - teol_desktop
+2025-04-15 16:42:11,533 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-04-15 16:42:24,267 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
+2025-04-15 16:42:24,268 - autopilot.drone3 - INFO - [drone3] - ueol_desktop
+2025-04-15 16:42:24,268 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS
+2025-04-15 16:43:03,589 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-04-15 16:43:18,322 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:43:18,322 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:43:18,322 - autopilot.drone2 - WARNING - [drone2] - Mode change to AUTO failed: init failed
+2025-04-15 16:43:29,369 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-04-15 16:43:29,369 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-04-15 16:43:45,202 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-04-15 16:43:45,202 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-04-15 16:44:01,376 - autopilot.drone3 - INFO - [drone3] - Arming motors
+2025-04-15 16:44:04,285 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-04-15 16:44:04,285 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-04-15 16:44:11,308 - autopilot.drone3 - INFO - [drone3] - Disarming motors
+2025-04-15 16:44:18,286 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-04-15 16:44:18,286 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-04-15 16:44:41,147 - autopilot.drone1 - INFO - [drone1] - Reached command #5

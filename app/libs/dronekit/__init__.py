@@ -61,16 +61,58 @@ log_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__)
 os.makedirs(log_dir, exist_ok=True)
 log_file = os.path.join(log_dir, 'dronekit.log')
 
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    handlers=[
-        logging.FileHandler(log_file),
-        logging.StreamHandler()
-    ]
-)
+class DroneIDFilter(logging.Filter):
+    def __init__(self, drone_id="system"):
+        super(DroneIDFilter, self).__init__()
+        self.drone_id = drone_id
+
+    def filter(self, record):
+        record.drone_id = self.drone_id
+        return True
+
+# 파일 핸들러 설정
+file_handler = logging.FileHandler(log_file)
+file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - [%(drone_id)s] - %(message)s'))
+file_handler.addFilter(DroneIDFilter("system"))
+
+# 콘솔 핸들러 설정
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - [%(drone_id)s] - %(message)s'))
+console_handler.addFilter(DroneIDFilter("system"))
+
+# 루트 로거 설정
+root_logger = logging.getLogger()
+root_logger.setLevel(logging.INFO)
+root_logger.addHandler(file_handler)
+root_logger.addHandler(console_handler)
+
+def get_drone_logger(drone_id):
+    """드론별 독립적인 로거를 생성하는 함수"""
+    logger = logging.getLogger(f"dronekit.{drone_id}")
+    logger.propagate = False  # 상속 방지
+    if not logger.handlers:
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - [%(drone_id)s] - %(message)s'))
+        file_handler.addFilter(DroneIDFilter(drone_id))
+        logger.addHandler(file_handler)
+        logger.addFilter(DroneIDFilter(drone_id))
+    return logger
+
+def get_autopilot_logger(drone_id):
+    """드론별 독립적인 autopilot 로거를 생성하는 함수"""
+    logger = logging.getLogger(f"autopilot.{drone_id}")
+    logger.propagate = False  # 상속 방지
+    if not logger.handlers:
+        file_handler = logging.FileHandler(log_file)
+        file_handler.setFormatter(logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - [%(drone_id)s] - %(message)s'))
+        file_handler.addFilter(DroneIDFilter(drone_id))
+        logger.addHandler(file_handler)
+        logger.addFilter(DroneIDFilter(drone_id))
+    return logger
 
 logger = logging.getLogger(__name__)
+logger.propagate = False  # 상속 방지
+logger.addFilter(DroneIDFilter("system"))
 
 # 예제 로그 추가
 logger.info("DroneKit 모듈이 초기화되었습니다.")
@@ -1061,11 +1103,13 @@ class Vehicle(HasObservers):
         to the project!
     """
 
-    def __init__(self, handler):
+    def __init__(self, handler, drone_id="default"):
         super(Vehicle, self).__init__()
-
-        self._logger = logging.getLogger(__name__)  # Logger for DroneKit
-        self._autopilot_logger = logging.getLogger('autopilot')  # Logger for the autopilot messages
+        
+        self.drone_id = drone_id
+        self._logger = get_drone_logger(drone_id)  # 드론별 독립적인 로거 사용
+        self._autopilot_logger = get_autopilot_logger(drone_id)  # 드론별 독립적인 autopilot 로거
+        self._autopilot_logger.addFilter(DroneIDFilter(drone_id))
         # MAVLink-to-logging-module log severity mappings
         self._mavlink_statustext_severity = {
             0: logging.CRITICAL,
@@ -3161,7 +3205,8 @@ def connect(ip,
             heartbeat_timeout=30,
             source_system=255,
             source_component=0,
-            use_native=False):
+            use_native=False,
+            drone_id="default"):
     """
     Returns a :py:class:`Vehicle` object connected to the address specified by string parameter ``ip``.
     Connection string parameters (``ip``) for different targets are listed in the :ref:`getting started guide <get_started_connecting>`.
@@ -3223,7 +3268,7 @@ def connect(ip,
         vehicle_class = Vehicle
 
     handler = MAVConnection(ip, baud=baud, source_system=source_system, source_component=source_component, use_native=use_native)
-    vehicle = vehicle_class(handler)
+    vehicle = vehicle_class(handler, drone_id=drone_id)
 
     if status_printer:
         vehicle._autopilot_logger.addHandler(ErrprinterHandler(status_printer))

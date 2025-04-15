@@ -14,7 +14,7 @@ async def connect_drone(request):
         raise HTTPException(status_code=400, detail="Drone already connected")
     try:
         # 드론 연결 시도
-        vehicle = connect(request.connection_string, wait_ready=True)
+        vehicle = connect(request.connection_string, wait_ready=True, drone_id=request.drone_id)
         connected_drones[request.drone_id] = vehicle  # 연결된 드론 저장
         return {"message": f"Drone {request.drone_id} connected successfully"}
     except Exception as e:
