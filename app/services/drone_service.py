@@ -223,3 +223,28 @@ async def get_telemetry(drone_id: str):
 async def list_connected_drones():
     # connected_drones 딕셔너리에서 모든 드론 ID를 리스트로 반환
     return list(connected_drones.keys())
+
+# 드론 비행 모드 변경 함수
+async def change_flight_mode(drone_id: str, mode: str):
+    # 드론이 연결되어 있는지 확인
+    if drone_id not in connected_drones:
+        raise HTTPException(status_code=404, detail="Drone not connected")
+    try:
+        # 드론 객체 가져오기
+        vehicle = connected_drones[drone_id]
+        
+        # 현재 모드와 요청된 모드가 같은지 확인
+        if vehicle.mode.name == mode:
+            return {"message": f"Drone {drone_id} is already in {mode} mode."}
+        
+        # 모드 변경 시도
+        vehicle.mode = mode
+        
+        # 모드 변경이 완료될 때까지 대기
+        while vehicle.mode.name != mode:
+            await asyncio.sleep(0.5)
+            
+        return {"message": f"Drone {drone_id} flight mode changed to {mode}."}
+    except Exception as e:
+        # 오류 처리
+        raise HTTPException(status_code=500, detail=f"Failed to change flight mode: {str(e)}")

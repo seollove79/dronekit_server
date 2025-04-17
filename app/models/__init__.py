@@ -28,3 +28,7 @@ class CommandRequest(BaseModel):
     drone_id: str  # 드론의 고유 ID
     command: str  # 실행할 명령
     params: Optional[List[float]] = []  # 명령에 필요한 매개변수
+
+# 드론 비행 모드 변경 요청 모델 정의
+class FlightModeRequest(BaseModel):
+    mode: str  # 변경할 비행 모드 (예: "GUIDED", "AUTO", "RTL", "LAND" 등)
