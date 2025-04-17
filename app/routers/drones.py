@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from app.models import DroneConnectionRequest, TelemetryResponse, CommandRequest, FlightModeRequest
+from app.models import DroneConnectionRequest, TelemetryResponse, CommandRequest, FlightModeRequest, GPSPosition
 from app.services import drone_service
 
 # 드론 관련 API 라우터 생성
@@ -85,3 +85,13 @@ async def change_flight_mode(drone_id: str, request: FlightModeRequest):
     :param request: 변경할 비행 모드 정보
     """
     return await drone_service.change_flight_mode(drone_id, request.mode)
+
+# GPS 위치로 비행하는 엔드포인트
+@router.post("/{drone_id}/fly-to")
+async def fly_to_position(drone_id: str, position: GPSPosition):
+    """
+    드론을 지정된 GPS 좌표로 비행시키는 API
+    :param drone_id: 드론의 고유 ID
+    :param position: 목표 GPS 좌표 (위도, 경도, 고도)
+    """
+    return await drone_service.fly_to_position(drone_id, position)

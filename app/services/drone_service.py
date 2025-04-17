@@ -1,8 +1,9 @@
-from app.libs.dronekit import connect, Command
+from app.libs.dronekit import connect, Command, LocationGlobalRelative
 from fastapi import HTTPException
 import asyncio
 from pymavlink import mavutil
 import os
+from app.models import GPSPosition
 
 # 연결된 드론을 저장하는 딕셔너리
 connected_drones = {}
@@ -136,6 +137,7 @@ async def execute_command(drone_id: str, request):
 
 # 드론 자동비행 미션 업로드 함수
 async def upload_mission(drone_id: str, mission: list[dict]):
+    #TODO: 미션 하나더 올라가는 것 해결 해야 함
     # 드론이 연결되어 있는지 확인
     if drone_id not in connected_drones:
         raise HTTPException(status_code=404, detail="Drone not connected")
@@ -201,7 +203,8 @@ async def get_telemetry(drone_id: str):
             "drone_id": drone_id,  # 드론 ID 추가
             "latitude": vehicle.location.global_relative_frame.lat,
             "longitude": vehicle.location.global_relative_frame.lon,
-            "altitude": vehicle.location.global_relative_frame.alt,
+            "altitude": vehicle.location.global_relative_frame.alt,  # 상대 고도
+            "altitude_asl": vehicle.location.global_frame.alt,  # 해수면 고도 (ASL)
             "battery": vehicle.battery.level,
             "airspeed": vehicle.airspeed,
             "groundspeed": vehicle.groundspeed,
@@ -248,3 +251,33 @@ async def change_flight_mode(drone_id: str, mode: str):
     except Exception as e:
         # 오류 처리
         raise HTTPException(status_code=500, detail=f"Failed to change flight mode: {str(e)}")
+
+# GPS 위치로 비행하는 함수
+async def fly_to_position(drone_id: str, position: GPSPosition):
+    # 드론이 연결되어 있는지 확인
+    if drone_id not in connected_drones:
+        raise HTTPException(status_code=404, detail="Drone not connected")
+    try:
+        # 드론 객체 가져오기
+        vehicle = connected_drones[drone_id]
+
+        # 드론이 Guided 모드인지 확인
+        if vehicle.mode.name != "GUIDED":
+            vehicle.mode = "GUIDED"  # Guided 모드로 변경
+            while vehicle.mode.name != "GUIDED":
+                await asyncio.sleep(0.5)  # 모드 변경 대기
+
+        # 목표 위치 객체 생성
+        target_location = LocationGlobalRelative(
+            position.latitude,
+            position.longitude,
+            position.altitude
+        )
+
+        # simple_goto를 사용하여 목표 위치로 이동
+        vehicle.simple_goto(target_location)
+
+        return {"message": f"Drone {drone_id} is flying to position: lat={position.latitude}, lon={position.longitude}, alt={position.altitude}"}
+    except Exception as e:
+        # 오류 처리
+        raise HTTPException(status_code=500, detail=f"Failed to fly to position: {str(e)}")

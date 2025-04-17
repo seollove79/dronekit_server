@@ -26,9 +26,12 @@ app/
 - 비행 모드 변경
 - 자동비행 미션 업로드
 - 사용자 정의 명령 실행
+- GPS 좌표로 비행 (상대 고도 사용)
 
 ### 텔레메트리 모니터링
 - 실시간 위치 정보 (위도, 경도, 고도)
+  - 상대 고도 (현재 위치 기준)
+  - 해수면 고도 (ASL - Above Sea Level)
 - 배터리 상태
 - 비행 속도 (공중 속도, 지상 속도)
 - 기체 자세 (피치, 롤, 요)
@@ -50,9 +53,36 @@ app/
 - `POST /drones/{drone_id}/mode` - 비행 모드 변경
 - `POST /drones/{drone_id}/mission` - 자동비행 미션 업로드
 - `POST /drones/{drone_id}/command` - 사용자 정의 명령 실행
+- `POST /drones/{drone_id}/fly-to` - GPS 좌표로 비행
+  ```json
+  {
+      "latitude": 37.12345,  // 위도
+      "longitude": 127.12345,  // 경도
+      "altitude": 10.0  // 상대 고도 (미터)
+  }
+  ```
 
 ### 텔레메트리
 - `GET /drones/{drone_id}/telemetry` - 드론 텔레메트리 데이터 조회
+  ```json
+  {
+      "drone_id": "drone1",
+      "latitude": 37.12345,
+      "longitude": 127.12345,
+      "altitude": 10.0,        // 상대 고도
+      "altitude_asl": 50.0,    // 해수면 고도 (ASL)
+      "battery": 95.5,
+      "airspeed": 5.0,
+      "groundspeed": 4.8,
+      "heading": 90,
+      "mode": "GUIDED",
+      "armed": true,
+      "pitch": 0.1,
+      "roll": 0.0,
+      "yaw": 45.0,
+      "signal_strength": 100
+  }
+  ```
 
 ## 기술 스택
 
@@ -81,4 +111,5 @@ uvicorn app.main:app --reload
 
 - 드론 연결 시 올바른 연결 문자열을 사용해야 합니다.
 - 드론 제어 명령은 안전을 위해 신중하게 사용해야 합니다.
-- 실제 비행 전에 시뮬레이션 환경에서 충분한 테스트를 진행하세요. 
+- 실제 비행 전에 시뮬레이션 환경에서 충분한 테스트를 진행하세요.
+- GPS 좌표로 비행 시 상대 고도를 사용하므로, 현재 위치를 기준으로 한 고도를 입력해야 합니다. 

@@ -11,7 +11,8 @@ class TelemetryResponse(BaseModel):
     drone_id: str  # 드론의 고유 ID
     latitude: float  # 위도
     longitude: float  # 경도
-    altitude: float  # 고도 정보
+    altitude: float  # 상대 고도
+    altitude_asl: float  # 해수면 고도 (ASL)
     battery: float  # 배터리 상태
     airspeed: float  # 공중 속도
     groundspeed: float  # 지상 속도
@@ -32,3 +33,9 @@ class CommandRequest(BaseModel):
 # 드론 비행 모드 변경 요청 모델 정의
 class FlightModeRequest(BaseModel):
     mode: str  # 변경할 비행 모드 (예: "GUIDED", "AUTO", "RTL", "LAND" 등)
+
+# GPS 좌표 모델 정의
+class GPSPosition(BaseModel):
+    latitude: float  # 위도
+    longitude: float  # 경도
+    altitude: float  # 고도 (상대 고도)
