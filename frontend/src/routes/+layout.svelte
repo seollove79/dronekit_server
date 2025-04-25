@@ -1,7 +1,7 @@
 <div class="layout">
   <header class="header">
     <div class="header-left">
-      <button class="menu-button">
+      <button class="menu-button" aria-label="메뉴 열기">
         <i class="fas fa-bars"></i>
       </button>
       <h1 class="title">INTOSKY Multipurpose Ground Control Station</h1>
@@ -9,8 +9,8 @@
     <div class="header-right">
       <div class="search-box">
         <i class="fas fa-map-marker-alt location-icon"></i>
-        <input type="text" placeholder="주소를 입력하세요." />
-        <button class="search-button">
+        <input type="text" placeholder="주소를 입력하세요." aria-label="주소 검색" />
+        <button class="search-button" aria-label="주소 검색하기">
           <i class="fas fa-search"></i>
         </button>
       </div>

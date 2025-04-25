@@ -1,40 +1,57 @@
 <script>
     import { onMount } from "svelte";
+    import DroneList from "$lib/components/DroneList.svelte";
+    import { connectDrone } from "$lib/stores/drones";
 
     let mapController;
     let showAddDroneModal = false;
-    let connectionType = "TCP";
+    let connectionType = "tcp";
     let droneId = "";
     let ipAddress = "127.0.0.1";
     let port = "5762";
+    let isConnecting = false;
+    let errorMessage = "";
     
     const handleAddDrone = () => {
         showAddDroneModal = true;
+        errorMessage = "";
     };
 
     const handleClose = () => {
         showAddDroneModal = false;
+        errorMessage = "";
     };
 
-    const handleConnect = () => {
-        console.log('드론 연결 시도:', { connectionType, dro, ipAddress, port });
-        // TODO: 드론 연결 로직 구현
-        showAddDroneModal = false;
+    const handleConnect = async () => {
+        try {
+            isConnecting = true;
+            errorMessage = "";
+            
+            const connectionString = `${connectionType}:${ipAddress}:${port}`;
+            await connectDrone(droneId, connectionString);
+
+            showAddDroneModal = false;
+        } catch (error) {
+            console.error('드론 연결 오류:', error);
+            errorMessage = error.message || '드론 연결에 실패했습니다.';
+        } finally {
+            isConnecting = false;
+        }
     };
 
     onMount(async () => {
         vw.MapControllerOption = {
             container : "vmap",
             mapMode : "ws3d-map",
-			basemapType : vw.ol3.BasemapType.GRAPHIC,
-			controlDensity : vw.ol3.DensityType.BASIC,
-			interactionDensity : vw.ol3.DensityType.BASIC,
-			controlsAutoArrange : true,
-			homePosition : vw.ol3.CameraPosition,
-			initPosition : vw.ol3.CameraPosition,
+            basemapType : vw.ol3.BasemapType.GRAPHIC,
+            controlDensity : vw.ol3.DensityType.BASIC,
+            interactionDensity : vw.ol3.DensityType.BASIC,
+            controlsAutoArrange : true,
+            homePosition : vw.ol3.CameraPosition,
+            initPosition : vw.ol3.CameraPosition,
             useControl : false,
-		};
-		mapController = new vw.MapController(vw.MapControllerOption);
+        };
+        mapController = new vw.MapController(vw.MapControllerOption);
     });
 </script>
 
@@ -46,6 +63,9 @@
             <span class="button-text">드론<br/>추가</span>
         </button>
     </div>
+    <div class="drone-list-wrapper">
+        <DroneList />
+    </div>
 </div>
 
 {#if showAddDroneModal}
@@ -53,27 +73,48 @@
     <div class="modal">
         <div class="modal-header">
             <h2>드론연결정보</h2>
-            <button class="close-button" on:click={handleClose}>×</button>
+            <button class="close-button" on:click={handleClose} aria-label="닫기">×</button>
         </div>
         <div class="modal-content">
+            {#if errorMessage}
+                <div class="error-message" role="alert">{errorMessage}</div>
+            {/if}
             <div class="input-group">
-                <select bind:value={connectionType}>
-                    <option value="TCP">TCP</option>
+                <select bind:value={connectionType} disabled={isConnecting}>
+                    <option value="tcp">TCP</option>
                 </select>
             </div>
             <div class="input-group">
-                <input type="text" placeholder="드론 아이디" bind:value={droneId}>
+                <input type="text" 
+                    placeholder="드론 아이디" 
+                    bind:value={droneId}
+                    disabled={isConnecting}
+                    aria-label="드론 아이디">
             </div>
             <div class="input-group">
-                <input type="text" placeholder="드론 IP 주소" bind:value={ipAddress}>
+                <input type="text" 
+                    placeholder="드론 IP 주소" 
+                    bind:value={ipAddress}
+                    disabled={isConnecting}
+                    aria-label="드론 IP 주소">
             </div>
             <div class="input-group">
-                <input type="text" placeholder="5770" bind:value={port}>
+                <input type="text" 
+                    placeholder="포트 번호" 
+                    bind:value={port}
+                    disabled={isConnecting}
+                    aria-label="포트 번호">
             </div>
         </div>
         <div class="modal-footer">
-            <button class="cancel-button" on:click={handleClose}>취소</button>
-            <button class="connect-button" on:click={handleConnect}>연결</button>
+            <button class="cancel-button" 
+                on:click={handleClose}
+                disabled={isConnecting}>취소</button>
+            <button class="connect-button" 
+                on:click={handleConnect}
+                disabled={isConnecting}>
+                {isConnecting ? '연결 중...' : '연결'}
+            </button>
         </div>
     </div>
 </div>
@@ -92,10 +133,6 @@
         position: absolute;
         left: 0;
         top: 0;
-    }
-
-    .vm_control_panel {
-        display: none !important;
     }
 
     .button-container {
@@ -206,7 +243,8 @@
         color: #888;
     }
 
-    .input-group input:disabled {
+    .input-group input:disabled,
+    .input-group select:disabled {
         background-color: #333;
         color: #888;
     }
@@ -241,5 +279,27 @@
 
     .connect-button:hover {
         background-color: #00E6AC;
+    }
+
+    .error-message {
+        background-color: rgba(255, 0, 0, 0.1);
+        color: #ff4444;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 12px;
+        font-size: 14px;
+    }
+
+    .cancel-button:disabled,
+    .connect-button:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+
+    .drone-list-wrapper {
+        position: absolute;
+        top: 10px;
+        right: 80px;
+        z-index: 1000;
     }
 </style>
