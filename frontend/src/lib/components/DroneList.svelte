@@ -2,6 +2,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { drones, refreshDrones, disconnectDrone, getDroneTelemetry } from '../stores/drones';
     import DroneCard from './DroneCard.svelte';
+    import DroneStatus from './DroneStatus.svelte';
 
     let updateInterval;
     let selectedDrone = null;
@@ -15,15 +16,22 @@
 
     // 드론 선택
     async function selectDrone(drone) {
-        selectedDrone = drone;
-        if (drone) {
-            try {
-                telemetryData = await getDroneTelemetry(drone.drone_id);
-            } catch (error) {
-                console.error('텔레메트리 데이터 조회 실패:', error);
-            }
-        } else {
+        if (selectedDrone?.drone_id === drone.drone_id) {
+            // 이미 선택된 드론을 다시 클릭하면 선택 해제
+            selectedDrone = null;
             telemetryData = null;
+        } else {
+            // 새로운 드론 선택
+            selectedDrone = drone;
+            if (drone) {
+                try {
+                    telemetryData = await getDroneTelemetry(drone.drone_id);
+                } catch (error) {
+                    console.error('텔레메트리 데이터 조회 실패:', error);
+                }
+            } else {
+                telemetryData = null;
+            }
         }
     }
 
@@ -67,27 +75,7 @@
     </div>
 
     {#if selectedDrone && telemetryData}
-        <div class="telemetry-data">
-            <h3>{selectedDrone.drone_id} 상태 정보</h3>
-            <div class="telemetry-grid">
-                <div class="telemetry-item">
-                    <span class="label">고도</span>
-                    <span class="value">{telemetryData.altitude.toFixed(1)}m</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="label">속도</span>
-                    <span class="value">{telemetryData.groundspeed.toFixed(1)}m/s</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="label">배터리</span>
-                    <span class="value">{telemetryData.battery}%</span>
-                </div>
-                <div class="telemetry-item">
-                    <span class="label">비행 모드</span>
-                    <span class="value">{telemetryData.mode}</span>
-                </div>
-            </div>
-        </div>
+        <DroneStatus drone={selectedDrone} telemetryData={telemetryData} />
     {/if}
 </div>
 
@@ -106,6 +94,7 @@
         display: flex;
         flex-direction: column;
         gap: 8px;
+        align-items: flex-end;
     }
 
     .drone-cards {
@@ -114,6 +103,7 @@
         gap: 8px;
         align-items: flex-start;
         flex-wrap: wrap;
+        justify-content: flex-end;
     }
 
     .no-drones {
@@ -141,41 +131,5 @@
 
     .drone-list-container::-webkit-scrollbar-thumb:hover {
         background-color: rgba(255, 255, 255, 0.5);
-    }
-
-    .telemetry-data {
-        margin-top: 20px;
-        padding-top: 20px;
-        border-top: 1px solid #404040;
-    }
-
-    h3 {
-        margin: 0 0 16px 0;
-        font-size: 16px;
-        font-weight: normal;
-    }
-
-    .telemetry-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-    }
-
-    .telemetry-item {
-        background-color: #333;
-        padding: 12px;
-        border-radius: 4px;
-    }
-
-    .label {
-        display: block;
-        font-size: 12px;
-        color: #888;
-        margin-bottom: 4px;
-    }
-
-    .value {
-        font-size: 16px;
-        font-weight: bold;
     }
 </style> 
