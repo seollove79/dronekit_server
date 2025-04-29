@@ -1,5 +1,5 @@
 <script>
-    import { armDrone, disarmDrone } from '../stores/drones';
+    import { armDrone, disarmDrone, takeoffDrone, landDrone } from '../stores/drones';
     export let drone;
     export let telemetryData;
 
@@ -12,7 +12,35 @@
             }
         } catch (error) {
             console.error('시동/종료 실패:', error);
-            // 에러 처리를 위한 추가 로직이 필요하다면 여기에 구현
+            alert('시동/종료에 실패했습니다: ' + error.message);
+        }
+    }
+
+    async function handleTakeoff() {
+        try {
+            if (!telemetryData.armed) {
+                alert('드론의 시동이 꺼져있습니다. 먼저 시동을 켜주세요.');
+                return;
+            }
+            await takeoffDrone(drone.drone_id);
+        } catch (error) {
+            console.error('이륙 실패:', error);
+            const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
+            alert(`이륙에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
+        }
+    }
+
+    async function handleLand() {
+        try {
+            if (!telemetryData.armed) {
+                alert('드론의 시동이 꺼져있습니다.');
+                return;
+            }
+            await landDrone(drone.drone_id);
+        } catch (error) {
+            console.error('착륙 실패:', error);
+            const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
+            alert(`착륙에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
         }
     }
 </script>
@@ -93,8 +121,20 @@
             >
                 {telemetryData.armed ? '시동 종료' : '시동'}
             </button>
-            <button class="control-button">이륙</button>
-            <button class="control-button">착륙</button>
+            <button 
+                class="control-button"
+                on:click={handleTakeoff}
+                disabled={!telemetryData.armed}
+            >
+                이륙
+            </button>
+            <button 
+                class="control-button"
+                on:click={handleLand}
+                disabled={!telemetryData.armed}
+            >
+                착륙
+            </button>
             <button class="control-button">LOITER</button>
             <button class="control-button">ALT HOLD</button>
             <button class="control-button">STABILIZE</button>
@@ -259,5 +299,14 @@
 
     .control-button.armed:hover {
         background-color: #CC3333;
+    }
+
+    .control-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .control-button:disabled:hover {
+        background-color: #1a1a1a;
     }
 </style> 

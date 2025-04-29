@@ -66,4 +66,46 @@ export async function disarmDrone(droneId) {
         console.error('드론 시동 종료 실패:', error);
         throw error;
     }
+}
+
+// 드론 이륙
+export async function takeoffDrone(droneId, altitude = 3) {  // 기본 고도 3m
+    try {
+        await droneApi.takeoff(droneId, altitude);
+    } catch (error) {
+        console.error('드론 이륙 실패:', {
+            message: error.message,
+            status: error.status,
+            details: error.response?.data
+        });
+        
+        // ApiError인 경우 직접 메시지 사용
+        if (error.status) {
+            throw new Error(`드론 이륙 실패: ${error.message}`);
+        }
+        
+        // 기타 에러 처리
+        throw new Error(`드론 이륙 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
+    }
+}
+
+// 드론 착륙
+export async function landDrone(droneId) {
+    try {
+        await droneApi.land(droneId);
+    } catch (error) {
+        console.error('드론 착륙 실패:', {
+            message: error.message,
+            status: error.status,
+            details: error.response?.data
+        });
+        
+        // ApiError인 경우 직접 메시지 사용
+        if (error.status) {
+            throw new Error(`드론 착륙 실패: ${error.message}`);
+        }
+        
+        // 기타 에러 처리
+        throw new Error(`드론 착륙 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
+    }
 } 

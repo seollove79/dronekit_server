@@ -27,7 +27,15 @@ async function fetchApi(endpoint, options = {}) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new ApiError(response.status, data.detail || '서버 오류가 발생했습니다.');
+            // 422 에러 처리
+            if (response.status === 422) {
+                const errorDetail = data.detail || data.message || '입력값이 올바르지 않습니다.';
+                throw new ApiError(response.status, errorDetail);
+            }
+            
+            // 기타 에러 처리
+            const errorMessage = data.detail || data.message || '서버 오류가 발생했습니다.';
+            throw new ApiError(response.status, errorMessage);
         }
 
         return data;
@@ -95,9 +103,8 @@ export const droneApi = {
 
     // 드론 이륙
     takeoff: async (droneId, altitude) => {
-        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.TAKEOFF(droneId), {
+        return await fetchApi(`${API_CONFIG.ENDPOINTS.DRONES.TAKEOFF(droneId)}?altitude=${altitude}`, {
             method: 'POST',
-            body: JSON.stringify({ altitude }),
         });
     },
 

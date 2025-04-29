@@ -81,3 +81,17 @@
 2025-04-29 11:02:24,791 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
 2025-04-29 11:02:24,791 - autopilot.drone3 - INFO - [drone3] - kntosky_gcs_01
 2025-04-29 11:02:24,791 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS
+2025-04-29 12:58:54,301 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 12:59:04,177 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 12:59:07,450 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 12:59:10,544 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:01:11,732 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:01:21,705 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:03:27,122 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:03:37,085 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:04:41,736 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:04:51,690 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:05:54,696 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:06:04,679 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:08:46,884 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:08:56,801 - autopilot.drone1 - INFO - [drone1] - Disarming motors
