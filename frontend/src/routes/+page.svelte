@@ -11,6 +11,7 @@
     let port = "5762";
     let isConnecting = false;
     let errorMessage = "";
+    let map_viewer;
     
     const handleAddDrone = () => {
         showAddDroneModal = true;
@@ -57,6 +58,7 @@
             useControl : false,
         };
         mapController = new vw.MapController(vw.MapControllerOption);
+        map_viewer = ws3d.viewer;
     });
 </script>
 

@@ -7,7 +7,7 @@
     let updateInterval;
     let telemetryInterval;
     let selectedDrone = null;
-    let telemetryData = null;
+    let telemetryData = new Map(); // 각 드론의 텔레메트리 데이터를 저장할 Map
 
     // 드론 목록 주기적 업데이트
     async function startUpdates() {
@@ -17,9 +17,10 @@
 
     // 텔레메트리 데이터 업데이트
     async function updateTelemetry() {
-        if (selectedDrone) {
+        for (const droneId of $drones) {
             try {
-                telemetryData = await getDroneTelemetry(selectedDrone.drone_id);
+                const data = await getDroneTelemetry(droneId);
+                telemetryData.set(droneId, data);
             } catch (error) {
                 console.error('텔레메트리 데이터 조회 실패:', error);
             }
@@ -27,34 +28,13 @@
     }
 
     // 드론 선택
-    async function selectDrone(drone) {
+    function selectDrone(drone) {
         if (selectedDrone?.drone_id === drone.drone_id) {
             // 이미 선택된 드론을 다시 클릭하면 선택 해제
             selectedDrone = null;
-            telemetryData = null;
-            // 텔레메트리 업데이트 중지
-            if (telemetryInterval) {
-                clearInterval(telemetryInterval);
-                telemetryInterval = null;
-            }
         } else {
-            // 기존 텔레메트리 업데이트 중지
-            if (telemetryInterval) {
-                clearInterval(telemetryInterval);
-            }
             // 새로운 드론 선택
             selectedDrone = drone;
-            if (drone) {
-                try {
-                    telemetryData = await getDroneTelemetry(drone.drone_id);
-                    // 새로운 텔레메트리 업데이트 시작
-                    telemetryInterval = setInterval(updateTelemetry, 1000); // 1초마다 업데이트
-                } catch (error) {
-                    console.error('텔레메트리 데이터 조회 실패:', error);
-                }
-            } else {
-                telemetryData = null;
-            }
         }
     }
 
@@ -64,24 +44,24 @@
             await disconnectDrone(droneId);
             if (selectedDrone?.drone_id === droneId) {
                 selectedDrone = null;
-                telemetryData = null;
-                // 텔레메트리 업데이트 중지
-                if (telemetryInterval) {
-                    clearInterval(telemetryInterval);
-                    telemetryInterval = null;
-                }
             }
+            telemetryData.delete(droneId);
         } catch (error) {
             console.error('드론 연결 해제 실패:', error);
         }
     }
 
-    onMount(startUpdates);
+    onMount(() => {
+        startUpdates();
+        // 모든 드론의 텔레메트리 데이터 업데이트 시작
+        updateTelemetry();
+        telemetryInterval = setInterval(updateTelemetry, 1000);
+    });
+
     onDestroy(() => {
         if (updateInterval) clearInterval(updateInterval);
         if (telemetryInterval) clearInterval(telemetryInterval);
     });
-
 </script>
 
 <div class="drone-list-container">
@@ -101,9 +81,14 @@
         {/if}
     </div>
 
-    {#if selectedDrone && telemetryData}
-        <DroneStatus drone={selectedDrone} telemetryData={telemetryData} />
-    {/if}
+    {#each $drones as droneId}
+        <div class="drone-status-wrapper" class:visible={selectedDrone?.drone_id === droneId}>
+            <DroneStatus 
+                drone={{ drone_id: droneId }} 
+                telemetryData={telemetryData.get(droneId)} 
+            />
+        </div>
+    {/each}
 </div>
 
 <style>
@@ -140,6 +125,18 @@
         font-size: 14px;
         background-color: rgba(0, 0, 0, 0.8);
         border-radius: 4px;
+    }
+
+    .drone-status-wrapper {
+        position: absolute;
+        visibility: hidden;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .drone-status-wrapper.visible {
+        visibility: visible;
+        opacity: 1;
     }
 
     /* 스크롤바 스타일링 */

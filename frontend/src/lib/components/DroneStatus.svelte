@@ -3,11 +3,17 @@
     import TakeoffModal from './TakeoffModal.svelte';
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     export let drone;
-    export let telemetryData;
+    export let telemetryData = null;
 
     let showTakeoffModal = false;
     let updateInterval;
     const dispatch = createEventDispatcher();
+
+    // 드론 모델 관련 상수
+    const DRONE_ALTITUDE_OFFSET = 0;
+    const DRONE_YAW_OFFSET = 90;
+    const DRONE_MODEL_SCALE = 0.003;
+    let droneEntities = new Map(); // 드론 엔티티를 저장할 Map
 
     // 비행 모드 목록
     const flightModes = [
@@ -21,15 +27,72 @@
         { value: 'LAND', label: 'LAND' }
     ];
 
-    let selectedMode = 'STABILIZE';
+    let selectedMode = 'LOITER';
+
+    // 드론 위치 및 자세 업데이트 함수
+    function updateDronePosition(droneId, telemetryData) {
+        if (!telemetryData) return;
+
+        const position = Cesium.Cartesian3.fromDegrees(
+            telemetryData.longitude,
+            telemetryData.latitude,
+            telemetryData.altitude_asl + DRONE_ALTITUDE_OFFSET
+        );
+
+        const hpr = new Cesium.HeadingPitchRoll(
+            Cesium.Math.toRadians(telemetryData.yaw - DRONE_YAW_OFFSET),
+            telemetryData.pitch,
+            telemetryData.roll
+        );
+
+        const orientation = Cesium.Transforms.headingPitchRollQuaternion(
+            position,
+            hpr
+        );
+
+        if (droneEntities.has(droneId)) {
+            // 기존 드론 엔티티 업데이트
+            const droneEntity = droneEntities.get(droneId);
+            droneEntity.position = position;
+            droneEntity.orientation = orientation;
+        } else {
+            // 새로운 드론 엔티티 생성
+            const droneEntity = ws3d.viewer.entities.add({
+                name: `Drone_${droneId}`,
+                position: position,
+                orientation: orientation,
+                model: {
+                    uri: "/images/drone.glb",
+                    scale: DRONE_MODEL_SCALE,
+                    minimumPixelSize: 32,
+                    maximumScale: 20000
+                },
+                label: {
+                    text: droneId,
+                    font: "20px sans-serif",
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    fillColor: Cesium.Color.WHITE,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                    horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    pixelOffset: new Cesium.Cartesian2(0, -50)
+                }
+            });
+            droneEntities.set(droneId, droneEntity);
+        }
+    }
 
     // 텔레메트리 데이터 업데이트 함수
     async function updateTelemetry() {
         try {
             const newData = await getDroneTelemetry(drone.drone_id);
+            telemetryData = newData;
             dispatch('telemetryUpdate', newData);
+            updateDronePosition(drone.drone_id, newData);
         } catch (error) {
             console.error('텔레메트리 데이터 업데이트 실패:', error);
+            telemetryData = null;
         }
     }
 
@@ -45,6 +108,11 @@
         if (updateInterval) {
             clearInterval(updateInterval);
         }
+        // 모든 드론 엔티티 제거
+        droneEntities.forEach((entity) => {
+            ws3d.viewer.entities.remove(entity);
+        });
+        droneEntities.clear();
     });
 
     async function handleArmDisarm() {
@@ -109,57 +177,165 @@
         <span class="label">드론 ID:</span><span class="value">{drone.drone_id}</span>
     </div>
     
-    <div class="telemetry-section">
-        <div class="telemetry-row">
-            <div class="telemetry-item">
-                <span class="label">배터리</span>
-                <span class="value">{telemetryData.battery?.toFixed(1)}V</span>
+    {#if telemetryData}
+        <div class="telemetry-section">
+            <div class="telemetry-row">
+                <div class="telemetry-item">
+                    <span class="label">배터리</span>
+                    <span class="value">
+                        {#if telemetryData.battery !== undefined}
+                            {telemetryData.battery.toFixed(1)}V
+                        {:else}
+                            -
+                        {/if}
+                    </span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">GPS</span>
+                    <span class="value">
+                        {#if telemetryData.mode}
+                            {telemetryData.mode}
+                        {:else}
+                            -
+                        {/if}
+                    </span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">Signal</span>
+                    <span class="value">
+                        {#if telemetryData.signal_strength !== undefined}
+                            {(telemetryData.signal_strength * 100).toFixed(0)}%
+                        {:else}
+                            -
+                        {/if}
+                    </span>
+                </div>
             </div>
-            <div class="telemetry-item">
-                <span class="label">GPS</span>
-                <span class="value">{telemetryData.mode}</span>
+            
+            <div class="telemetry-row status-row">
+                <div class="status-item">
+                    {#if telemetryData.armed !== undefined}
+                        {telemetryData.armed ? 'ARMED' : 'DISARMED'}
+                    {:else}
+                        -
+                    {/if}
+                </div>
+                <div class="status-item">
+                    {#if telemetryData.mode}
+                        {telemetryData.mode}
+                    {:else}
+                        -
+                    {/if}
+                </div>
+                <div class="status-item">OK</div>
             </div>
-            <div class="telemetry-item">
-                <span class="label">Signal</span>
-                <span class="value">{(telemetryData.signal_strength * 100).toFixed(0)}%</span>
-            </div>
-        </div>
-        
-        <div class="telemetry-row status-row">
-            <div class="status-item">{telemetryData.armed ? 'ARMED' : 'DISARMED'}</div>
-            <div class="status-item">{telemetryData.mode}</div>
-            <div class="status-item">OK</div>
-        </div>
 
-        <div class="telemetry-row">
-            <div class="altitude-section">
-                <div class="label">고도(m)</div>
-                <div class="altitude-values">
-                    <div class="altitude-item">
-                        <span>{telemetryData.altitude?.toFixed(1)}</span>
-                        <span class="sub-label">(상대)</span>
-                    </div>
-                    <div class="altitude-item">
-                        <span>{telemetryData.altitude_asl?.toFixed(1)}</span>
-                        <span class="sub-label">(해발)</span>
+            <div class="telemetry-row">
+                <div class="altitude-section">
+                    <div class="label">고도(m)</div>
+                    <div class="altitude-values">
+                        <div class="altitude-item">
+                            <span>
+                                {#if telemetryData.altitude !== undefined}
+                                    {telemetryData.altitude.toFixed(1)}
+                                {:else}
+                                    -
+                                {/if}
+                            </span>
+                            <span class="sub-label">(상대)</span>
+                        </div>
+                        <div class="altitude-item">
+                            <span>
+                                {#if telemetryData.altitude_asl !== undefined}
+                                    {telemetryData.altitude_asl.toFixed(1)}
+                                {:else}
+                                    -
+                                {/if}
+                            </span>
+                            <span class="sub-label">(해발)</span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="speed-section">
-                <div class="label">속도(m/s)</div>
-                <div class="speed-values">
-                    <div class="speed-item">
-                        <span>{telemetryData.airspeed?.toFixed(1)}</span>
-                        <span class="sub-label">(air)</span>
-                    </div>
-                    <div class="speed-item">
-                        <span>{telemetryData.groundspeed?.toFixed(1)}</span>
-                        <span class="sub-label">(Ground)</span>
+                <div class="speed-section">
+                    <div class="label">속도(m/s)</div>
+                    <div class="speed-values">
+                        <div class="speed-item">
+                            <span>
+                                {#if telemetryData.airspeed !== undefined}
+                                    {telemetryData.airspeed.toFixed(1)}
+                                {:else}
+                                    -
+                                {/if}
+                            </span>
+                            <span class="sub-label">(air)</span>
+                        </div>
+                        <div class="speed-item">
+                            <span>
+                                {#if telemetryData.groundspeed !== undefined}
+                                    {telemetryData.groundspeed.toFixed(1)}
+                                {:else}
+                                    -
+                                {/if}
+                            </span>
+                            <span class="sub-label">(Ground)</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    {:else}
+        <div class="telemetry-section">
+            <div class="telemetry-row">
+                <div class="telemetry-item">
+                    <span class="label">배터리</span>
+                    <span class="value">-</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">GPS</span>
+                    <span class="value">-</span>
+                </div>
+                <div class="telemetry-item">
+                    <span class="label">Signal</span>
+                    <span class="value">-</span>
+                </div>
+            </div>
+            
+            <div class="telemetry-row status-row">
+                <div class="status-item">-</div>
+                <div class="status-item">-</div>
+                <div class="status-item">-</div>
+            </div>
+
+            <div class="telemetry-row">
+                <div class="altitude-section">
+                    <div class="label">고도(m)</div>
+                    <div class="altitude-values">
+                        <div class="altitude-item">
+                            <span>-</span>
+                            <span class="sub-label">(상대)</span>
+                        </div>
+                        <div class="altitude-item">
+                            <span>-</span>
+                            <span class="sub-label">(해발)</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="speed-section">
+                    <div class="label">속도(m/s)</div>
+                    <div class="speed-values">
+                        <div class="speed-item">
+                            <span>-</span>
+                            <span class="sub-label">(air)</span>
+                        </div>
+                        <div class="speed-item">
+                            <span>-</span>
+                            <span class="sub-label">(Ground)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {/if}
 
     <div class="control-section">
         <div class="section-title">시점제어</div>
@@ -175,44 +351,45 @@
         <div class="button-grid">
             <button 
                 class="control-button" 
-                class:armed={telemetryData.armed}
+                class:armed={telemetryData?.armed}
                 on:click={handleArmDisarm}
+                disabled={!telemetryData}
             >
-                {telemetryData.armed ? '시동 종료' : '시동'}
+                {telemetryData?.armed ? '시동 종료' : '시동'}
             </button>
             <button 
                 class="control-button"
                 on:click={handleTakeoffClick}
-                disabled={!telemetryData.armed}
+                disabled={!telemetryData || !telemetryData.armed}
             >
                 이륙
             </button>
             <button 
                 class="control-button"
                 on:click={handleLand}
-                disabled={!telemetryData.armed}
+                disabled={!telemetryData || !telemetryData.armed}
             >
                 착륙
             </button>
+            <div class="button-grid">
+                <select 
+                    bind:value={selectedMode}
+                    class="control-button"
+                    disabled={!telemetryData}
+                >
+                    {#each flightModes as mode}
+                        <option value={mode.value}>{mode.label}</option>
+                    {/each}
+                </select>
+                <button 
+                    class="control-button"
+                    on:click={handleFlightModeChange}
+                    disabled={!telemetryData}
+                >
+                    모드변경
+                </button>
+            </div>
         </div>
-        <div class="button-grid">
-            <select 
-                bind:value={selectedMode}
-                class="control-button"
-            >
-                {#each flightModes as mode}
-                    <option value={mode.value}>{mode.label}</option>
-                {/each}
-            </select>
-            <button 
-                class="control-button"
-                on:click={handleFlightModeChange}
-            >
-                모드변경
-            </button>
-            <button class="control-button">연결종료</button>
-        </div>
-        
     </div>
 
     <div class="control-section">
