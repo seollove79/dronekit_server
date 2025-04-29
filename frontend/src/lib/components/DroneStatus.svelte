@@ -72,7 +72,7 @@
     <div class="control-section">
         <div class="section-title">제어명령</div>
         <div class="button-grid">
-            <button class="control-button">시동/중로</button>
+            <button class="control-button">시동/종료</button>
             <button class="control-button">이륙</button>
             <button class="control-button">착륙</button>
             <button class="control-button">LOITER</button>
@@ -99,12 +99,12 @@
     .telemetry-data {
         background-color: rgba(0, 0, 0, 0.5);
         border-radius: 8px;
-        padding: 16px;
+        padding: 10px;
         margin-top: 16px;
         width: 350px;
         position: fixed;
         right: 10px;
-        top: 50;
+        top: 120px;
     }
 
     .telemetry-header {
@@ -122,7 +122,7 @@
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 4px;
         padding: 12px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
     }
 
     .telemetry-row {
@@ -186,7 +186,7 @@
         background-color: rgba(0, 0, 0, 0.6);
         border-radius: 4px;
         padding: 12px;
-        margin-bottom: 16px;
+        margin-bottom: 10px;
     }
 
     .section-title {

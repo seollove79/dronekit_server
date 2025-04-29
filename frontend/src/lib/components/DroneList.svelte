@@ -5,6 +5,7 @@
     import DroneStatus from './DroneStatus.svelte';
 
     let updateInterval;
+    let telemetryInterval;
     let selectedDrone = null;
     let telemetryData = null;
 
@@ -14,18 +15,40 @@
         updateInterval = setInterval(refreshDrones, 5000); // 5초마다 업데이트
     }
 
+    // 텔레메트리 데이터 업데이트
+    async function updateTelemetry() {
+        if (selectedDrone) {
+            try {
+                telemetryData = await getDroneTelemetry(selectedDrone.drone_id);
+            } catch (error) {
+                console.error('텔레메트리 데이터 조회 실패:', error);
+            }
+        }
+    }
+
     // 드론 선택
     async function selectDrone(drone) {
         if (selectedDrone?.drone_id === drone.drone_id) {
             // 이미 선택된 드론을 다시 클릭하면 선택 해제
             selectedDrone = null;
             telemetryData = null;
+            // 텔레메트리 업데이트 중지
+            if (telemetryInterval) {
+                clearInterval(telemetryInterval);
+                telemetryInterval = null;
+            }
         } else {
+            // 기존 텔레메트리 업데이트 중지
+            if (telemetryInterval) {
+                clearInterval(telemetryInterval);
+            }
             // 새로운 드론 선택
             selectedDrone = drone;
             if (drone) {
                 try {
                     telemetryData = await getDroneTelemetry(drone.drone_id);
+                    // 새로운 텔레메트리 업데이트 시작
+                    telemetryInterval = setInterval(updateTelemetry, 1000); // 1초마다 업데이트
                 } catch (error) {
                     console.error('텔레메트리 데이터 조회 실패:', error);
                 }
@@ -42,6 +65,11 @@
             if (selectedDrone?.drone_id === droneId) {
                 selectedDrone = null;
                 telemetryData = null;
+                // 텔레메트리 업데이트 중지
+                if (telemetryInterval) {
+                    clearInterval(telemetryInterval);
+                    telemetryInterval = null;
+                }
             }
         } catch (error) {
             console.error('드론 연결 해제 실패:', error);
@@ -51,6 +79,7 @@
     onMount(startUpdates);
     onDestroy(() => {
         if (updateInterval) clearInterval(updateInterval);
+        if (telemetryInterval) clearInterval(telemetryInterval);
     });
 
     // 디버깅용 로그
