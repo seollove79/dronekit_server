@@ -82,8 +82,6 @@
         if (telemetryInterval) clearInterval(telemetryInterval);
     });
 
-    // 디버깅용 로그
-    $: console.log('현재 드론 목록:', $drones);
 </script>
 
 <div class="drone-list-container">

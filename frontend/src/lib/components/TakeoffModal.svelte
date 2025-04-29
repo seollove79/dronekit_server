@@ -15,12 +15,38 @@
     function handleCancel() {
         show = false;
     }
+
+    function handleKeydown(event) {
+        if (event.key === 'Escape') {
+            handleCancel();
+        }
+    }
 </script>
 
 {#if show}
-<div class="modal-backdrop" on:click={handleCancel}>
-    <div class="modal-content" on:click|stopPropagation>
-        <h2>이륙 고도 설정</h2>
+<div 
+    class="modal-backdrop" 
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modal-title"
+    tabindex="-1"
+    on:keydown={handleKeydown}
+>
+    <div 
+        class="modal-content" 
+        role="document"
+    >
+        <div class="modal-header">
+            <h2 id="modal-title">이륙 고도 설정</h2>
+            <button
+                type="button"
+                class="close-button"
+                on:click={handleCancel}
+                aria-label="모달 닫기"
+            >
+                ×
+            </button>
+        </div>
         <div class="input-group">
             <label for="altitude">이륙 고도 (미터)</label>
             <input 
@@ -33,8 +59,20 @@
             />
         </div>
         <div class="button-group">
-            <button class="cancel-button" on:click={handleCancel}>취소</button>
-            <button class="submit-button" on:click={handleSubmit}>이륙</button>
+            <button 
+                type="button"
+                class="cancel-button" 
+                on:click={handleCancel}
+            >
+                취소
+            </button>
+            <button 
+                type="button"
+                class="submit-button" 
+                on:click={handleSubmit}
+            >
+                이륙
+            </button>
         </div>
     </div>
 </div>
@@ -61,11 +99,31 @@
         width: 300px;
         color: white;
     }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .close-button {
+        background: none;
+        border: none;
+        color: #888;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        line-height: 1;
+    }
+
+    .close-button:hover {
+        color: white;
+    }
     
     h2 {
-        margin: 0 0 20px 0;
+        margin: 0;
         font-size: 18px;
-        text-align: center;
     }
     
     .input-group {

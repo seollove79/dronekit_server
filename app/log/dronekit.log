@@ -105,3 +105,26 @@
 2025-04-29 13:19:33,853 - autopilot.drone1 - CRITICAL - [drone1] - Arm: LAND mode not armable
 2025-04-29 13:19:47,687 - autopilot.drone1 - INFO - [drone1] - Arming motors
 2025-04-29 13:19:50,771 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:31:58,143 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:32:08,131 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:32:11,289 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:32:24,772 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-04-29 13:32:24,772 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-04-29 13:32:42,675 - autopilot.drone1 - INFO - [drone1] - SIM Hit ground at 0.482905 m/s
+2025-04-29 13:32:44,773 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:32:54,532 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 13:33:10,260 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-04-29 13:33:10,260 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-04-29 13:33:23,811 - autopilot.drone1 - INFO - [drone1] - SIM Hit ground at 0.482675 m/s
+2025-04-29 13:33:25,878 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-04-29 13:33:28,837 - autopilot.drone2 - INFO - [drone2] - Arming motors
+2025-04-29 13:33:42,526 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-04-29 13:33:42,526 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-04-29 13:33:56,471 - autopilot.drone2 - INFO - [drone2] - SIM Hit ground at 0.482308 m/s
+2025-04-29 13:33:58,563 - autopilot.drone2 - INFO - [drone2] - Disarming motors
+2025-04-29 14:01:15,883 - autopilot.drone3 - CRITICAL - [drone3] - PreArm: Mode requires mission
+2025-04-29 14:20:13,220 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-04-29 14:20:27,388 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-04-29 14:20:27,388 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-04-29 14:20:38,559 - autopilot.drone1 - INFO - [drone1] - SIM Hit ground at 0.482819 m/s
+2025-04-29 14:20:40,638 - autopilot.drone1 - INFO - [drone1] - Disarming motors

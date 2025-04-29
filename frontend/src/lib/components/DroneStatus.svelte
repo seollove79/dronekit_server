@@ -9,6 +9,20 @@
     let updateInterval;
     const dispatch = createEventDispatcher();
 
+    // 비행 모드 목록
+    const flightModes = [
+        { value: 'STABILIZE', label: 'STABILIZE' },
+        { value: 'ALT_HOLD', label: 'ALT HOLD' },
+        { value: 'LOITER', label: 'LOITER' },
+        { value: 'GUIDED', label: 'GUIDED' },
+        { value: 'AUTO', label: 'AUTO' },
+        { value: 'ZIGZAG', label: 'ZIGZAG' },
+        { value: 'RTL', label: 'RTL' },
+        { value: 'LAND', label: 'LAND' }
+    ];
+
+    let selectedMode = 'STABILIZE';
+
     // 텔레메트리 데이터 업데이트 함수
     async function updateTelemetry() {
         try {
@@ -79,13 +93,13 @@
         }
     }
 
-    async function handleFlightMode(mode) {
+    async function handleFlightModeChange() {
         try {
-            await changeFlightMode(drone.drone_id, mode);
+            await changeFlightMode(drone.drone_id, selectedMode);
         } catch (error) {
-            console.error(`${mode} 모드 변경 실패:`, error);
+            console.error(`${selectedMode} 모드 변경 실패:`, error);
             const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
-            alert(`${mode} 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
+            alert(`${selectedMode} 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
         }
     }
 </script>
@@ -180,26 +194,25 @@
             >
                 착륙
             </button>
-            <button 
-                class="control-button"
-                on:click={() => handleFlightMode('LOITER')}
-            >
-                LOITER
-            </button>
-            <button 
-                class="control-button"
-                on:click={() => handleFlightMode('ALT_HOLD')}
-            >
-                ALT HOLD
-            </button>
-            <button 
-                class="control-button"
-                on:click={() => handleFlightMode('STABILIZE')}
-            >
-                STABILIZE
-            </button>
         </div>
-        <button class="full-width-button">연결종료</button>
+        <div class="button-grid">
+            <select 
+                bind:value={selectedMode}
+                class="control-button"
+            >
+                {#each flightModes as mode}
+                    <option value={mode.value}>{mode.label}</option>
+                {/each}
+            </select>
+            <button 
+                class="control-button"
+                on:click={handleFlightModeChange}
+            >
+                모드변경
+            </button>
+            <button class="control-button">연결종료</button>
+        </div>
+        
     </div>
 
     <div class="control-section">
@@ -340,22 +353,6 @@
     }
 
     .control-button:hover {
-        background-color: #333;
-    }
-
-    .full-width-button {
-        width: 100%;
-        background-color: #1a1a1a;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 8px;
-        font-size: 12px;
-        cursor: pointer;
-        transition: background-color 0.2s;
-    }
-
-    .full-width-button:hover {
         background-color: #333;
     }
 
