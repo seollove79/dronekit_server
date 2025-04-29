@@ -46,4 +46,24 @@ export async function getDroneTelemetry(droneId) {
         console.error('드론 상태 조회 실패:', error);
         throw error;
     }
+}
+
+// 드론 시동
+export async function armDrone(droneId) {
+    try {
+        await droneApi.arm(droneId);
+    } catch (error) {
+        console.error('드론 시동 실패:', error);
+        throw error;
+    }
+}
+
+// 드론 시동 종료
+export async function disarmDrone(droneId) {
+    try {
+        await droneApi.disarm(droneId);
+    } catch (error) {
+        console.error('드론 시동 종료 실패:', error);
+        throw error;
+    }
 } 

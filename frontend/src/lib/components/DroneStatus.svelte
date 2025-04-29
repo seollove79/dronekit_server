@@ -1,6 +1,20 @@
 <script>
+    import { armDrone, disarmDrone } from '../stores/drones';
     export let drone;
     export let telemetryData;
+
+    async function handleArmDisarm() {
+        try {
+            if (!telemetryData.armed) {
+                await armDrone(drone.drone_id);
+            } else {
+                await disarmDrone(drone.drone_id);
+            }
+        } catch (error) {
+            console.error('시동/종료 실패:', error);
+            // 에러 처리를 위한 추가 로직이 필요하다면 여기에 구현
+        }
+    }
 </script>
 
 <div class="telemetry-data">
@@ -72,7 +86,13 @@
     <div class="control-section">
         <div class="section-title">제어명령</div>
         <div class="button-grid">
-            <button class="control-button">시동/종료</button>
+            <button 
+                class="control-button" 
+                class:armed={telemetryData.armed}
+                on:click={handleArmDisarm}
+            >
+                {telemetryData.armed ? '시동 종료' : '시동'}
+            </button>
             <button class="control-button">이륙</button>
             <button class="control-button">착륙</button>
             <button class="control-button">LOITER</button>
@@ -231,5 +251,13 @@
 
     .full-width-button:hover {
         background-color: #333;
+    }
+
+    .control-button.armed {
+        background-color: #FF4444;
+    }
+
+    .control-button.armed:hover {
+        background-color: #CC3333;
     }
 </style> 
