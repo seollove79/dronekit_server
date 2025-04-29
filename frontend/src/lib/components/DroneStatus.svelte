@@ -10,7 +10,7 @@
     const dispatch = createEventDispatcher();
 
     // 드론 모델 관련 상수
-    const DRONE_ALTITUDE_OFFSET = 0;
+    const DRONE_ALTITUDE_OFFSET = 7.5;
     const DRONE_YAW_OFFSET = 90;
     const DRONE_MODEL_SCALE = 0.003;
     let droneEntities = new Map(); // 드론 엔티티를 저장할 Map
@@ -36,11 +36,11 @@
         const position = Cesium.Cartesian3.fromDegrees(
             telemetryData.longitude,
             telemetryData.latitude,
-            telemetryData.altitude_asl + DRONE_ALTITUDE_OFFSET
+            telemetryData.altitude_asl + DRONE_ALTITUDE_OFFSET,
         );
 
         const hpr = new Cesium.HeadingPitchRoll(
-            Cesium.Math.toRadians(telemetryData.yaw - DRONE_YAW_OFFSET),
+            telemetryData.yaw - Cesium.Math.toRadians(DRONE_YAW_OFFSET),
             telemetryData.pitch,
             telemetryData.roll
         );
@@ -64,7 +64,7 @@
                 model: {
                     uri: "/images/drone.glb",
                     scale: DRONE_MODEL_SCALE,
-                    minimumPixelSize: 32,
+                    minimumPixelSize: 50,
                     maximumScale: 20000
                 },
                 label: {
@@ -371,24 +371,25 @@
             >
                 착륙
             </button>
-            <div class="button-grid">
-                <select 
-                    bind:value={selectedMode}
-                    class="control-button"
-                    disabled={!telemetryData}
-                >
-                    {#each flightModes as mode}
-                        <option value={mode.value}>{mode.label}</option>
-                    {/each}
-                </select>
-                <button 
-                    class="control-button"
-                    on:click={handleFlightModeChange}
-                    disabled={!telemetryData}
-                >
-                    모드변경
-                </button>
-            </div>
+        </div>
+        <div class="button-grid">
+            <select 
+                bind:value={selectedMode}
+                class="control-button"
+                disabled={!telemetryData}
+            >
+                {#each flightModes as mode}
+                    <option value={mode.value}>{mode.label}</option>
+                {/each}
+            </select>
+            <button 
+                class="control-button"
+                on:click={handleFlightModeChange}
+                disabled={!telemetryData}
+            >
+                모드변경
+            </button>
+            <button class="control-button">연결종료</button>
         </div>
     </div>
 
