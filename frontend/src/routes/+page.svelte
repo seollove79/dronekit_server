@@ -23,6 +23,11 @@
     };
 
     const handleConnect = async () => {
+        if (!droneId || !ipAddress || !port) {
+            errorMessage = '모든 필드를 입력해주세요.';
+            return;
+        }
+
         try {
             isConnecting = true;
             errorMessage = "";
@@ -86,23 +91,26 @@
             </div>
             <div class="input-group">
                 <input type="text" 
-                    placeholder="드론 아이디" 
+                    placeholder="드론 아이디 *" 
                     bind:value={droneId}
                     disabled={isConnecting}
+                    required
                     aria-label="드론 아이디">
             </div>
             <div class="input-group">
                 <input type="text" 
-                    placeholder="드론 IP 주소" 
+                    placeholder="드론 IP 주소 *" 
                     bind:value={ipAddress}
                     disabled={isConnecting}
+                    required
                     aria-label="드론 IP 주소">
             </div>
             <div class="input-group">
                 <input type="text" 
-                    placeholder="포트 번호" 
+                    placeholder="포트 번호 *" 
                     bind:value={port}
                     disabled={isConnecting}
+                    required
                     aria-label="포트 번호">
             </div>
         </div>
@@ -112,7 +120,7 @@
                 disabled={isConnecting}>취소</button>
             <button class="connect-button" 
                 on:click={handleConnect}
-                disabled={isConnecting}>
+                disabled={isConnecting || !droneId || !ipAddress || !port}>
                 {isConnecting ? '연결 중...' : '연결'}
             </button>
         </div>

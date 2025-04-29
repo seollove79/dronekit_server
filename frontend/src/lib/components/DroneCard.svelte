@@ -38,16 +38,23 @@
 <style>
     .drone-card {
         display: flex;
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0,0,0,0.8);
         border-radius: 8px;
         padding: 8px;
         cursor: pointer;
         transition: all 0.2s ease;
-        width: 240px;
+        width: 200px;
+        border: 2px solid transparent;
     }
 
     .drone-card:hover {
-        background-color: rgba(0, 0, 0, 0.9);
+        background-color: #000000;
+    }
+
+    .drone-card.selected {
+        border-color: #FFDA52;
+        background-color: #000000;
+
     }
 
     .drone-image {
@@ -57,7 +64,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: #6B6B6B;
         border-radius: 4px;
         padding: 4px;
     }
