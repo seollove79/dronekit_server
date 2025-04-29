@@ -110,9 +110,10 @@
 
     .drone-cards {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         gap: 8px;
-        align-items: flex-end;
+        align-items: flex-start;
+        flex-wrap: wrap;
     }
 
     .no-drones {
