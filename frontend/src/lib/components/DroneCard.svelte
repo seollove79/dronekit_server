@@ -14,7 +14,9 @@
     role="button"
     tabindex="0"
 >
-    <div class="drone-image">
+    <div class="drone-image"
+        class:selected={isSelected}
+    >
         <img src="/images/drone_01.png" alt="드론 이미지" />
     </div>
     <div class="drone-details">
@@ -73,6 +75,10 @@
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+
+    .drone-image.selected {
+        background-color: #d9d9d9;
     }
 
     .drone-details {

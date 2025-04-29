@@ -74,3 +74,10 @@
 2025-04-29 10:47:47,136 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
 2025-04-29 10:47:47,137 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
 2025-04-29 10:47:47,137 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-04-29 11:01:35,888 - dronekit.drone2 - WARNING - [drone2] - Link timeout, no heartbeat in last 5 seconds
+2025-04-29 11:02:08,723 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-04-29 11:02:08,723 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-04-29 11:02:08,723 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-04-29 11:02:24,791 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
+2025-04-29 11:02:24,791 - autopilot.drone3 - INFO - [drone3] - kntosky_gcs_01
+2025-04-29 11:02:24,791 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS
