@@ -1,7 +1,37 @@
 <script>
-    import { armDrone, disarmDrone, takeoffDrone, landDrone } from '../stores/drones';
+    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry } from '../stores/drones';
+    import TakeoffModal from './TakeoffModal.svelte';
+    import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     export let drone;
     export let telemetryData;
+
+    let showTakeoffModal = false;
+    let updateInterval;
+    const dispatch = createEventDispatcher();
+
+    // 텔레메트리 데이터 업데이트 함수
+    async function updateTelemetry() {
+        try {
+            const newData = await getDroneTelemetry(drone.drone_id);
+            dispatch('telemetryUpdate', newData);
+        } catch (error) {
+            console.error('텔레메트리 데이터 업데이트 실패:', error);
+        }
+    }
+
+    onMount(() => {
+        // 컴포넌트가 마운트될 때 텔레메트리 데이터 업데이트 시작
+        updateTelemetry();
+        // 1초마다 텔레메트리 데이터 업데이트
+        updateInterval = setInterval(updateTelemetry, 1000);
+    });
+
+    onDestroy(() => {
+        // 컴포넌트가 언마운트될 때 인터벌 정리
+        if (updateInterval) {
+            clearInterval(updateInterval);
+        }
+    });
 
     async function handleArmDisarm() {
         try {
@@ -16,13 +46,18 @@
         }
     }
 
-    async function handleTakeoff() {
+    function handleTakeoffClick() {
+        if (!telemetryData.armed) {
+            alert('드론의 시동이 꺼져있습니다. 먼저 시동을 켜주세요.');
+            return;
+        }
+        showTakeoffModal = true;
+    }
+
+    async function handleTakeoff(event) {
         try {
-            if (!telemetryData.armed) {
-                alert('드론의 시동이 꺼져있습니다. 먼저 시동을 켜주세요.');
-                return;
-            }
-            await takeoffDrone(drone.drone_id);
+            const { altitude } = event.detail;
+            await takeoffDrone(drone.drone_id, altitude);
         } catch (error) {
             console.error('이륙 실패:', error);
             const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
@@ -43,6 +78,16 @@
             alert(`착륙에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
         }
     }
+
+    async function handleFlightMode(mode) {
+        try {
+            await changeFlightMode(drone.drone_id, mode);
+        } catch (error) {
+            console.error(`${mode} 모드 변경 실패:`, error);
+            const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
+            alert(`${mode} 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
+        }
+    }
 </script>
 
 <div class="telemetry-data">
@@ -54,22 +99,22 @@
         <div class="telemetry-row">
             <div class="telemetry-item">
                 <span class="label">배터리</span>
-                <span class="value">{telemetryData.battery}V(100%)</span>
+                <span class="value">{telemetryData.battery?.toFixed(1)}V</span>
             </div>
             <div class="telemetry-item">
                 <span class="label">GPS</span>
-                <span class="value">10(3D)</span>
+                <span class="value">{telemetryData.mode}</span>
             </div>
             <div class="telemetry-item">
-                <span class="label">Telemetry</span>
-                <span class="value">99%(25%)</span>
+                <span class="label">Signal</span>
+                <span class="value">{(telemetryData.signal_strength * 100).toFixed(0)}%</span>
             </div>
         </div>
         
         <div class="telemetry-row status-row">
-            <div class="status-item">DISARMED</div>
-            <div class="status-item">STABILIZE</div>
-            <div class="status-item">EFK OK</div>
+            <div class="status-item">{telemetryData.armed ? 'ARMED' : 'DISARMED'}</div>
+            <div class="status-item">{telemetryData.mode}</div>
+            <div class="status-item">OK</div>
         </div>
 
         <div class="telemetry-row">
@@ -77,11 +122,11 @@
                 <div class="label">고도(m)</div>
                 <div class="altitude-values">
                     <div class="altitude-item">
-                        <span>0.0</span>
+                        <span>{telemetryData.altitude?.toFixed(1)}</span>
                         <span class="sub-label">(상대)</span>
                     </div>
                     <div class="altitude-item">
-                        <span>0.0</span>
+                        <span>{telemetryData.altitude_asl?.toFixed(1)}</span>
                         <span class="sub-label">(해발)</span>
                     </div>
                 </div>
@@ -90,11 +135,11 @@
                 <div class="label">속도(m/s)</div>
                 <div class="speed-values">
                     <div class="speed-item">
-                        <span>0.0</span>
+                        <span>{telemetryData.airspeed?.toFixed(1)}</span>
                         <span class="sub-label">(air)</span>
                     </div>
                     <div class="speed-item">
-                        <span>0.0</span>
+                        <span>{telemetryData.groundspeed?.toFixed(1)}</span>
                         <span class="sub-label">(Ground)</span>
                     </div>
                 </div>
@@ -123,7 +168,7 @@
             </button>
             <button 
                 class="control-button"
-                on:click={handleTakeoff}
+                on:click={handleTakeoffClick}
                 disabled={!telemetryData.armed}
             >
                 이륙
@@ -135,9 +180,24 @@
             >
                 착륙
             </button>
-            <button class="control-button">LOITER</button>
-            <button class="control-button">ALT HOLD</button>
-            <button class="control-button">STABILIZE</button>
+            <button 
+                class="control-button"
+                on:click={() => handleFlightMode('LOITER')}
+            >
+                LOITER
+            </button>
+            <button 
+                class="control-button"
+                on:click={() => handleFlightMode('ALT_HOLD')}
+            >
+                ALT HOLD
+            </button>
+            <button 
+                class="control-button"
+                on:click={() => handleFlightMode('STABILIZE')}
+            >
+                STABILIZE
+            </button>
         </div>
         <button class="full-width-button">연결종료</button>
     </div>
@@ -154,6 +214,12 @@
         </div>
     </div>
 </div>
+
+<TakeoffModal 
+    bind:show={showTakeoffModal}
+    defaultAltitude={3}
+    on:submit={handleTakeoff}
+/>
 
 <style>
     .telemetry-data {

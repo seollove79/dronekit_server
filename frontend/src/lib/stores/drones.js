@@ -108,4 +108,25 @@ export async function landDrone(droneId) {
         // 기타 에러 처리
         throw new Error(`드론 착륙 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
     }
+}
+
+// 드론 비행 모드 변경
+export async function changeFlightMode(droneId, mode) {
+    try {
+        await droneApi.changeFlightMode(droneId, mode);
+    } catch (error) {
+        console.error('비행 모드 변경 실패:', {
+            message: error.message,
+            status: error.status,
+            details: error.response?.data
+        });
+        
+        // ApiError인 경우 직접 메시지 사용
+        if (error.status) {
+            throw new Error(`비행 모드 변경 실패: ${error.message}`);
+        }
+        
+        // 기타 에러 처리
+        throw new Error(`비행 모드 변경 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
+    }
 } 
