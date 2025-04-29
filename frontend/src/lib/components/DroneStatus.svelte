@@ -97,7 +97,7 @@
 
 <style>
     .telemetry-data {
-        background-color: rgba(0, 0, 0, 0.8);
+        background-color: rgba(0, 0, 0, 0.5);
         border-radius: 8px;
         padding: 16px;
         margin-top: 16px;
