@@ -193,6 +193,11 @@
             alert(`${selectedMode} 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
         }
     }
+
+    // 드론 연결 해제 이벤트 발생
+    function handleDisconnect() {
+        dispatch('disconnect', { droneId: drone.drone_id });
+    }
 </script>
 
 <div class="telemetry-data">
@@ -412,7 +417,13 @@
             >
                 모드변경
             </button>
-            <button class="control-button">연결종료</button>
+            <button 
+                class="control-button"
+                on:click={handleDisconnect}
+                disabled={!telemetryData}
+            >
+                연결종료
+            </button>
         </div>
     </div>
 

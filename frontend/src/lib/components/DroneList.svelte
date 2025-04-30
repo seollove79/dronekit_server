@@ -112,7 +112,8 @@
         <div class="drone-status-wrapper" class:visible={selectedDrone?.drone_id === droneId}>
             <DroneStatus 
                 drone={{ drone_id: droneId }} 
-                telemetryData={telemetryData.get(droneId)} 
+                telemetryData={telemetryData.get(droneId)}
+                on:disconnect={({ detail }) => handleDisconnect(detail.droneId)}
             />
         </div>
     {/each}
