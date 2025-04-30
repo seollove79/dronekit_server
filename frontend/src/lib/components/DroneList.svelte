@@ -35,6 +35,33 @@
         } else {
             // 새로운 드론 선택
             selectedDrone = drone;
+            
+            // 선택된 드론의 텔레메트리 데이터로 카메라 이동
+            const telemetry = telemetryData.get(drone.drone_id);
+            if (telemetry) {
+                const position = Cesium.Cartesian3.fromDegrees(
+                    telemetry.longitude,
+                    telemetry.latitude,
+                    telemetry.altitude_asl + 7.7 // DRONE_ALTITUDE_OFFSET
+                );
+                
+                // 카메라를 드론의 수직 상단 50m 위에 위치시킴
+                const cameraPosition = Cesium.Cartesian3.fromDegrees(
+                    telemetry.longitude,
+                    telemetry.latitude,
+                    telemetry.altitude_asl + 7.7 + 50 // 드론 위치 + 50m
+                );
+                
+                ws3d.viewer.camera.flyTo({
+                    destination: cameraPosition,
+                    orientation: {
+                        heading: Cesium.Math.toRadians(0),
+                        pitch: Cesium.Math.toRadians(-90), // 수직 아래를 바라봄
+                        roll: 0
+                    },
+                    duration: 2
+                });
+            }
         }
     }
 

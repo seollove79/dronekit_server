@@ -10,7 +10,7 @@
     const dispatch = createEventDispatcher();
 
     // 드론 모델 관련 상수
-    const DRONE_ALTITUDE_OFFSET = 7.5;
+    const DRONE_ALTITUDE_OFFSET = 7.7;
     const DRONE_YAW_OFFSET = 90;
     const DRONE_MODEL_SCALE = 0.003;
     let droneEntities = new Map(); // 드론 엔티티를 저장할 Map
@@ -76,10 +76,30 @@
                     outlineWidth: 2,
                     horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
                     verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-                    pixelOffset: new Cesium.Cartesian2(0, -50)
+                    pixelOffset: new Cesium.Cartesian2(0, -60)
                 }
             });
             droneEntities.set(droneId, droneEntity);
+        }
+    }
+
+    // 드론이 선택될 때 카메라를 해당 드론의 위치로 이동시키는 함수
+    function flyToDrone() {
+        if (telemetryData) {
+            const position = Cesium.Cartesian3.fromDegrees(
+                telemetryData.longitude,
+                telemetryData.latitude,
+                telemetryData.altitude_asl + DRONE_ALTITUDE_OFFSET
+            );
+            ws3d.viewer.camera.flyTo({
+                destination: position,
+                orientation: {
+                    heading: Cesium.Math.toRadians(0),
+                    pitch: Cesium.Math.toRadians(-45),
+                    roll: 0
+                },
+                duration: 2
+            });
         }
     }
 
@@ -101,6 +121,9 @@
         updateTelemetry();
         // 1초마다 텔레메트리 데이터 업데이트
         updateInterval = setInterval(updateTelemetry, 1000);
+        
+        // 드론이 선택되면 카메라 이동
+        flyToDrone();
     });
 
     onDestroy(() => {

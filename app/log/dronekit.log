@@ -141,3 +141,9 @@
 2025-04-29 16:20:44,583 - autopilot.drone2 - INFO - [drone2] - Arming motors
 2025-04-29 16:21:00,848 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
 2025-04-29 16:21:00,848 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-04-30 11:13:26,667 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-04-30 11:13:26,667 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-04-30 11:13:26,667 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-04-30 11:44:21,880 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-04-30 11:44:21,880 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-04-30 11:44:21,880 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
