@@ -1,12 +1,11 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    import { drones, refreshDrones, disconnectDrone, getDroneTelemetry } from '../stores/drones';
+    import { drones, selectedDrone, refreshDrones, disconnectDrone, getDroneTelemetry, setSelectedDrone, clearSelectedDrone } from '../stores/drones';
     import DroneCard from './DroneCard.svelte';
     import DroneStatus from './DroneStatus.svelte';
 
     let updateInterval;
     let telemetryInterval;
-    let selectedDrone = null;
     let telemetryData = new Map(); // 각 드론의 텔레메트리 데이터를 저장할 Map
 
     // 드론 목록 주기적 업데이트
@@ -29,12 +28,12 @@
 
     // 드론 선택
     function selectDrone(drone) {
-        if (selectedDrone?.drone_id === drone.drone_id) {
+        if ($selectedDrone?.drone_id === drone.drone_id) {
             // 이미 선택된 드론을 다시 클릭하면 선택 해제
-            selectedDrone = null;
+            clearSelectedDrone();
         } else {
             // 새로운 드론 선택
-            selectedDrone = drone;
+            setSelectedDrone(drone);
             
             // 선택된 드론의 텔레메트리 데이터로 카메라 이동
             const telemetry = telemetryData.get(drone.drone_id);
@@ -69,8 +68,8 @@
     async function handleDisconnect(droneId) {
         try {
             await disconnectDrone(droneId);
-            if (selectedDrone?.drone_id === droneId) {
-                selectedDrone = null;
+            if ($selectedDrone?.drone_id === droneId) {
+                clearSelectedDrone();
             }
             telemetryData.delete(droneId);
         } catch (error) {
@@ -100,7 +99,7 @@
                 {#each $drones as droneId (droneId)}
                     <DroneCard 
                         drone={{ drone_id: droneId }}
-                        isSelected={selectedDrone?.drone_id === droneId}
+                        isSelected={$selectedDrone?.drone_id === droneId}
                         onSelect={(drone) => selectDrone(drone)}
                     />
                 {/each}
@@ -109,7 +108,7 @@
     </div>
 
     {#each $drones as droneId}
-        <div class="drone-status-wrapper" class:visible={selectedDrone?.drone_id === droneId}>
+        <div class="drone-status-wrapper" class:visible={$selectedDrone?.drone_id === droneId}>
             <DroneStatus 
                 drone={{ drone_id: droneId }} 
                 telemetryData={telemetryData.get(droneId)}

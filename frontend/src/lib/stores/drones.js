@@ -3,6 +3,18 @@ import { droneApi } from '../services/api';
 
 // 드론 목록을 저장할 스토어 생성
 export const drones = writable([]);
+// 선택된 드론을 저장할 스토어 생성
+export const selectedDrone = writable(null);
+
+// 선택된 드론 설정
+export function setSelectedDrone(drone) {
+    selectedDrone.set(drone);
+}
+
+// 선택된 드론 해제
+export function clearSelectedDrone() {
+    selectedDrone.set(null);
+}
 
 // 드론 목록 새로고침
 export async function refreshDrones() {
