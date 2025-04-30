@@ -1,12 +1,11 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    import { drones, selectedDrone, refreshDrones, disconnectDrone, getDroneTelemetry, setSelectedDrone, clearSelectedDrone } from '../stores/drones';
+    import { drones, selectedDrone, refreshDrones, disconnectDrone, telemetryData, updateTelemetry } from '../stores/drones';
     import DroneCard from './DroneCard.svelte';
     import DroneStatus from './DroneStatus.svelte';
 
     let updateInterval;
     let telemetryInterval;
-    let telemetryData = new Map(); // 각 드론의 텔레메트리 데이터를 저장할 Map
 
     // 드론 목록 주기적 업데이트
     async function startUpdates() {
@@ -14,29 +13,17 @@
         updateInterval = setInterval(refreshDrones, 5000); // 5초마다 업데이트
     }
 
-    // 텔레메트리 데이터 업데이트
-    async function updateTelemetry() {
-        for (const droneId of $drones) {
-            try {
-                const data = await getDroneTelemetry(droneId);
-                telemetryData.set(droneId, data);
-            } catch (error) {
-                console.error('텔레메트리 데이터 조회 실패:', error);
-            }
-        }
-    }
-
     // 드론 선택
     function selectDrone(drone) {
         if ($selectedDrone?.drone_id === drone.drone_id) {
             // 이미 선택된 드론을 다시 클릭하면 선택 해제
-            clearSelectedDrone();
+            selectedDrone.set(null);
         } else {
             // 새로운 드론 선택
-            setSelectedDrone(drone);
+            selectedDrone.set(drone);
             
             // 선택된 드론의 텔레메트리 데이터로 카메라 이동
-            const telemetry = telemetryData.get(drone.drone_id);
+            const telemetry = $telemetryData.get(drone.drone_id);
             if (telemetry) {
                 const position = Cesium.Cartesian3.fromDegrees(
                     telemetry.longitude,
@@ -69,9 +56,8 @@
         try {
             await disconnectDrone(droneId);
             if ($selectedDrone?.drone_id === droneId) {
-                clearSelectedDrone();
+                selectedDrone.set(null);
             }
-            telemetryData.delete(droneId);
         } catch (error) {
             console.error('드론 연결 해제 실패:', error);
         }
@@ -111,7 +97,7 @@
         <div class="drone-status-wrapper" class:visible={$selectedDrone?.drone_id === droneId}>
             <DroneStatus 
                 drone={{ drone_id: droneId }} 
-                telemetryData={telemetryData.get(droneId)}
+                telemetryData={$telemetryData.get(droneId)}
                 on:disconnect={({ detail }) => handleDisconnect(detail.droneId)}
             />
         </div>

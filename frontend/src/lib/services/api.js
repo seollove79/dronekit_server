@@ -131,11 +131,15 @@ export const droneApi = {
         });
     },
 
-    // GPS 위치로 비행
-    flyTo: async (droneId, position) => {
+    // 현재 고도 유지하며 특정 위치로 비행
+    flyToPosition: async (droneId, position) => {
         return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.FLY_TO(droneId), {
             method: 'POST',
-            body: JSON.stringify(position),
+            body: JSON.stringify({
+                "latitude": position.latitude,
+                "longitude": position.longitude,
+                "altitude": position.altitude
+            }),
         });
     },
 };

@@ -2,7 +2,7 @@
     import { onMount, onDestroy } from "svelte";
     import { browser } from '$app/environment';
     import DroneList from "$lib/components/DroneList.svelte";
-    import { connectDrone } from "$lib/stores/drones";
+    import { connectDrone, selectedDrone, flyToPosition, telemetryData } from "$lib/stores/drones";
 
     let mapController;
     let showAddDroneModal = false;
@@ -56,7 +56,7 @@
     };
 
     // 컨텍스트 메뉴 처리 함수
-    function handleContextMenu(event) {
+    async function handleContextMenu(event) {
         event.preventDefault();
         event.stopPropagation();
         
@@ -74,13 +74,20 @@
             new Cesium.Cartesian2(x, y),
             map_viewer.scene.globe.ellipsoid
         );
-        
+
         if (cartesian) {
             const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
             const longitude = Cesium.Math.toDegrees(cartographic.longitude);
             const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+
+            // 선택된 드론이 있는 경우 현재 고도 가져오기
+            let altitude = 0;
+            if ($selectedDrone) {
+                const telemetry = $telemetryData.get($selectedDrone.drone_id);
+                altitude = telemetry?.altitude || 0;
+            }
             
-            selectedPosition = { longitude, latitude };
+            selectedPosition = { longitude, latitude, altitude };
             contextMenuPosition = {
                 x: event.pageX,
                 y: event.pageY
@@ -90,22 +97,35 @@
     }
 
     // 컨텍스트 메뉴 항목 클릭 처리
-    function handleContextMenuAction(action) {
+    async function handleContextMenuAction(action) {
         if (!selectedPosition) return;
 
-        switch (action) {
-            case 'fly-to':
-                // 이 위치로 비행 처리
-                console.log('이 위치로 비행:', selectedPosition);
-                break;
-            case 'fly-to-altitude':
-                // 이 위치로 비행 (고도) 처리
-                console.log('이 위치로 비행 (고도):', selectedPosition);
-                break;
-            case 'fly-to-coordinates':
-                // 지정좌표로 비행 처리
-                console.log('지정좌표로 비행');
-                break;
+        try {
+            switch (action) {
+                case 'fly-to':
+                    if (!$selectedDrone) {
+                        alert('드론을 먼저 선택해주세요.');
+                        return;
+                    }
+                    const telemetry = $telemetryData.get($selectedDrone.drone_id);
+                    selectedPosition.altitude = telemetry?.altitude || 0;
+
+                    console.log(selectedPosition);
+
+                    await flyToPosition($selectedDrone.drone_id, selectedPosition);
+                    break;
+                case 'fly-to-altitude':
+                    // 이 위치로 비행 (고도) 처리
+                    console.log('이 위치로 비행 (고도):', selectedPosition);
+                    break;
+                case 'fly-to-coordinates':
+                    // 지정좌표로 비행 처리
+                    console.log('지정좌표로 비행');
+                    break;
+            }
+        } catch (error) {
+            console.error('비행 명령 실행 실패:', error);
+            alert(error.message || '비행 명령 실행에 실패했습니다.');
         }
         
         showContextMenu = false;
@@ -157,7 +177,7 @@
             }
         }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-        handler.setInputAction((movement) => {
+        handler.setInputAction(async (movement) => {
             if (!isDragging) {
                 const rect = map_viewer.canvas.getBoundingClientRect();
                 const x = movement.position.x - rect.left;
@@ -173,7 +193,14 @@
                     const longitude = Cesium.Math.toDegrees(cartographic.longitude);
                     const latitude = Cesium.Math.toDegrees(cartographic.latitude);
                     
-                    selectedPosition = { longitude, latitude };
+                    // 선택된 드론이 있는 경우 현재 고도 가져오기
+                    let altitude = 0;
+                    if ($selectedDrone) {
+                        const telemetry = $telemetryData.get($selectedDrone.drone_id);
+                        altitude = telemetry?.altitude_relative || 0;
+                    }
+                    
+                    selectedPosition = { longitude, latitude, altitude };
                     contextMenuPosition = {
                         x: movement.position.x + window.scrollX,
                         y: movement.position.y + window.scrollY

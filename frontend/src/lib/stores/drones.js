@@ -1,10 +1,37 @@
-import { writable } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 import { droneApi } from '../services/api';
 
 // 드론 목록을 저장할 스토어 생성
 export const drones = writable([]);
 // 선택된 드론을 저장할 스토어 생성
 export const selectedDrone = writable(null);
+// 각 드론의 텔레메트리 데이터를 저장할 Map
+const telemetryMap = writable(new Map());
+
+// 텔레메트리 데이터 업데이트
+export async function updateTelemetry() {
+    const currentDrones = get(drones);
+    const newTelemetryMap = new Map();
+    
+    for (const droneId of currentDrones) {
+        try {
+            const data = await droneApi.getTelemetry(droneId);
+            newTelemetryMap.set(droneId, data);
+        } catch (error) {
+            console.error('텔레메트리 데이터 조회 실패:', error);
+        }
+    }
+    
+    telemetryMap.set(newTelemetryMap);
+}
+
+// 특정 드론의 텔레메트리 데이터 가져오기
+export function getDroneTelemetry(droneId) {
+    return get(telemetryMap).get(droneId);
+}
+
+// 텔레메트리 데이터 스토어
+export const telemetryData = derived(telemetryMap, $telemetryMap => $telemetryMap);
 
 // 선택된 드론 설정
 export function setSelectedDrone(drone) {
@@ -46,16 +73,6 @@ export async function disconnectDrone(droneId) {
         await refreshDrones(); // 목록 새로고침
     } catch (error) {
         console.error('드론 연결 해제 실패:', error);
-        throw error;
-    }
-}
-
-// 드론 상태 조회
-export async function getDroneTelemetry(droneId) {
-    try {
-        return await droneApi.getTelemetry(droneId);
-    } catch (error) {
-        console.error('드론 상태 조회 실패:', error);
         throw error;
     }
 }
@@ -140,5 +157,26 @@ export async function changeFlightMode(droneId, mode) {
         
         // 기타 에러 처리
         throw new Error(`비행 모드 변경 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
+    }
+}
+
+// 현재 고도 유지하며 특정 위치로 비행
+export async function flyToPosition(droneId, position) {
+    try {
+        await droneApi.flyToPosition(droneId, position);
+    } catch (error) {
+        console.error('드론 비행 실패:', {
+            message: error.message,
+            status: error.status,
+            details: error.response?.data
+        });
+        
+        // ApiError인 경우 직접 메시지 사용
+        if (error.status) {
+            throw new Error(`드론 비행 실패: ${error.message}`);
+        }
+        
+        // 기타 에러 처리
+        throw new Error(`드론 비행 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
     }
 } 
