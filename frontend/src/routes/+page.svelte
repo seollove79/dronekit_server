@@ -2,7 +2,9 @@
     import { onMount, onDestroy } from "svelte";
     import { browser } from '$app/environment';
     import DroneList from "$lib/components/DroneList.svelte";
+    import FlyToCoordinatesModal from "$lib/components/FlyToCoordinatesModal.svelte";
     import { connectDrone, selectedDrone, flyToPosition, telemetryData } from "$lib/stores/drones";
+    import { mapViewer } from "$lib/stores/map";
 
     let mapController;
     let showAddDroneModal = false;
@@ -26,6 +28,9 @@
     // 마커와 선 관련 변수
     let positionMarker = null;
     let positionLine = null;
+
+    let showFlyToCoordinatesModal = false;
+    let selectedCoordinates = null;
 
     const handleAddDrone = () => {
         showAddDroneModal = true;
@@ -93,7 +98,7 @@
             // 구형 마커 생성
             positionMarker = map_viewer.entities.add({
                 name: 'position-marker',
-                position: Cesium.Cartesian3.fromDegrees(longitude, latitude, 10),
+                position: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude),
                 point: {
                     pixelSize: 10,  // 픽셀 단위
                     color: Cesium.Color.YELLOW,
@@ -107,7 +112,7 @@
                 name: 'position-line',
                 polyline: {
                     positions: [
-                        Cesium.Cartesian3.fromDegrees(longitude, latitude, 10),
+                        Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude),
                         Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
                     ],
                     width: 3,
@@ -200,8 +205,8 @@
                     console.log('이 위치로 비행 (고도):', selectedPosition);
                     break;
                 case 'fly-to-coordinates':
-                    // 지정좌표로 비행 처리
-                    console.log('지정좌표로 비행');
+                    selectedCoordinates = selectedPosition;
+                    showFlyToCoordinatesModal = true;
                     break;
             }
         } catch (error) {
@@ -210,6 +215,22 @@
         }
         
         showContextMenu = false;
+    }
+
+    async function handleFlyToCoordinates(event) {
+        const { latitude, longitude, altitude } = event.detail;
+        
+        if (!$selectedDrone) {
+            alert('드론을 먼저 선택해주세요.');
+            return;
+        }
+
+        try {
+            await flyToPosition($selectedDrone.drone_id, { latitude, longitude, altitude });
+        } catch (error) {
+            console.error('비행 명령 실행 실패:', error);
+            alert(error.message || '비행 명령 실행에 실패했습니다.');
+        }
     }
 
     // 다른 곳 클릭시 메뉴 닫기
@@ -237,9 +258,34 @@
         };
         mapController = new vw.MapController(vw.MapControllerOption);
         map_viewer = ws3d.viewer;
+        mapViewer.set(map_viewer);  // 스토어에 map_viewer 저장
 
         // ScreenSpaceEventHandler 설정
         handler = new Cesium.ScreenSpaceEventHandler(map_viewer.canvas);
+
+        // 왼쪽 마우스 버튼 클릭 이벤트 처리
+        handler.setInputAction((movement) => {
+            const click = windowToCanvasCoordinates({
+                x: movement.position.x,
+                y: movement.position.y
+            });
+            
+            const ray = map_viewer.camera.getPickRay(click);
+            const cartesian = map_viewer.scene.globe.pick(ray, map_viewer.scene);
+            
+            if (cartesian) {
+                const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                const longitude = Cesium.Math.toDegrees(cartographic.longitude);
+                const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+                const height = cartographic.height;
+                
+                console.log('클릭 위치:', {
+                    longitude: longitude.toFixed(6),
+                    latitude: latitude.toFixed(6),
+                    altitude_asl: height.toFixed(2) + 'm'  // 해수면 고도
+                });
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
         // 오른쪽 마우스 버튼 이벤트 처리
         handler.setInputAction((movement) => {
@@ -448,7 +494,24 @@
         >
             지정좌표로 비행
         </button>
+        <button 
+            class="menu-item" 
+            role="menuitem"
+        >
+            이 위치를 홈으로
+        </button>
     </div>
+{/if}
+
+{#if showFlyToCoordinatesModal}
+    <FlyToCoordinatesModal
+        show={showFlyToCoordinatesModal}
+        defaultLatitude={selectedCoordinates?.latitude}
+        defaultLongitude={selectedCoordinates?.longitude}
+        defaultAltitude={selectedCoordinates?.altitude}
+        on:submit={handleFlyToCoordinates}
+        on:close={() => showFlyToCoordinatesModal = false}
+    />
 {/if}
 
 <style>
