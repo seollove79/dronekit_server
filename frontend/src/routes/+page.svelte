@@ -23,6 +23,10 @@
     let isDragging = false;
     let lastRightClickTime = 0;
     
+    // 마커와 선 관련 변수
+    let positionMarker = null;
+    let positionLine = null;
+
     const handleAddDrone = () => {
         showAddDroneModal = true;
         errorMessage = "";
@@ -55,6 +59,83 @@
         }
     };
 
+    // 마커와 선 제거
+    function removePositionEntities() {
+        if (!map_viewer) return;
+
+        try {
+            if (positionMarker) {
+                map_viewer.entities.remove(positionMarker);
+                positionMarker = null;
+            }
+            if (positionLine) {
+                map_viewer.entities.remove(positionLine);
+                positionLine = null;
+            }
+        } catch (error) {
+            console.error('엔티티 제거 실패:', error);
+        }
+    }
+
+    // 마커와 선 생성
+    function createPositionEntities(longitude, latitude, altitude) {
+        if (!map_viewer) {
+            console.error('map_viewer가 초기화되지 않았습니다.');
+            return;
+        }
+
+        // 기존 엔티티 제거
+        removePositionEntities();
+
+        console.log('마커 생성:', longitude, latitude, altitude);
+
+        try {
+            // 구형 마커 생성
+            positionMarker = map_viewer.entities.add({
+                name: 'position-marker',
+                position: Cesium.Cartesian3.fromDegrees(longitude, latitude, 10),
+                point: {
+                    pixelSize: 10,  // 픽셀 단위
+                    color: Cesium.Color.YELLOW,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                }
+            });
+
+            // 지표면까지의 점선 생성
+            positionLine = map_viewer.entities.add({
+                name: 'position-line',
+                polyline: {
+                    positions: [
+                        Cesium.Cartesian3.fromDegrees(longitude, latitude, 10),
+                        Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
+                    ],
+                    width: 3,
+                    material: new Cesium.PolylineDashMaterialProperty({
+                        color: Cesium.Color.YELLOW.withAlpha(0.7),
+                        dashLength: 16.0,
+                        dashPattern: parseInt('1111', 2)
+                    })
+                }
+            });
+
+
+        } catch (error) {
+            console.error('엔티티 생성 실패:', error);
+        }
+    }
+
+    // 윈도우 좌표를 캔버스 좌표로 변환하는 함수
+    function windowToCanvasCoordinates(windowPosition) {
+        const canvas = map_viewer.canvas;
+        const rect = canvas.getBoundingClientRect();
+        
+        return new Cesium.Cartesian2(
+            windowPosition.x - rect.left,
+            windowPosition.y - rect.top
+        );
+    }
+
     // 컨텍스트 메뉴 처리 함수
     async function handleContextMenu(event) {
         event.preventDefault();
@@ -65,32 +146,37 @@
             return;
         }
         
-        // 클릭한 위치의 좌표 가져오기
-        const rect = map_viewer.canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        const click = windowToCanvasCoordinates({
+            x: event.clientX,
+            y: event.clientY
+        });
         
-        const cartesian = map_viewer.camera.pickEllipsoid(
-            new Cesium.Cartesian2(x, y),
-            map_viewer.scene.globe.ellipsoid
-        );
-
+        const ray = map_viewer.camera.getPickRay(click);
+        const cartesian = map_viewer.scene.globe.pick(ray, map_viewer.scene);
+        
         if (cartesian) {
             const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
             const longitude = Cesium.Math.toDegrees(cartographic.longitude);
             const latitude = Cesium.Math.toDegrees(cartographic.latitude);
-
+            const height = cartographic.height;
+            
+            console.log('클릭 위치:', { longitude, latitude, height });
+            
             // 선택된 드론이 있는 경우 현재 고도 가져오기
-            let altitude = 0;
+            let altitude = height;
             if ($selectedDrone) {
                 const telemetry = $telemetryData.get($selectedDrone.drone_id);
-                altitude = telemetry?.altitude || 0;
+                altitude = telemetry?.altitude || height;
             }
             
             selectedPosition = { longitude, latitude, altitude };
+            
+            // 마커와 선 생성
+            createPositionEntities(longitude, latitude, altitude);
+            
             contextMenuPosition = {
-                x: event.pageX,
-                y: event.pageY
+                x: event.clientX,
+                y: event.clientY
             };
             showContextMenu = true;
         }
@@ -107,11 +193,6 @@
                         alert('드론을 먼저 선택해주세요.');
                         return;
                     }
-                    const telemetry = $telemetryData.get($selectedDrone.drone_id);
-                    selectedPosition.altitude = telemetry?.altitude || 0;
-
-                    console.log(selectedPosition);
-
                     await flyToPosition($selectedDrone.drone_id, selectedPosition);
                     break;
                 case 'fly-to-altitude':
@@ -137,6 +218,7 @@
             return;
         }
         showContextMenu = false;
+        removePositionEntities();
     }
 
     onMount(async () => {
@@ -183,27 +265,33 @@
                 const x = movement.position.x - rect.left;
                 const y = movement.position.y - rect.top;
                 
-                const cartesian = map_viewer.camera.pickEllipsoid(
-                    new Cesium.Cartesian2(x, y),
-                    map_viewer.scene.globe.ellipsoid
-                );
+                const click = new Cesium.Cartesian2(x, y);
+                const ray = map_viewer.camera.getPickRay(movement.position);
+                const cartesian = map_viewer.scene.globe.pick(ray, map_viewer.scene);
                 
                 if (cartesian) {
                     const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
                     const longitude = Cesium.Math.toDegrees(cartographic.longitude);
                     const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+                    const height = cartographic.height;
+                    
+                    console.log('클릭 위치:', { longitude, latitude, height });
                     
                     // 선택된 드론이 있는 경우 현재 고도 가져오기
-                    let altitude = 0;
+                    let altitude = height;
                     if ($selectedDrone) {
                         const telemetry = $telemetryData.get($selectedDrone.drone_id);
-                        altitude = telemetry?.altitude_relative || 0;
+                        altitude = telemetry?.altitude || height;
                     }
                     
                     selectedPosition = { longitude, latitude, altitude };
+                    
+                    // 마커와 선 생성
+                    createPositionEntities(longitude, latitude, altitude);
+                    
                     contextMenuPosition = {
-                        x: movement.position.x + window.scrollX,
-                        y: movement.position.y + window.scrollY
+                        x: movement.position.x,
+                        y: movement.position.y
                     };
                     showContextMenu = true;
                 }
@@ -233,6 +321,9 @@
         if (handler) {
             handler.destroy();
         }
+        
+        // 마커와 선 제거
+        removePositionEntities();
         
         const preventContextMenu = (e) => {
             e.preventDefault();
