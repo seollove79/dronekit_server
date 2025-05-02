@@ -214,8 +214,23 @@ async def get_telemetry(drone_id: str):
             "pitch": vehicle.attitude.pitch,  # 기체의 피치(앞뒤 기울기)
             "roll": vehicle.attitude.roll,    # 기체의 롤(좌우 기울기)
             "yaw": vehicle.attitude.yaw,     # 기체의 요(방향)
-            "signal_strength": vehicle.last_heartbeat  # 수신 감도값 (마지막 신호 수신 시간)
+            "signal_strength": vehicle.last_heartbeat,  # 수신 감도값 (마지막 신호 수신 시간)
         }
+
+        # 홈 위치 정보가 있는 경우에만 추가
+        if vehicle.home_location is not None:
+            telemetry_data.update({
+                "home_latitude": vehicle.home_location.lat,
+                "home_longitude": vehicle.home_location.lon,
+                "home_altitude": vehicle.home_location.alt
+            })
+        else:
+            # 홈 위치가 없는 경우 현재 위치를 홈 위치로 사용
+            telemetry_data.update({
+                "home_latitude": vehicle.location.global_relative_frame.lat,
+                "home_longitude": vehicle.location.global_relative_frame.lon,
+                "home_altitude": vehicle.location.global_relative_frame.alt
+            })
 
         return telemetry_data
     except Exception as e:

@@ -204,3 +204,9 @@
 2025-05-02 12:54:36,915 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
 2025-05-02 12:54:36,915 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
 2025-05-02 12:54:36,915 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-02 13:43:36,878 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 13:43:36,878 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-02 13:43:36,878 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-02 13:45:43,240 - autopilot.drone - INFO - [drone] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 13:45:43,241 - autopilot.drone - INFO - [drone] - intosky_gcs_01
+2025-05-02 13:45:43,241 - autopilot.drone - INFO - [drone] - Frame: QUAD/PLUS

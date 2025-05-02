@@ -23,6 +23,9 @@ class TelemetryResponse(BaseModel):
     roll: float  # 기체의 롤(좌우 기울기)
     yaw: float  # 기체의 요(방향)
     signal_strength: float  # 수신 감도값
+    home_latitude: float  # 홈 위치 위도
+    home_longitude: float  # 홈 위치 경도
+    home_altitude: float  # 홈 위치 고도
 
 # 드론 명령 요청 모델 정의
 class CommandRequest(BaseModel):
