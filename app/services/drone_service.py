@@ -1,4 +1,4 @@
-from app.libs.dronekit import connect, Command, LocationGlobalRelative
+from app.libs.dronekit import connect, Command, LocationGlobalRelative, LocationGlobal
 from fastapi import HTTPException
 import asyncio
 from pymavlink import mavutil
@@ -313,7 +313,7 @@ async def set_home_position(drone_id: str, request: HomePositionRequest):
         
         if request.set_current:
             # 현재 위치를 홈으로 설정
-            vehicle = drone['vehicle']
+            vehicle = connected_drones[drone_id]
             current_location = vehicle.location.global_relative_frame
             vehicle.home_location = current_location
             
@@ -332,10 +332,10 @@ async def set_home_position(drone_id: str, request: HomePositionRequest):
             }
         else:
             # 지정된 위치를 홈으로 설정
-            vehicle = drone['vehicle']
+            vehicle = connected_drones[drone_id]
             
             # 홈 위치 설정
-            home_location = dronekit.LocationGlobalRelative(
+            home_location = LocationGlobal(
                 request.latitude,
                 request.longitude,
                 request.altitude

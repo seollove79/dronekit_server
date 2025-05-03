@@ -245,3 +245,29 @@
 2025-05-02 17:32:01,852 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
 2025-05-02 17:32:01,852 - autopilot.drone3 - INFO - [drone3] - kntosky_gcs_01
 2025-05-02 17:32:01,852 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS
+2025-05-03 15:03:36,457 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:03:36,457 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-03 15:03:36,457 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-03 15:03:45,722 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-03 15:04:00,271 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-03 15:04:00,271 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-03 15:05:28,510 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:05:28,510 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-03 15:05:28,510 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-03 15:09:01,359 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:09:01,359 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-03 15:09:01,359 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-03 15:09:10,803 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:09:10,803 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-03 15:09:10,803 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-03 15:10:52,661 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:10:52,662 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-03 15:10:52,662 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-03 15:11:00,973 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:11:00,973 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-03 15:11:00,973 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-03 15:13:45,992 - autopilot.drone1 - INFO - [drone1] - SIM Hit ground at 0.476216 m/s
+2025-05-03 15:13:48,116 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-05-03 15:14:13,201 - autopilot.drone1 - CRITICAL - [drone1] - Arm: LAND mode not armable
+2025-05-03 15:15:14,331 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-03 15:15:24,242 - autopilot.drone1 - INFO - [drone1] - Disarming motors
