@@ -42,3 +42,10 @@ class GPSPosition(BaseModel):
     latitude: float  # 위도
     longitude: float  # 경도
     altitude: float  # 고도 (상대 고도)
+
+# 홈 포지션 설정 요청 모델 정의
+class HomePositionRequest(BaseModel):
+    latitude: float  # 위도
+    longitude: float  # 경도
+    altitude: float  # 고도 (상대 고도)
+    set_current: bool = False  # 현재 위치를 홈으로 설정할지 여부

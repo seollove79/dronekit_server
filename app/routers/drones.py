@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Depends
-from app.models import DroneConnectionRequest, TelemetryResponse, CommandRequest, FlightModeRequest, GPSPosition
+from app.models import DroneConnectionRequest, TelemetryResponse, CommandRequest, FlightModeRequest, GPSPosition, HomePositionRequest
 from app.services import drone_service
 
 # 드론 관련 API 라우터 생성
@@ -95,3 +95,13 @@ async def fly_to_position(drone_id: str, position: GPSPosition):
     :param position: 목표 GPS 좌표 (위도, 경도, 고도)
     """
     return await drone_service.fly_to_position(drone_id, position)
+
+# 홈 포지션 설정 엔드포인트
+@router.post("/{drone_id}/home-position")
+async def set_home_position(drone_id: str, request: HomePositionRequest):
+    """
+    드론의 홈 포지션을 설정하는 API
+    :param drone_id: 드론의 고유 ID
+    :param request: 홈 포지션 정보 (위도, 경도, 고도) 또는 현재 위치 설정 여부
+    """
+    return await drone_service.set_home_position(drone_id, request)

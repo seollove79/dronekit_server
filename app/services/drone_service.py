@@ -3,7 +3,7 @@ from fastapi import HTTPException
 import asyncio
 from pymavlink import mavutil
 import os
-from app.models import GPSPosition
+from app.models import GPSPosition, HomePositionRequest
 
 # 연결된 드론을 저장하는 딕셔너리
 connected_drones = {}
@@ -269,6 +269,9 @@ async def change_flight_mode(drone_id: str, mode: str):
 
 # GPS 위치로 비행하는 함수
 async def fly_to_position(drone_id: str, position: GPSPosition):
+    """
+    드론을 지정된 GPS 좌표로 비행시키는 함수
+    """
     # 드론이 연결되어 있는지 확인
     if drone_id not in connected_drones:
         raise HTTPException(status_code=404, detail="Drone not connected")
@@ -296,3 +299,62 @@ async def fly_to_position(drone_id: str, position: GPSPosition):
     except Exception as e:
         # 오류 처리
         raise HTTPException(status_code=500, detail=f"Failed to fly to position: {str(e)}")
+
+async def set_home_position(drone_id: str, request: HomePositionRequest):
+    """
+    드론의 홈 포지션을 설정하는 함수
+    """
+    try:
+        # 드론 연결 확인
+        if drone_id not in connected_drones:
+            raise HTTPException(status_code=404, detail="드론이 연결되어 있지 않습니다.")
+
+        drone = connected_drones[drone_id]
+        
+        if request.set_current:
+            # 현재 위치를 홈으로 설정
+            vehicle = drone['vehicle']
+            current_location = vehicle.location.global_relative_frame
+            vehicle.home_location = current_location
+            
+            # 홈 위치 설정 확인
+            if not vehicle.home_location:
+                raise HTTPException(status_code=500, detail="홈 위치 설정에 실패했습니다.")
+                
+            return {
+                "status": "success",
+                "message": "현재 위치가 홈으로 설정되었습니다.",
+                "home_position": {
+                    "latitude": current_location.lat,
+                    "longitude": current_location.lon,
+                    "altitude": current_location.alt
+                }
+            }
+        else:
+            # 지정된 위치를 홈으로 설정
+            vehicle = drone['vehicle']
+            
+            # 홈 위치 설정
+            home_location = dronekit.LocationGlobalRelative(
+                request.latitude,
+                request.longitude,
+                request.altitude
+            )
+            vehicle.home_location = home_location
+            
+            # 홈 위치 설정 확인
+            if not vehicle.home_location:
+                raise HTTPException(status_code=500, detail="홈 위치 설정에 실패했습니다.")
+                
+            return {
+                "status": "success",
+                "message": "지정된 위치가 홈으로 설정되었습니다.",
+                "home_position": {
+                    "latitude": request.latitude,
+                    "longitude": request.longitude,
+                    "altitude": request.altitude
+                }
+            }
+            
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

@@ -216,3 +216,32 @@
 2025-05-02 14:59:03,410 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
 2025-05-02 14:59:03,410 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
 2025-05-02 14:59:03,410 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-02 17:13:27,629 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:13:27,629 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-02 17:13:27,630 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-02 17:13:43,814 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:13:43,814 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-02 17:13:43,815 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-02 17:17:14,294 - autopilot.drone2 - INFO - [drone2] - Arming motors
+2025-05-02 17:17:30,082 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-02 17:17:30,083 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-02 17:25:55,615 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:25:55,615 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-02 17:25:55,615 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-02 17:26:04,591 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:26:04,591 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-02 17:26:04,591 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-02 17:26:44,400 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:26:44,400 - autopilot.drone3 - INFO - [drone3] - kntosky_gcs_01
+2025-05-02 17:26:44,400 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS
+2025-05-02 17:26:51,972 - autopilot.drone2 - INFO - [drone2] - SIM Hit ground at 0.475858 m/s
+2025-05-02 17:26:54,093 - autopilot.drone2 - INFO - [drone2] - Disarming motors
+2025-05-02 17:31:27,362 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:31:27,363 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-02 17:31:27,363 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-02 17:31:49,978 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:31:49,978 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-02 17:31:49,978 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-02 17:32:01,852 - autopilot.drone3 - INFO - [drone3] - ArduCopter V4.5.7 (b7207551)
+2025-05-02 17:32:01,852 - autopilot.drone3 - INFO - [drone3] - kntosky_gcs_01
+2025-05-02 17:32:01,852 - autopilot.drone3 - INFO - [drone3] - Frame: QUAD/PLUS

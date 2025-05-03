@@ -21,6 +21,8 @@ export async function updateTelemetry() {
             console.error('텔레메트리 데이터 조회 실패:', error);
         }
     }
+
+    console.log(newTelemetryMap);
     
     telemetryMap.set(newTelemetryMap);
 }
