@@ -3,6 +3,7 @@
     import { browser } from '$app/environment';
     import DroneList from "$lib/components/DroneList.svelte";
     import FlyToCoordinatesModal from "$lib/components/FlyToCoordinatesModal.svelte";
+    import FlyToAltitudeModal from "$lib/components/FlyToAltitudeModal.svelte";
     import { connectDrone, selectedDrone, flyToPosition, telemetryData, setHomePosition } from "$lib/stores/drones";
     import { mapViewer } from "$lib/stores/map";
 
@@ -31,6 +32,7 @@
     let positionLine = null;
 
     let showFlyToCoordinatesModal = false;
+    let showFlyToAltitudeModal = false;
     let selectedCoordinates = null;
 
     const handleAddDrone = () => {
@@ -201,8 +203,7 @@
                     await flyToPosition($selectedDrone.drone_id, selectedPosition);
                     break;
                 case 'fly-to-altitude':
-                    // 이 위치로 비행 (고도) 처리
-                    console.log('이 위치로 비행 (고도):', selectedPosition);
+                    showFlyToAltitudeModal = true;
                     break;
                 case 'fly-to-coordinates':
                     selectedCoordinates = selectedPosition;
@@ -236,6 +237,26 @@
 
         try {
             await flyToPosition($selectedDrone.drone_id, { latitude, longitude, altitude });
+        } catch (error) {
+            console.error('비행 명령 실행 실패:', error);
+            alert(error.message || '비행 명령 실행에 실패했습니다.');
+        }
+    }
+
+    async function handleFlyToAltitude(event) {
+        const { altitude } = event.detail;
+        
+        if (!$selectedDrone) {
+            alert('드론을 먼저 선택해주세요.');
+            return;
+        }
+
+        try {
+            await flyToPosition($selectedDrone.drone_id, {
+                ...selectedPosition,
+                altitude
+            });
+            showFlyToAltitudeModal = false;  // 비행 명령 실행 후 모달 닫기
         } catch (error) {
             console.error('비행 명령 실행 실패:', error);
             alert(error.message || '비행 명령 실행에 실패했습니다.');
@@ -520,6 +541,15 @@
         defaultAltitude={selectedCoordinates?.altitude}
         on:submit={handleFlyToCoordinates}
         on:close={() => showFlyToCoordinatesModal = false}
+    />
+{/if}
+
+{#if showFlyToAltitudeModal}
+    <FlyToAltitudeModal
+        show={showFlyToAltitudeModal}
+        defaultAltitude={selectedPosition?.altitude}
+        on:submit={handleFlyToAltitude}
+        on:close={() => showFlyToAltitudeModal = false}
     />
 {/if}
 

@@ -22,7 +22,7 @@ export async function updateTelemetry() {
         }
     }
 
-    console.log(newTelemetryMap);
+    //console.log(newTelemetryMap);
 
     telemetryMap.set(newTelemetryMap);
 }
