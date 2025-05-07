@@ -19,33 +19,21 @@
 
   {#if isMenuOpen}
     <div class="expanded-menu" role="menu">
-      <div class="simulation-mode">
-        <label class="checkbox-label">
-          <input 
-            type="checkbox" 
-            bind:checked={$simulationMode}
-            on:change={(e) => simulationMode.set(e.target.checked)}
-          >
-          <span class="checkbox-custom"></span>
-          <span class="checkbox-text">시뮬레이션 모드</span>
-        </label>
-      </div>
-      <div class="menu-divider"></div>
       <button 
         class="menu-item" 
-        on:click={() => handleMenuClick('메뉴2')}
-        on:keydown={(e) => e.key === 'Enter' && handleMenuClick('메뉴2')}
+        on:click={() => handleMenuClick('메인페이지')}
+        on:keydown={(e) => e.key === 'Enter' && handleMenuClick('메인페이지')}
         role="menuitem"
       >
-        메뉴2
+      메인페이지
       </button>
       <button 
         class="menu-item" 
-        on:click={() => handleMenuClick('메뉴3')}
-        on:keydown={(e) => e.key === 'Enter' && handleMenuClick('메뉴3')}
+        on:click={() => handleMenuClick('비행계획 수립')}
+        on:keydown={(e) => e.key === 'Enter' && handleMenuClick('비행계획 수립')}
         role="menuitem"
       >
-        메뉴3
+        비행계획 수립
       </button>
     </div>
   {/if}
@@ -58,11 +46,11 @@
 <script>
   import '@fortawesome/fontawesome-free/css/all.min.css';
   import { onMount } from 'svelte';
-  import { mapViewer } from '$lib/stores/map';
   import { page } from '$app/stores';
   import { browser } from '$app/environment';
   import { slide } from 'svelte/transition';
-  import { simulationMode } from '$lib/stores/simulation';
+  import { goto } from '$app/navigation';
+  import { ws3d } from '$lib/stores/ws3d';
 
   let isMenuOpen = false;
   let menuHeight = 0;
@@ -83,7 +71,6 @@
   }
 
   onMount(() => {
-    document.addEventListener('click', handleClickOutside);
     if (browser) {
       document.addEventListener('click', handleClickOutside);
     }
@@ -92,12 +79,21 @@
     };
   });
 
-  function handleMenuClick(item) {
-    if (item === '메뉴2') {
-      console.log('메뉴2 클릭');
-    } else if (item === '메뉴3') {
-      console.log('메뉴3 클릭');
+  async function handleMenuClick(item) {
+    // 현재 맵 뷰어 정리
+    if (ws3d.viewer) {
+      ws3d.viewer.destroy();
+      ws3d.set(null);
     }
+
+    if (item === '메인페이지') {
+      await goto('/');
+      window.location.reload();
+    } else if (item === '비행계획 수립') {
+      await goto('/mission');
+      window.location.reload();
+    }
+    isMenuOpen = false;
   }
 </script>
 
@@ -227,55 +223,5 @@
   :global(body) {
     margin: 0;
     padding: 0;
-  }
-
-  .simulation-mode {
-    padding: 1rem;
-    border-bottom: 1px solid #404040;
-  }
-
-  .checkbox-label {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .checkbox-label input[type="checkbox"] {
-    display: none;
-  }
-
-  .checkbox-custom {
-    width: 18px;
-    height: 18px;
-    border: 2px solid #00FFBF;
-    border-radius: 4px;
-    display: inline-block;
-    position: relative;
-    transition: all 0.2s ease;
-  }
-
-  .checkbox-label input[type="checkbox"]:checked + .checkbox-custom::after {
-    content: '';
-    position: absolute;
-    left: 5px;
-    top: 2px;
-    width: 4px;
-    height: 8px;
-    border: solid #00FFBF;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-  }
-
-  .checkbox-text {
-    color: white;
-    font-size: 1rem;
-  }
-
-  .menu-divider {
-    height: 1px;
-    background-color: #404040;
-    margin: 0;
   }
 </style> 

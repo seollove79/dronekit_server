@@ -2,11 +2,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { drones, selectedDrone, refreshDrones, disconnectDrone, telemetryData, updateTelemetry } from '../stores/drones';
     import DroneCard from './DroneCard.svelte';
-    import DroneStatus from './DroneStatus.svelte';
-
-    export let showStatus = true;  // 기본값은 true로 설정
-    export let rightOffset = 70;   // 기본값은 70px로 설정
-
+    
     let updateInterval;
     let telemetryInterval;
 
@@ -79,7 +75,7 @@
     });
 </script>
 
-<div class="drone-list-container" style="right: {rightOffset}px;">
+<div class="drone-list-container">
     <div class="drone-list">
         {#if $drones.length === 0}
             <p class="no-drones">연결된 드론이 없습니다.</p>
@@ -95,22 +91,13 @@
             </div>
         {/if}
     </div>
-
-    {#each $drones as droneId}
-        <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === droneId}>
-            <DroneStatus 
-                drone={{ drone_id: droneId }} 
-                telemetryData={$telemetryData.get(droneId)}
-                on:disconnect={({ detail }) => handleDisconnect(detail.droneId)}
-            />
-        </div>
-    {/each}
 </div>
 
 <style>
     .drone-list-container {
         position: fixed;
         top: 48px;
+        right: 70px;
         z-index: 1000;
         padding-top: 10px;
         max-height: 100vh;
@@ -140,18 +127,6 @@
         font-size: 14px;
         background-color: rgba(0, 0, 0, 0.8);
         border-radius: 4px;
-    }
-
-    .drone-status-wrapper {
-        position: absolute;
-        visibility: hidden;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .drone-status-wrapper.visible {
-        visibility: visible;
-        opacity: 1;
     }
 
     /* 스크롤바 스타일링 */
