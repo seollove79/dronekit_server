@@ -1,5 +1,5 @@
 <script>
-    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry } from '../stores/drones';
+    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, selectedDrone } from '../stores/drones';
     import TakeoffModal from './TakeoffModal.svelte';
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     export let drone;
@@ -14,6 +14,7 @@
     const DRONE_YAW_OFFSET = 90;
     const DRONE_MODEL_SCALE = 0.003;
     let droneEntities = new Map(); // 드론 엔티티를 저장할 Map
+    let homePositionEntity = null; // 홈 포지션 엔티티
 
     // 비행 모드 목록
     const flightModes = [
@@ -103,6 +104,80 @@
         }
     }
 
+    // 홈 포지션 마커 생성/업데이트 함수
+    function updateHomePositionMarker(droneId, telemetryData) {
+        if (!telemetryData || !telemetryData.home_latitude || !telemetryData.home_longitude) return;
+
+        // 선택된 드론이 아니면 마커를 제거
+        if ($selectedDrone?.drone_id !== droneId) {
+            if (homePositionEntity) {
+                ws3d.viewer.entities.remove(homePositionEntity);
+                homePositionEntity = null;
+            }
+            return;
+        }
+
+        const position = Cesium.Cartesian3.fromDegrees(
+            telemetryData.home_longitude,
+            telemetryData.home_latitude,
+            0
+        );
+
+        if (homePositionEntity) {
+            // 기존 홈 포지션 마커 업데이트
+            homePositionEntity.position = position;
+        } else {
+            // 새로운 홈 포지션 마커 생성
+            homePositionEntity = ws3d.viewer.entities.add({
+                name: `Home_${droneId}`,
+                position: position,
+                polygon: {
+                    hierarchy: new Cesium.PolygonHierarchy([
+                        Cesium.Cartesian3.fromDegrees(
+                            telemetryData.home_longitude - 0.0000125,
+                            telemetryData.home_latitude - 0.0000125
+                        ),
+                        Cesium.Cartesian3.fromDegrees(
+                            telemetryData.home_longitude + 0.0000125,
+                            telemetryData.home_latitude - 0.0000125
+                        ),
+                        Cesium.Cartesian3.fromDegrees(
+                            telemetryData.home_longitude + 0.0000125,
+                            telemetryData.home_latitude + 0.0000125
+                        ),
+                        Cesium.Cartesian3.fromDegrees(
+                            telemetryData.home_longitude - 0.0000125,
+                            telemetryData.home_latitude + 0.0000125
+                        )
+                    ]),
+                    material: Cesium.Color.YELLOW.withAlpha(0.5),
+                    outline: true,
+                    outlineColor: Cesium.Color.YELLOW,
+                    outlineWidth: 2,
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    classificationType: Cesium.ClassificationType.TERRAIN
+                },
+                label: {
+                    text: 'H',
+                    font: 'bold 20px sans-serif',
+                    fillColor: Cesium.Color.WHITE,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    verticalOrigin: Cesium.VerticalOrigin.CENTER,
+                    horizontalOrigin: Cesium.HorizontalOrigin.CENTER,
+                    pixelOffset: new Cesium.Cartesian2(0, 0),
+                    heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
+                    disableDepthTestDistance: Number.POSITIVE_INFINITY
+                }
+            });
+
+            // 지형 분류 활성화
+            ws3d.viewer.scene.globe.enableLighting = true;
+            ws3d.viewer.scene.globe.depthTestAgainstTerrain = true;
+        }
+    }
+
     // 텔레메트리 데이터 업데이트 함수
     async function updateTelemetry() {
         try {
@@ -110,9 +185,15 @@
             telemetryData = newData;
             dispatch('telemetryUpdate', newData);
             updateDronePosition(drone.drone_id, newData);
+            updateHomePositionMarker(drone.drone_id, newData);
         } catch (error) {
             console.error('텔레메트리 데이터 업데이트 실패:', error);
             telemetryData = null;
+            // 에러 발생 시 마커 제거
+            if (homePositionEntity) {
+                ws3d.viewer.entities.remove(homePositionEntity);
+                homePositionEntity = null;
+            }
         }
     }
 
@@ -136,6 +217,11 @@
             ws3d.viewer.entities.remove(entity);
         });
         droneEntities.clear();
+        // 홈 포지션 마커 제거
+        if (homePositionEntity) {
+            ws3d.viewer.entities.remove(homePositionEntity);
+            homePositionEntity = null;
+        }
     });
 
     async function handleArmDisarm() {
