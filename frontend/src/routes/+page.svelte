@@ -556,7 +556,7 @@
 <style>
     .map-container {
         width: 100%;
-        height: 98%;
+        height: 100%;
         position: relative;
         -webkit-user-select: none;
         -moz-user-select: none;

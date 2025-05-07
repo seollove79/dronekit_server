@@ -5,26 +5,18 @@
     import DroneList from '$lib/components/DroneList.svelte';
     import { selectedDrone } from '$lib/stores/drones';
     import { drones } from '$lib/stores/drones';
+    import MissionWaypointTable from '$lib/components/mission/MissionWaypointTable.svelte';
 
-    let waypoints = [];
+    let waypoints = [
+        { command: 'waypoint', delay: 0, latitude: 36.29664487304268, longitude: 127.16118161647057, altitude: 10, altitudeType: 'relative' },
+        { command: 'waypoint', delay: 0, latitude: 36.29234394857392, longitude: 127.16113847283728, altitude: 10, altitudeType: 'relative' },
+        { command: 'waypoint', delay: 0, latitude: 36.27362837382718, longitude: 127.19534212347583, altitude: 10, altitudeType: 'relative' }
+    ];
     let selectedWaypoint = null;
     let map_viewer = null;
     let mapController = null;
     let droneMarker = null;
     let homePositionMarker = null;
-
-    // 웨이포인트 테이블 컬럼 정의
-    const columns = [
-        { key: 'index', label: '순서' },
-        { key: 'latitude', label: '위도' },
-        { key: 'longitude', label: '경도' },
-        { key: 'altitude', label: '고도' },
-        { key: 'command', label: '명령' },
-        { key: 'param1', label: '파라미터1' },
-        { key: 'param2', label: '파라미터2' },
-        { key: 'param3', label: '파라미터3' },
-        { key: 'param4', label: '파라미터4' }
-    ];
 
     onMount(async () => {
         if (!browser) return;
@@ -152,6 +144,13 @@
     function handleWriteToDrone() {
         // TODO: 드론에 쓰기 구현
     }
+
+    function handleWaypointChange(newWaypoints) {
+        waypoints = newWaypoints;
+    }
+    function handleWaypointDelete(idx) {
+        waypoints = waypoints.filter((_, i) => i !== idx);
+    }
 </script>
 
 <div class="mission-page">
@@ -190,32 +189,16 @@
         <DroneList showStatus={false} rightOffset={10} />
     </div>
 
-    <!-- 웨이포인트 테이블 영역 -->
-    <div class="waypoint-table">
-        <table>
-            <thead>
-                <tr>
-                    {#each columns as column}
-                        <th>{column.label}</th>
-                    {/each}
-                </tr>
-            </thead>
-            <tbody>
-                {#each waypoints as waypoint, i}
-                    <tr class:selected={selectedWaypoint === waypoint}>
-                        <td>{i + 1}</td>
-                        <td>{waypoint.latitude?.toFixed(6) || '-'}</td>
-                        <td>{waypoint.longitude?.toFixed(6) || '-'}</td>
-                        <td>{waypoint.altitude?.toFixed(1) || '-'}</td>
-                        <td>{waypoint.command || '-'}</td>
-                        <td>{waypoint.param1 || '-'}</td>
-                        <td>{waypoint.param2 || '-'}</td>
-                        <td>{waypoint.param3 || '-'}</td>
-                        <td>{waypoint.param4 || '-'}</td>
-                    </tr>
-                {/each}
-            </tbody>
-        </table>
+    <div class="waypoint-table-area">
+        <MissionWaypointTable
+            droneName="drone#03"
+            altitudeType="relative"
+            missionAltitude={10}
+            acceptanceRadius={2}
+            {waypoints}
+            onChange={handleWaypointChange}
+            onDelete={handleWaypointDelete}
+        />
     </div>
 </div>
 
@@ -223,12 +206,15 @@
     .mission-page {
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        height: 100%;
         position: relative;
+        overflow: hidden;
     }
 
     .map-container {
-        flex: 1;
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
         position: relative;
     }
 
@@ -310,39 +296,14 @@
         text-align: left;
     }
 
-    .waypoint-table {
+    .waypoint-table-area {
         position: absolute;
-        bottom: 0;
         left: 0;
         right: 0;
-        background-color: rgba(0, 0, 0, 0.7);
-        padding: 15px;
-        max-height: 30vh;
-        overflow-y: auto;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        color: white;
-    }
-
-    th, td {
-        padding: 8px;
-        text-align: left;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    th {
-        background-color: rgba(0, 0, 0, 0.5);
-        font-weight: 500;
-    }
-
-    tr:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    tr.selected {
-        background-color: rgba(255, 255, 255, 0.2);
+        bottom: 0;
+        z-index: 1100;
+        display: flex;
+        justify-content: center;
+        pointer-events: auto;
     }
 </style> 
