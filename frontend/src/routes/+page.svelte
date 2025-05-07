@@ -93,13 +93,14 @@
         // 기존 엔티티 제거
         removePositionEntities();
 
-        console.log('마커 생성:', longitude, latitude, altitude);
+        console.log('마커 생성:', longitude, latitude, altitude + selectedPositionHome.height);
 
         try {
+            console.log('마커 생성:', longitude, latitude, altitude + selectedPositionHome.height);
             // 구형 마커 생성
             positionMarker = map_viewer.entities.add({
                 name: 'position-marker',
-                position: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude),
+                position: Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude + selectedPositionHome.height),
                 point: {
                     pixelSize: 10,  // 픽셀 단위
                     color: Cesium.Color.YELLOW,
@@ -113,7 +114,7 @@
                 name: 'position-line',
                 polyline: {
                     positions: [
-                        Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude),
+                        Cesium.Cartesian3.fromDegrees(longitude, latitude, altitude + selectedPositionHome.height),
                         Cesium.Cartesian3.fromDegrees(longitude, latitude, 0)
                     ],
                     width: 3,

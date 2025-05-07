@@ -280,3 +280,67 @@
 2025-05-07 11:44:39,987 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
 2025-05-07 11:44:39,987 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
 2025-05-07 11:44:39,987 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS
+2025-05-07 11:48:14,578 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-07 11:48:29,686 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-07 11:48:29,687 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-07 12:36:04,823 - autopilot.drone2 - INFO - [drone2] - Arming motors
+2025-05-07 12:36:19,856 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-07 12:36:19,856 - autopilot.drone2 - INFO - [drone2] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-07 12:37:39,156 - autopilot.drone2 - INFO - [drone2] - SIM Hit ground at 0.475884 m/s
+2025-05-07 12:37:41,282 - autopilot.drone2 - INFO - [drone2] - Disarming motors
+2025-05-07 12:41:35,624 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 12:41:35,624 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 12:41:35,624 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 13:05:46,944 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 13:05:46,944 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 13:05:46,944 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 13:07:08,069 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 13:07:08,069 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 13:07:08,069 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 13:12:25,451 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 13:12:25,451 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 13:12:25,451 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 13:30:27,263 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 13:30:27,263 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 13:30:27,263 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 13:33:09,582 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 13:33:09,583 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 13:33:09,583 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 13:52:37,940 - autopilot.drone1 - CRITICAL - [drone1] - APM:Copter V3.3 (d6053245)
+2025-05-07 13:52:37,941 - autopilot.drone1 - CRITICAL - [drone1] - Frame: QUAD
+2025-05-07 13:52:38,428 - autopilot.drone1 - CRITICAL - [drone1] - Calibrating barometer
+2025-05-07 13:52:41,017 - autopilot.drone1 - CRITICAL - [drone1] - Initialising APM...
+2025-05-07 13:52:43,609 - autopilot.drone1 - CRITICAL - [drone1] - barometer calibration complete
+2025-05-07 13:52:43,611 - autopilot.drone1 - CRITICAL - [drone1] - GROUND START
+2025-05-07 13:53:39,615 - autopilot.drone2 - CRITICAL - [drone2] - APM:Copter V3.3 (d6053245)
+2025-05-07 13:53:39,616 - autopilot.drone2 - CRITICAL - [drone2] - Frame: QUAD
+2025-05-07 13:53:40,103 - autopilot.drone2 - CRITICAL - [drone2] - Calibrating barometer
+2025-05-07 13:53:42,721 - autopilot.drone2 - CRITICAL - [drone2] - Initialising APM...
+2025-05-07 13:53:45,295 - autopilot.drone2 - CRITICAL - [drone2] - barometer calibration complete
+2025-05-07 13:53:45,297 - autopilot.drone2 - CRITICAL - [drone2] - GROUND START
+2025-05-07 13:54:39,801 - autopilot.drone3 - CRITICAL - [drone3] - APM:Copter V3.3 (d6053245)
+2025-05-07 13:54:39,802 - autopilot.drone3 - CRITICAL - [drone3] - Frame: QUAD
+2025-05-07 13:54:40,290 - autopilot.drone3 - CRITICAL - [drone3] - Calibrating barometer
+2025-05-07 13:54:42,941 - autopilot.drone3 - CRITICAL - [drone3] - Initialising APM...
+2025-05-07 13:54:45,566 - autopilot.drone3 - CRITICAL - [drone3] - barometer calibration complete
+2025-05-07 13:54:45,568 - autopilot.drone3 - CRITICAL - [drone3] - GROUND START
+2025-05-07 13:55:14,287 - autopilot.drone4 - CRITICAL - [drone4] - APM:Copter V3.3 (d6053245)
+2025-05-07 13:55:14,288 - autopilot.drone4 - CRITICAL - [drone4] - Frame: QUAD
+2025-05-07 13:55:14,773 - autopilot.drone4 - CRITICAL - [drone4] - Calibrating barometer
+2025-05-07 13:55:17,436 - autopilot.drone4 - CRITICAL - [drone4] - Initialising APM...
+2025-05-07 13:55:20,047 - autopilot.drone4 - CRITICAL - [drone4] - barometer calibration complete
+2025-05-07 13:55:20,050 - autopilot.drone4 - CRITICAL - [drone4] - GROUND START
+2025-05-07 13:56:17,580 - autopilot.drone1 - ERROR - [drone1] - ARMING MOTORS
+2025-05-07 13:56:17,583 - autopilot.drone1 - CRITICAL - [drone1] - GROUND START
+2025-05-07 13:56:18,772 - autopilot.drone1 - CRITICAL - [drone1] - Initialising APM...
+2025-05-07 13:56:28,988 - autopilot.drone1 - ERROR - [drone1] - DISARMING MOTORS
+2025-05-07 13:58:33,148 - autopilot.drone4 - ERROR - [drone4] - ARMING MOTORS
+2025-05-07 13:58:33,152 - autopilot.drone4 - CRITICAL - [drone4] - GROUND START
+2025-05-07 13:58:34,342 - autopilot.drone4 - CRITICAL - [drone4] - Initialising APM...
+2025-05-07 13:58:44,655 - autopilot.drone4 - ERROR - [drone4] - DISARMING MOTORS
+2025-05-07 14:08:26,906 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 14:08:26,906 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 14:08:26,906 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 14:08:52,400 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-07 14:09:02,263 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-07 14:09:02,263 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete

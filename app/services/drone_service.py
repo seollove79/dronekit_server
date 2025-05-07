@@ -341,7 +341,8 @@ async def set_home_position(drone_id: str, request: HomePositionRequest):
                 request.altitude
             )
             vehicle.home_location = home_location
-            
+
+           
             # 홈 위치 설정 확인
             if not vehicle.home_location:
                 raise HTTPException(status_code=500, detail="홈 위치 설정에 실패했습니다.")
