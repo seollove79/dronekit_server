@@ -23,7 +23,7 @@ export async function updateTelemetry() {
     }
 
     console.log(newTelemetryMap);
-    
+
     telemetryMap.set(newTelemetryMap);
 }
 
@@ -180,5 +180,26 @@ export async function flyToPosition(droneId, position) {
         
         // 기타 에러 처리
         throw new Error(`드론 비행 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
+    }
+}
+
+// 홈 위치 설정
+export async function setHomePosition(droneId, position) {
+    try {
+        await droneApi.setHomePosition(droneId, position);
+    } catch (error) {
+        console.error('홈 위치 설정 실패:', {
+            message: error.message,
+            status: error.status,
+            details: error.response?.data
+        });
+        
+        // ApiError인 경우 직접 메시지 사용
+        if (error.status) {
+            throw new Error(`홈 위치 설정 실패: ${error.message}`);
+        }
+        
+        // 기타 에러 처리
+        throw new Error(`홈 위치 설정 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
     }
 } 

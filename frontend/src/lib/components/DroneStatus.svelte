@@ -36,7 +36,7 @@
         const position = Cesium.Cartesian3.fromDegrees(
             telemetryData.longitude,
             telemetryData.latitude,
-            telemetryData.altitude_asl + DRONE_ALTITUDE_OFFSET,
+            telemetryData.altitude_asl + telemetryData.home_altitude,
         );
 
         const hpr = new Cesium.HeadingPitchRoll(

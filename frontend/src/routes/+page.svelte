@@ -3,7 +3,7 @@
     import { browser } from '$app/environment';
     import DroneList from "$lib/components/DroneList.svelte";
     import FlyToCoordinatesModal from "$lib/components/FlyToCoordinatesModal.svelte";
-    import { connectDrone, selectedDrone, flyToPosition, telemetryData } from "$lib/stores/drones";
+    import { connectDrone, selectedDrone, flyToPosition, telemetryData, setHomePosition } from "$lib/stores/drones";
     import { mapViewer } from "$lib/stores/map";
 
     let mapController;
@@ -21,6 +21,7 @@
     let showContextMenu = false;
     let contextMenuPosition = { x: 0, y: 0 };
     let selectedPosition = null;
+    let selectedPositionHome = null;
     let rightMouseDownPosition = null;
     let isDragging = false;
     let lastRightClickTime = 0;
@@ -165,8 +166,6 @@
             const latitude = Cesium.Math.toDegrees(cartographic.latitude);
             const height = cartographic.height;
             
-            console.log('클릭 위치:', { longitude, latitude, height });
-            
             // 선택된 드론이 있는 경우 현재 고도 가져오기
             let altitude = height;
             if ($selectedDrone) {
@@ -208,10 +207,19 @@
                     selectedCoordinates = selectedPosition;
                     showFlyToCoordinatesModal = true;
                     break;
+                case 'set-home':
+                    if (!$selectedDrone) {
+                        alert('드론을 먼저 선택해주세요.');
+                        return;
+                    }
+
+                    await setHomePosition($selectedDrone.drone_id, selectedPositionHome);
+                    alert('홈 위치가 설정되었습니다.');
+                    break;
             }
         } catch (error) {
-            console.error('비행 명령 실행 실패:', error);
-            alert(error.message || '비행 명령 실행에 실패했습니다.');
+            console.error('명령 실행 실패:', error);
+            alert(error.message || '명령 실행에 실패했습니다.');
         }
         
         showContextMenu = false;
@@ -321,8 +329,6 @@
                     const latitude = Cesium.Math.toDegrees(cartographic.latitude);
                     const height = cartographic.height;
                     
-                    console.log('클릭 위치:', { longitude, latitude, height });
-                    
                     // 선택된 드론이 있는 경우 현재 고도 가져오기
                     let altitude = height;
                     if ($selectedDrone) {
@@ -331,7 +337,7 @@
                     }
                     
                     selectedPosition = { longitude, latitude, altitude };
-                    
+                    selectedPositionHome = { longitude, latitude, height };
                     // 마커와 선 생성
                     createPositionEntities(longitude, latitude, altitude);
                     
@@ -496,6 +502,8 @@
         </button>
         <button 
             class="menu-item" 
+            on:click={() => handleContextMenuAction('set-home')}
+            on:keydown={(e) => e.key === 'Enter' && handleContextMenuAction('set-home')}
             role="menuitem"
         >
             이 위치를 홈으로

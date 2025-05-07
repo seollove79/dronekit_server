@@ -271,3 +271,12 @@
 2025-05-03 15:14:13,201 - autopilot.drone1 - CRITICAL - [drone1] - Arm: LAND mode not armable
 2025-05-03 15:15:14,331 - autopilot.drone1 - INFO - [drone1] - Arming motors
 2025-05-03 15:15:24,242 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-05-03 15:33:30,994 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-03 15:33:30,995 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-03 15:33:30,995 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 10:48:40,890 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 10:48:40,890 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-07 10:48:40,891 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-07 11:44:39,987 - autopilot.drone2 - INFO - [drone2] - ArduCopter V4.5.7 (b7207551)
+2025-05-07 11:44:39,987 - autopilot.drone2 - INFO - [drone2] - jntosky_gcs_01
+2025-05-07 11:44:39,987 - autopilot.drone2 - INFO - [drone2] - Frame: QUAD/PLUS

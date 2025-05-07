@@ -59,8 +59,6 @@ export const droneApi = {
 
     // 드론 연결
     connect: async (drone_id, connection_string) => {
-        console.log(drone_id, connection_string);
-
         return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.CONNECT, {
             method: 'POST',
             body: JSON.stringify({ drone_id, connection_string }),
@@ -139,6 +137,20 @@ export const droneApi = {
                 "latitude": position.latitude,
                 "longitude": position.longitude,
                 "altitude": position.altitude
+            }),
+        });
+    },
+
+    // 홈 위치 설정
+    setHomePosition: async (droneId, position) => {
+        console.log('홈 위치 설정:', droneId, position);
+        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.HOME_POSITION(droneId), {
+            method: 'POST',
+            body: JSON.stringify({
+                "latitude": position.latitude,
+                "longitude": position.longitude,
+                "altitude": position.height,
+                "set_current": false
             }),
         });
     },
