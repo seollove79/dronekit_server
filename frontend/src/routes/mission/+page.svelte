@@ -14,6 +14,11 @@
         acceptanceRadius: 2        // 웨이포인트 도달 판정 반경 (미터)
     };
 
+    // 웨이포인트 설정값 변경 핸들러
+    function handleWaypointSettingsChange(settings) {
+        waypointSettings = { ...settings };
+    }
+
     // 드론별 웨이포인트 저장소
     let droneWaypoints = new Map();  // Map<droneId, waypoints[]>
     let selectedWaypoint = null;
@@ -272,7 +277,7 @@
 
         if ($selectedDrone) {
             const telemetry = getDroneTelemetry($selectedDrone.drone_id);
-            homeAltitude = telemetry.home_altitude || 0;
+            homeAltitude = parseFloat(telemetry.home_altitude) || 0;
         }
 
         let marker = null;
@@ -286,7 +291,7 @@
                 position: Cesium.Cartesian3.fromDegrees(
                     waypoint.longitude, 
                     waypoint.latitude, 
-                    waypoint.altitude + homeAltitude
+                    parseFloat(waypoint.altitude) + homeAltitude
                 ),
                 point: {
                     pixelSize: 10,
@@ -315,7 +320,7 @@
                         Cesium.Cartesian3.fromDegrees(
                             waypoint.longitude, 
                             waypoint.latitude, 
-                            waypoint.altitude + homeAltitude
+                            parseFloat(waypoint.altitude) + homeAltitude
                         ),
                         Cesium.Cartesian3.fromDegrees(
                             waypoint.longitude, 
@@ -343,12 +348,12 @@
                             Cesium.Cartesian3.fromDegrees(
                                 prevWaypoint.longitude,
                                 prevWaypoint.latitude,
-                                prevWaypoint.altitude + homeAltitude
+                                parseFloat(prevWaypoint.altitude) + homeAltitude
                             ),
                             Cesium.Cartesian3.fromDegrees(
                                 waypoint.longitude,
                                 waypoint.latitude,
-                                waypoint.altitude + homeAltitude
+                                parseFloat(waypoint.altitude) + homeAltitude
                             )
                         ],
                         width: 2,
@@ -377,6 +382,9 @@
         waypoints.splice(idx, 1);
         droneWaypoints.set($selectedDrone.drone_id, waypoints);
         
+        // currentWaypoints 업데이트
+        currentWaypoints = [...waypoints];
+        
         // 해당 드론의 마커들 가져오기
         const markers = waypointMarkers.get($selectedDrone.drone_id) || [];
         
@@ -395,6 +403,38 @@
                 marker.label.text = `${i + 1}`;
             }
         });
+
+        // 나머지 웨이포인트들의 연결선 업데이트
+        for (let i = idx; i < waypoints.length; i++) {
+            if (markers[i] && markers[i].connectionLine) {
+                map_viewer.entities.remove(markers[i].connectionLine);
+                if (i > 0) {
+                    const prevWaypoint = waypoints[i - 1];
+                    const currentWaypoint = waypoints[i];
+                    markers[i].connectionLine = map_viewer.entities.add({
+                        name: 'connection-line',
+                        polyline: {
+                            positions: [
+                                Cesium.Cartesian3.fromDegrees(
+                                    prevWaypoint.longitude,
+                                    prevWaypoint.latitude,
+                                    parseFloat(prevWaypoint.altitude)
+                                ),
+                                Cesium.Cartesian3.fromDegrees(
+                                    currentWaypoint.longitude,
+                                    currentWaypoint.latitude,
+                                    parseFloat(currentWaypoint.altitude)
+                                )
+                            ],
+                            width: 2,
+                            material: new Cesium.PolylineArrowMaterialProperty({
+                                color: Cesium.Color.WHITE.withAlpha(0.7)
+                            })
+                        }
+                    });
+                }
+            }
+        }
     }
 
     // 웨이포인트 변경 시 마커 업데이트
@@ -464,20 +504,9 @@
             missionAltitude={waypointSettings.missionAltitude}
             acceptanceRadius={waypointSettings.acceptanceRadius}
             waypoints={currentWaypoints}
-            onChange={(newWaypoints) => {
-                console.log('Waypoints changed:', newWaypoints);
-                droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
-                currentWaypoints = newWaypoints;
-                updateWaypointMarkers();
-            }}
-            onDelete={(index) => {
-                console.log('Deleting waypoint at index:', index);
-                const newWaypoints = [...currentWaypoints];
-                newWaypoints.splice(index, 1);
-                droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
-                currentWaypoints = newWaypoints;
-                updateWaypointMarkers();
-            }}
+            onChange={handleWaypointChange}
+            onDelete={handleWaypointDelete}
+            onSettingsChange={handleWaypointSettingsChange}
         />
     </div>
 </div>

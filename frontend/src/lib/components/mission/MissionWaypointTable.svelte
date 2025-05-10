@@ -6,14 +6,34 @@
   export let waypoints = [];
   export let onChange = () => {};
   export let onDelete = () => {};
+  export let onSettingsChange = () => {};
 
   const altitudeTypes = ['relative', 'absolute', 'agl'];
   const commands = ['waypoint', 'takeoff', 'land'];
+
+  // 설정값 변경 처리
+  $: if (altitudeType || missionAltitude || acceptanceRadius) {
+    onSettingsChange({
+      altitudeType,
+      missionAltitude,
+      acceptanceRadius
+    });
+  }
 
   function handleInputChange(idx, key, value) {
     console.log('Input changed:', { idx, key, value });
     const newWaypoints = [...waypoints];
     newWaypoints[idx][key] = value;
+    
+    // 지도 업데이트를 위한 이벤트 발생
+    const event = new CustomEvent('waypointUpdate', {
+      detail: {
+        index: idx,
+        waypoint: newWaypoints[idx]
+      }
+    });
+    window.dispatchEvent(event);
+    
     onChange(newWaypoints);
   }
 
