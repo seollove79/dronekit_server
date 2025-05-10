@@ -409,8 +409,10 @@
                             )
                         ],
                         width: 2,
-                        material: new Cesium.PolylineArrowMaterialProperty({
-                            color: Cesium.Color.WHITE.withAlpha(0.7)
+                        material: new Cesium.PolylineDashMaterialProperty({
+                            color: Cesium.Color.WHITE.withAlpha(0.7),
+                            dashLength: 16.0,
+                            dashPattern: parseInt('1111', 2)
                         })
                     }
                 });
@@ -479,8 +481,10 @@
                                 )
                             ],
                             width: 2,
-                            material: new Cesium.PolylineArrowMaterialProperty({
-                                color: Cesium.Color.WHITE.withAlpha(0.7)
+                            material: new Cesium.PolylineDashMaterialProperty({
+                                color: Cesium.Color.WHITE.withAlpha(0.7),
+                                dashLength: 16.0,
+                                dashPattern: parseInt('1111', 2)
                             })
                         }
                     });
