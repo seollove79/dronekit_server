@@ -80,7 +80,7 @@
         currentWaypoints = [];
     }
 
-    onMount(async () => {
+    onMount(() => {
         if (!browser) return;
 
         vw.MapControllerOption = {
@@ -98,50 +98,102 @@
         map_viewer = ws3d.viewer;
         mapViewer.set(map_viewer);  // 스토어에 map_viewer 저장
 
-        handler = new Cesium.ScreenSpaceEventHandler(map_viewer.canvas);
+        console.log('Map viewer initialized:', map_viewer);  // 디버깅용 로그
 
-        // 왼쪽 마우스 버튼 클릭 이벤트 처리
+        // VWorld 지도 클릭 이벤트 리스너 추가
+        const handler = new Cesium.ScreenSpaceEventHandler(map_viewer.canvas);
+        console.log('Handler created:', handler);  // 디버깅용 로그
+
         handler.setInputAction((movement) => {
+            console.log('Click detected:', movement);  // 디버깅용 로그
             if (!$selectedDrone) {
-                console.log('No drone selected, ignoring click');
-                return;  // 드론이 선택되지 않은 경우 무시
+                console.log('No drone selected');  // 디버깅용 로그
+                return;
             }
 
-            const click = windowToCanvasCoordinates({
-                x: movement.position.x,
-                y: movement.position.y
-            });
-            
-            const ray = map_viewer.camera.getPickRay(click);
+            // 클릭 위치에서 카메라 레이 생성
+            const ray = map_viewer.camera.getPickRay(movement.position);
+            console.log('Ray:', ray);  // 디버깅용 로그
+
+            // 레이와 지구 표면의 교차점 계산
             const cartesian = map_viewer.scene.globe.pick(ray, map_viewer.scene);
-            
+            console.log('Cartesian:', cartesian);  // 디버깅용 로그
+
             if (cartesian) {
+                // 지구 표면에서의 정확한 위치 계산
                 const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
                 const longitude = Cesium.Math.toDegrees(cartographic.longitude);
                 const latitude = Cesium.Math.toDegrees(cartographic.latitude);
-                const height = cartographic.height;
 
-                // 새로운 웨이포인트 추가
-                const newWaypoint = {
-                    command: 'waypoint',
-                    delay: 0,
-                    latitude: latitude,
-                    longitude: longitude,
-                    altitude: waypointSettings.missionAltitude,
-                    altitudeType: waypointSettings.altitudeType,
-                    acceptanceRadius: waypointSettings.acceptanceRadius
-                };
+                // 카메라의 현재 위치와 방향
+                const camera = map_viewer.camera;
+                const cameraPosition = camera.position;
+                const cameraDirection = camera.direction;
 
-                // 현재 드론의 웨이포인트 배열 가져오기
-                const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
-                waypoints.push(newWaypoint);
-                droneWaypoints.set($selectedDrone.drone_id, waypoints);
-                
-                // currentWaypoints 업데이트
-                currentWaypoints = [...waypoints];
+                // 클릭 위치의 방향 벡터 계산
+                const direction = new Cesium.Cartesian3();
+                Cesium.Cartesian3.subtract(cartesian, cameraPosition, direction);
+                Cesium.Cartesian3.normalize(direction, direction);
 
-                // 웨이포인트 마커 생성
-                createWaypointMarker(newWaypoint, waypoints.length - 1, $selectedDrone.drone_id);
+                // 새로운 레이 생성
+                const newRay = new Cesium.Ray(cameraPosition, direction);
+                const newCartesian = map_viewer.scene.globe.pick(newRay, map_viewer.scene);
+
+                if (newCartesian) {
+                    const newCartographic = Cesium.Cartographic.fromCartesian(newCartesian);
+                    const newLongitude = Cesium.Math.toDegrees(newCartographic.longitude);
+                    const newLatitude = Cesium.Math.toDegrees(newCartographic.latitude);
+
+                    // 카메라의 시점을 고려한 보정
+                    const cameraHeight = Cesium.Cartographic.fromCartesian(cameraPosition).height;
+                    const clickHeight = newCartographic.height;
+                    const heightDifference = cameraHeight - clickHeight;
+
+                    // 보정 계수 계산
+                    const distance = Cesium.Cartesian3.distance(cameraPosition, newCartesian);
+                    const correctionFactor = Math.min(1.0, Math.max(0.0, distance / 1000.0));
+
+                    // 화면 중앙에서의 거리에 따른 보정 계수 조정
+                    const screenCenter = new Cesium.Cartesian2(map_viewer.canvas.width / 2, map_viewer.canvas.height / 2);
+                    const clickDistance = Math.sqrt(Math.pow(movement.position.x - screenCenter.x, 2) + Math.pow(movement.position.y - screenCenter.y, 2));
+                    const screenCorrectionFactor = Math.min(1.0, Math.max(0.0, clickDistance / 500.0));
+
+                    // 카메라의 시점에 따른 보정 계수 조정
+                    const cameraHeading = camera.heading;
+                    const cameraPitch = camera.pitch;
+                    const cameraRoll = camera.roll;
+                    const viewCorrectionFactor = Math.cos(cameraPitch) * Math.cos(cameraRoll);
+
+                    // 보정된 위치 계산
+                    const correctedLongitude = newLongitude + (newLongitude - longitude) * correctionFactor * screenCorrectionFactor * viewCorrectionFactor;
+                    const correctedLatitude = newLatitude + (newLatitude - latitude) * correctionFactor * screenCorrectionFactor * viewCorrectionFactor;
+
+                    console.log('Corrected position:', { longitude: correctedLongitude, latitude: correctedLatitude });  // 디버깅용 로그
+
+                    // 새로운 웨이포인트 추가
+                    const newWaypoint = {
+                        command: 'waypoint',
+                        delay: 0,
+                        latitude: correctedLatitude,
+                        longitude: correctedLongitude,
+                        altitude: waypointSettings.missionAltitude,
+                        altitudeType: waypointSettings.altitudeType,
+                        acceptanceRadius: waypointSettings.acceptanceRadius
+                    };
+
+                    // 현재 드론의 웨이포인트 배열 가져오기
+                    const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
+                    waypoints.push(newWaypoint);
+                    droneWaypoints.set($selectedDrone.drone_id, waypoints);
+                    
+                    // currentWaypoints 업데이트
+                    currentWaypoints = [...waypoints];
+
+                    // 웨이포인트 마커 생성
+                    createWaypointMarker(newWaypoint, waypoints.length - 1, $selectedDrone.drone_id);
+                }
+            } else {
+                console.log('No valid position found');  // 디버깅용 로그
             }
         }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
