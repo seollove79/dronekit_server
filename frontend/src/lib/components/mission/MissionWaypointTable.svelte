@@ -16,6 +16,18 @@
   const commands = ['waypoint', 'takeoff', 'land'];
 
   let selectedIndex = null;
+  let tbody;
+  let prevWaypointsLength = 0;
+
+  // 웨이포인트가 추가될 때만 스크롤
+  $: if (waypoints && waypoints.length > prevWaypointsLength) {
+    setTimeout(() => {
+      if (tbody) {
+        tbody.scrollTop = tbody.scrollHeight;
+      }
+    }, 0);
+    prevWaypointsLength = waypoints.length;
+  }
 
   // 설정값 변경 처리
   $: if (altitudeType || missionAltitude || acceptanceRadius) {
@@ -53,6 +65,7 @@
   function handleDelete(idx) {
     console.log('Deleting waypoint at index:', idx);
     onDelete(idx);
+    prevWaypointsLength = waypoints.length - 1;
   }
 
   function handleMoveUp(idx) {
@@ -114,7 +127,7 @@
         <th width="10%">삭제</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody bind:this={tbody}>
       {#if waypoints && waypoints.length > 0}
         {#each waypoints as wp, i}
           <tr class:selected={selectedIndex === i}>
@@ -233,6 +246,7 @@
   display: block;
   max-height: calc(5 * 2.5em); /* 5행의 높이 */
   overflow-y: auto;
+  padding-right: 8px; /* 스크롤바 공간 확보 */
 }
 .mission-table thead tr,
 .mission-table tbody tr {
@@ -307,20 +321,23 @@
 
 /* 스크롤바 스타일링 */
 .mission-table tbody::-webkit-scrollbar {
-  width: 6px;
+  width: 8px;
+  background: rgba(0, 0, 0, 0.2);
 }
 
 .mission-table tbody::-webkit-scrollbar-track {
-  background: transparent;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .mission-table tbody::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
+  background: rgba(178, 255, 178, 0.3);
+  border-radius: 4px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
 }
 
 .mission-table tbody::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  background: rgba(178, 255, 178, 0.5);
 }
 
 .clickable {
