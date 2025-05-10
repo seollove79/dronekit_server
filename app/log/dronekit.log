@@ -349,3 +349,21 @@
 2025-05-07 14:27:45,243 - autopilot.drone1 - INFO - [drone1] - Arming motors
 2025-05-07 14:27:54,962 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
 2025-05-07 14:27:54,963 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-08 23:30:51,544 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-08 23:30:51,544 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-08 23:30:51,544 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-09 01:35:02,795 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-09 01:35:08,377 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-09 01:35:08,378 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-09 11:46:19,404 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-09 11:46:19,404 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-09 11:46:19,404 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-10 12:24:02,006 - autopilot.드론1 - INFO - [드론1] - ArduCopter V4.5.7 (b7207551)
+2025-05-10 12:24:02,009 - autopilot.드론1 - INFO - [드론1] - intosky_gcs_01
+2025-05-10 12:24:02,009 - autopilot.드론1 - INFO - [드론1] - Frame: QUAD/PLUS
+2025-05-10 12:24:11,161 - autopilot.드론2 - INFO - [드론2] - ArduCopter V4.5.7 (b7207551)
+2025-05-10 12:24:11,161 - autopilot.드론2 - INFO - [드론2] - jntosky_gcs_01
+2025-05-10 12:24:11,161 - autopilot.드론2 - INFO - [드론2] - Frame: QUAD/PLUS
+2025-05-10 12:24:21,161 - autopilot.드론3 - INFO - [드론3] - ArduCopter V4.5.7 (b7207551)
+2025-05-10 12:24:21,162 - autopilot.드론3 - INFO - [드론3] - kntosky_gcs_01
+2025-05-10 12:24:21,162 - autopilot.드론3 - INFO - [드론3] - Frame: QUAD/PLUS

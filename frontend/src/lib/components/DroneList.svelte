@@ -18,11 +18,14 @@
 
     // 드론 선택
     function selectDrone(drone) {
+        console.log('Selecting drone:', drone);
         if ($selectedDrone?.drone_id === drone.drone_id) {
             // 이미 선택된 드론을 다시 클릭하면 선택 해제
+            console.log('Deselecting drone:', drone.drone_id);
             selectedDrone.set(null);
         } else {
             // 새로운 드론 선택
+            console.log('Selecting new drone:', drone.drone_id);
             selectedDrone.set(drone);
             
             // 선택된 드론의 텔레메트리 데이터로 카메라 이동

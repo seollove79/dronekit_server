@@ -11,11 +11,33 @@
   const commands = ['waypoint', 'takeoff', 'land'];
 
   function handleInputChange(idx, key, value) {
-    waypoints[idx][key] = value;
-    onChange([...waypoints]);
+    console.log('Input changed:', { idx, key, value });
+    const newWaypoints = [...waypoints];
+    newWaypoints[idx][key] = value;
+    onChange(newWaypoints);
   }
+
   function handleDelete(idx) {
+    console.log('Deleting waypoint at index:', idx);
     onDelete(idx);
+  }
+
+  function handleMoveUp(idx) {
+    if (idx > 0) {
+      console.log('Moving waypoint up:', idx);
+      const newWaypoints = [...waypoints];
+      [newWaypoints[idx], newWaypoints[idx - 1]] = [newWaypoints[idx - 1], newWaypoints[idx]];
+      onChange(newWaypoints);
+    }
+  }
+
+  function handleMoveDown(idx) {
+    if (idx < waypoints.length - 1) {
+      console.log('Moving waypoint down:', idx);
+      const newWaypoints = [...waypoints];
+      [newWaypoints[idx], newWaypoints[idx + 1]] = [newWaypoints[idx + 1], newWaypoints[idx]];
+      onChange(newWaypoints);
+    }
   }
 </script>
 
@@ -38,47 +60,70 @@
   <table class="mission-table">
     <thead>
       <tr>
-        <th>No</th>
+        <th width="7%">No</th>
         <th>commnad</th>
         <th>Delay</th>
-        <th>Latitude</th>
-        <th>Longitude</th>
+        <th width="15%">Latitude</th>
+        <th width="15%">Longitude</th>
         <th>altitude</th>
         <th>고도타입</th>
-        <th>삭제</th>
+        <th>순서</th>
+        <th width="10%">삭제</th>
       </tr>
     </thead>
     <tbody>
-      {#each waypoints as wp, i}
+      {#if waypoints && waypoints.length > 0}
+        {#each waypoints as wp, i}
+          <tr>
+            <td width="7%">{i + 1}</td>
+            <td>
+              <select bind:value={wp.command} on:change={e => handleInputChange(i, 'command', e.target.value)} style="width: 100px;">
+                {#each commands as cmd}
+                  <option value={cmd}>{cmd}</option>
+                {/each}
+              </select>
+            </td>
+            <td>
+              <input type="number" bind:value={wp.delay} min="0" on:input={e => handleInputChange(i, 'delay', e.target.value)} style="width: 60px;" />
+            </td>
+            <td width="15%">
+              <input type="number" bind:value={wp.latitude} step="0.000001" on:input={e => handleInputChange(i, 'latitude', e.target.value)} style="width: 110px;" />
+            </td>
+            <td width="15%">
+              <input type="number" bind:value={wp.longitude} step="0.000001" on:input={e => handleInputChange(i, 'longitude', e.target.value)} style="width: 110px;"/>
+            </td>
+            <td>
+              <input type="number" bind:value={wp.altitude} min="0" on:input={e => handleInputChange(i, 'altitude', e.target.value)}  style="width: 60px;"/>
+            </td>
+            <td>
+              <select bind:value={wp.altitudeType} on:change={e => handleInputChange(i, 'altitudeType', e.target.value)}>
+                {#each altitudeTypes as type}
+                  <option value={type}>{type}</option>
+                {/each}
+              </select>
+            </td>
+            <td>
+              <div class="order-buttons">
+                <button class="order-btn" on:click={() => handleMoveUp(i)} disabled={i === 0} aria-label="위로 이동">
+                  <i class="fas fa-chevron-up"></i>
+                </button>
+                <button class="order-btn" on:click={() => handleMoveDown(i)} disabled={i === waypoints.length - 1} aria-label="아래로 이동">
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+              </div>
+            </td>
+            <td width="10%">
+              <button class="delete-btn" on:click={() => handleDelete(i)}>삭제</button>
+            </td>
+          </tr>
+        {/each}
+      {:else}
         <tr>
-          <td>{i + 1}</td>
-          <td>
-            <select bind:value={wp.command} on:change={e => handleInputChange(i, 'command', e.target.value)}>
-              {#each commands as cmd}
-                <option value={cmd}>{cmd}</option>
-              {/each}
-            </select>
-          </td>
-          <td>
-            <input type="number" bind:value={wp.delay} min="0" on:input={e => handleInputChange(i, 'delay', e.target.value)} />
-          </td>
-          <td>{wp.latitude}</td>
-          <td>{wp.longitude}</td>
-          <td>
-            <input type="number" bind:value={wp.altitude} min="0" on:input={e => handleInputChange(i, 'altitude', e.target.value)} />
-          </td>
-          <td>
-            <select bind:value={wp.altitudeType} on:change={e => handleInputChange(i, 'altitudeType', e.target.value)}>
-              {#each altitudeTypes as type}
-                <option value={type}>{type}</option>
-              {/each}
-            </select>
-          </td>
-          <td>
-            <button class="delete-btn" on:click={() => handleDelete(i)}>삭제</button>
+          <td colspan="9" style="text-align: center; padding: 20px;">
+            웨이포인트가 없습니다. 지도에서 클릭하여 웨이포인트를 추가하세요.
           </td>
         </tr>
-      {/each}
+      {/if}
     </tbody>
   </table>
 </div>
@@ -87,10 +132,9 @@
 .mission-table-container {
   background: rgba(0,0,0,0.85);
   border-radius: 14px;
-  padding: 18px 18px 10px 18px;
+  padding: 10px 10px 10px 10px;
   color: #fff;
-  min-width: 600px;
-  max-width: 98vw;
+  width: 1000px;
   margin: 0 auto 0 auto;
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
   max-height: 38vh;
@@ -102,11 +146,14 @@
   background: #111;
   border-radius: 8px 8px 0 0;
   padding: 10px 18px;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 .drone-name {
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 0.8em;
   margin-right: 24px;
 }
 .header-fields {
@@ -116,7 +163,7 @@
 }
 .header-fields span {
   color: #b2ffb2;
-  font-size: 1em;
+  font-size: 0.8em;
 }
 .header-fields input, .header-fields select {
   background: #222;
@@ -124,23 +171,45 @@
   border: none;
   border-radius: 4px;
   padding: 4px 8px;
-  font-size: 1em;
+  font-size: 0.8em;
   margin-right: 6px;
 }
 .mission-table {
   width: 100%;
   border-collapse: collapse;
   background: transparent;
+  table-layout: fixed;
+}
+.mission-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #111;
+}
+.mission-table tbody {
+  display: block;
+  max-height: calc(5 * 2.5em); /* 5행의 높이 */
+  overflow-y: auto;
+}
+.mission-table thead tr,
+.mission-table tbody tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 .mission-table th, .mission-table td {
-  padding: 8px 6px;
+  padding: 2px 2px;
   text-align: center;
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .mission-table th {
   background: #111;
   color: #b2ffb2;
   font-weight: 500;
+  font-size: 0.8em;
 }
 .mission-table td select, .mission-table td input {
   background: #444;
@@ -148,8 +217,7 @@
   border: none;
   border-radius: 4px;
   padding: 4px 8px;
-  font-size: 1em;
-  width: 90px;
+  font-size: 0.8em;
 }
 .mission-table td input[type="number"] {
   text-align: right;
@@ -166,5 +234,49 @@
 .delete-btn:hover {
   background: #c00;
   color: #fff;
+}
+
+.order-buttons {
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  justify-content: center;
+}
+
+.order-btn {
+  background: #222;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 1px 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.order-btn:hover:not(:disabled) {
+  background: #444;
+}
+
+.order-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* 스크롤바 스타일링 */
+.mission-table tbody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mission-table tbody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.mission-table tbody::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.mission-table tbody::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 </style> 

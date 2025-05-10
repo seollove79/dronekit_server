@@ -95,10 +95,7 @@
         // 기존 엔티티 제거
         removePositionEntities();
 
-        console.log('마커 생성:', longitude, latitude, altitude + selectedPositionHome.height);
-
         try {
-            console.log('마커 생성:', longitude, latitude, altitude + selectedPositionHome.height);
             // 구형 마커 생성
             positionMarker = map_viewer.entities.add({
                 name: 'position-marker',

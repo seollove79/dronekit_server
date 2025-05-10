@@ -1,22 +1,79 @@
 <script>
     import { onMount } from 'svelte';
-    import { ws3d } from '$lib/stores/ws3d';
     import { browser } from '$app/environment';
     import DroneList from '$lib/components/DroneList.svelte';
-    import { selectedDrone } from '$lib/stores/drones';
+    import { selectedDrone, getDroneTelemetry } from '$lib/stores/drones';
     import { drones } from '$lib/stores/drones';
     import MissionWaypointTable from '$lib/components/mission/MissionWaypointTable.svelte';
+    import { mapViewer } from "$lib/stores/map";
 
-    let waypoints = [
-        { command: 'waypoint', delay: 0, latitude: 36.29664487304268, longitude: 127.16118161647057, altitude: 10, altitudeType: 'relative' },
-        { command: 'waypoint', delay: 0, latitude: 36.29234394857392, longitude: 127.16113847283728, altitude: 10, altitudeType: 'relative' },
-        { command: 'waypoint', delay: 0, latitude: 36.27362837382718, longitude: 127.19534212347583, altitude: 10, altitudeType: 'relative' }
-    ];
+    // 웨이포인트 설정값
+    let waypointSettings = {
+        altitudeType: 'relative',  // 'relative' 또는 'absolute'
+        missionAltitude: 10,       // 기본 미션 고도 (미터)
+        acceptanceRadius: 2        // 웨이포인트 도달 판정 반경 (미터)
+    };
+
+    // 드론별 웨이포인트 저장소
+    let droneWaypoints = new Map();  // Map<droneId, waypoints[]>
     let selectedWaypoint = null;
     let map_viewer = null;
+    let handler;
     let mapController = null;
     let droneMarker = null;
     let homePositionMarker = null;
+    let waypointMarkers = new Map();  // Map<droneId, markers[]>
+    let currentWaypoints = [];  // 초기값 설정
+
+    // 현재 선택된 드론의 웨이포인트 가져오기
+    $: {
+        if ($selectedDrone) {
+            const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
+            currentWaypoints = [...waypoints];  // 새로운 배열로 복사
+        } else {
+            currentWaypoints = [];
+        }
+    }
+
+    // 드론 선택 시 해당 드론의 웨이포인트 마커 표시
+    $: if ($selectedDrone) {
+       
+        // 이전 드론의 마커 제거
+        if (waypointMarkers.size > 0) {
+            waypointMarkers.forEach(markers => {
+                markers.forEach(({ marker, line, connectionLine }) => {
+                    if (marker) map_viewer.entities.remove(marker);
+                    if (line) map_viewer.entities.remove(line);
+                    if (connectionLine) map_viewer.entities.remove(connectionLine);
+                });
+            });
+            waypointMarkers.clear();
+        }
+
+        // 선택된 드론의 웨이포인트 마커 생성
+        const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
+        
+        // currentWaypoints 업데이트
+        currentWaypoints = [...waypoints];
+        
+        // 마커 생성
+        waypoints.forEach((waypoint, index) => {
+            createWaypointMarker(waypoint, index, $selectedDrone.drone_id);
+        });
+    } else {
+        // 드론이 선택되지 않은 경우 마커 제거
+        if (waypointMarkers.size > 0) {
+            waypointMarkers.forEach(markers => {
+                markers.forEach(({ marker, line, connectionLine }) => {
+                    if (marker) map_viewer.entities.remove(marker);
+                    if (line) map_viewer.entities.remove(line);
+                    if (connectionLine) map_viewer.entities.remove(connectionLine);
+                });
+            });
+            waypointMarkers.clear();
+        }
+        currentWaypoints = [];
+    }
 
     onMount(async () => {
         if (!browser) return;
@@ -34,7 +91,54 @@
         };
         mapController = new vw.MapController(vw.MapControllerOption);
         map_viewer = ws3d.viewer;
-        ws3d.set(map_viewer);  // 스토어에 map_viewer 저장
+        mapViewer.set(map_viewer);  // 스토어에 map_viewer 저장
+
+        handler = new Cesium.ScreenSpaceEventHandler(map_viewer.canvas);
+
+        // 왼쪽 마우스 버튼 클릭 이벤트 처리
+        handler.setInputAction((movement) => {
+            if (!$selectedDrone) {
+                console.log('No drone selected, ignoring click');
+                return;  // 드론이 선택되지 않은 경우 무시
+            }
+
+            const click = windowToCanvasCoordinates({
+                x: movement.position.x,
+                y: movement.position.y
+            });
+            
+            const ray = map_viewer.camera.getPickRay(click);
+            const cartesian = map_viewer.scene.globe.pick(ray, map_viewer.scene);
+            
+            if (cartesian) {
+                const cartographic = Cesium.Cartographic.fromCartesian(cartesian);
+                const longitude = Cesium.Math.toDegrees(cartographic.longitude);
+                const latitude = Cesium.Math.toDegrees(cartographic.latitude);
+                const height = cartographic.height;
+
+                // 새로운 웨이포인트 추가
+                const newWaypoint = {
+                    command: 'waypoint',
+                    delay: 0,
+                    latitude: latitude,
+                    longitude: longitude,
+                    altitude: waypointSettings.missionAltitude,
+                    altitudeType: waypointSettings.altitudeType,
+                    acceptanceRadius: waypointSettings.acceptanceRadius
+                };
+
+                // 현재 드론의 웨이포인트 배열 가져오기
+                const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
+                waypoints.push(newWaypoint);
+                droneWaypoints.set($selectedDrone.drone_id, waypoints);
+                
+                // currentWaypoints 업데이트
+                currentWaypoints = [...waypoints];
+
+                // 웨이포인트 마커 생성
+                createWaypointMarker(newWaypoint, waypoints.length - 1, $selectedDrone.drone_id);
+            }
+        }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
         // 드론 위치 업데이트 구독
         drones.subscribe(drones => {
@@ -125,6 +229,17 @@
         });
     }
 
+    // 윈도우 좌표를 캔버스 좌표로 변환하는 함수
+    function windowToCanvasCoordinates(windowPosition) {
+        const canvas = map_viewer.canvas;
+        const rect = canvas.getBoundingClientRect();
+        
+        return new Cesium.Cartesian2(
+            windowPosition.x - rect.left,
+            windowPosition.y - rect.top
+        );
+    }
+
     // 파일 불러오기
     function handleFileLoad() {
         // TODO: 파일 불러오기 구현
@@ -145,11 +260,164 @@
         // TODO: 드론에 쓰기 구현
     }
 
-    function handleWaypointChange(newWaypoints) {
-        waypoints = newWaypoints;
+    // 웨이포인트 마커 생성 함수
+    function createWaypointMarker(waypoint, index, droneId) {
+        if (!map_viewer) {
+            console.error('map_viewer가 초기화되지 않았습니다.');
+            return;
+        }
+
+        // 선택된 드론의 홈 포지션 고도 가져오기
+        let homeAltitude = 0;
+
+        if ($selectedDrone) {
+            const telemetry = getDroneTelemetry($selectedDrone.drone_id);
+            homeAltitude = telemetry.home_altitude || 0;
+        }
+
+        let marker = null;
+        let line = null;
+        let connectionLine = null;
+        
+        try {
+            // 구형 마커 생성 (홈 포지션 고도 더하기)
+            marker = map_viewer.entities.add({
+                name: 'position-marker',
+                position: Cesium.Cartesian3.fromDegrees(
+                    waypoint.longitude, 
+                    waypoint.latitude, 
+                    waypoint.altitude + homeAltitude
+                ),
+                point: {
+                    pixelSize: 10,
+                    color: Cesium.Color.YELLOW,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                },
+                label: {
+                    text: `${index + 1}`,
+                    font: '14px sans-serif',
+                    fillColor: Cesium.Color.WHITE,
+                    outlineColor: Cesium.Color.BLACK,
+                    outlineWidth: 2,
+                    style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+                    verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+                    pixelOffset: new Cesium.Cartesian2(0, -10),
+                    disableDepthTestDistance: Number.POSITIVE_INFINITY
+                }
+            });
+
+            // 지표면까지의 점선 생성
+            line = map_viewer.entities.add({
+                name: 'position-line',
+                polyline: {
+                    positions: [
+                        Cesium.Cartesian3.fromDegrees(
+                            waypoint.longitude, 
+                            waypoint.latitude, 
+                            waypoint.altitude + homeAltitude
+                        ),
+                        Cesium.Cartesian3.fromDegrees(
+                            waypoint.longitude, 
+                            waypoint.latitude, 
+                            homeAltitude
+                        )
+                    ],
+                    width: 3,
+                    material: new Cesium.PolylineDashMaterialProperty({
+                        color: Cesium.Color.YELLOW.withAlpha(0.7),
+                        dashLength: 16.0,
+                        dashPattern: parseInt('1111', 2)
+                    })
+                }
+            });
+
+            // 이전 웨이포인트와의 연결선 생성
+            const waypoints = droneWaypoints.get(droneId) || [];
+            if (index > 0) {
+                const prevWaypoint = waypoints[index - 1];
+                connectionLine = map_viewer.entities.add({
+                    name: 'connection-line',
+                    polyline: {
+                        positions: [
+                            Cesium.Cartesian3.fromDegrees(
+                                prevWaypoint.longitude,
+                                prevWaypoint.latitude,
+                                prevWaypoint.altitude + homeAltitude
+                            ),
+                            Cesium.Cartesian3.fromDegrees(
+                                waypoint.longitude,
+                                waypoint.latitude,
+                                waypoint.altitude + homeAltitude
+                            )
+                        ],
+                        width: 2,
+                        material: new Cesium.PolylineArrowMaterialProperty({
+                            color: Cesium.Color.WHITE.withAlpha(0.7)
+                        })
+                    }
+                });
+            }
+
+        } catch (error) {
+            console.error('엔티티 생성 실패:', error);
+        }
+
+        // 드론별 마커 저장
+        const markers = waypointMarkers.get(droneId) || [];
+        markers.push({ marker, line, connectionLine });
+        waypointMarkers.set(droneId, markers);
     }
+
+    // 웨이포인트 삭제 시 마커도 함께 삭제
     function handleWaypointDelete(idx) {
-        waypoints = waypoints.filter((_, i) => i !== idx);
+        if (!$selectedDrone) return;
+
+        const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
+        waypoints.splice(idx, 1);
+        droneWaypoints.set($selectedDrone.drone_id, waypoints);
+        
+        // 해당 드론의 마커들 가져오기
+        const markers = waypointMarkers.get($selectedDrone.drone_id) || [];
+        
+        // 해당 인덱스의 마커 삭제
+        if (markers[idx]) {
+            const { marker, line, connectionLine } = markers[idx];
+            if (marker) map_viewer.entities.remove(marker);
+            if (line) map_viewer.entities.remove(line);
+            if (connectionLine) map_viewer.entities.remove(connectionLine);
+            markers.splice(idx, 1);
+        }
+
+        // 나머지 마커들의 텍스트 업데이트
+        markers.forEach(({ marker }, i) => {
+            if (marker) {
+                marker.label.text = `${i + 1}`;
+            }
+        });
+    }
+
+    // 웨이포인트 변경 시 마커 업데이트
+    function handleWaypointChange(newWaypoints) {
+        if (!$selectedDrone) return;
+
+        console.log('Waypoints changed:', newWaypoints);
+        droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
+        currentWaypoints = [...newWaypoints];
+        
+        // 기존 마커 모두 제거
+        const markers = waypointMarkers.get($selectedDrone.drone_id) || [];
+        markers.forEach(({ marker, line, connectionLine }) => {
+            if (marker) map_viewer.entities.remove(marker);
+            if (line) map_viewer.entities.remove(line);
+            if (connectionLine) map_viewer.entities.remove(connectionLine);
+        });
+        waypointMarkers.set($selectedDrone.drone_id, []);
+
+        // 새로운 마커 생성
+        newWaypoints.forEach((waypoint, index) => {
+            createWaypointMarker(waypoint, index, $selectedDrone.drone_id);
+        });
     }
 </script>
 
@@ -191,13 +459,25 @@
 
     <div class="waypoint-table-area">
         <MissionWaypointTable
-            droneName="drone#03"
-            altitudeType="relative"
-            missionAltitude={10}
-            acceptanceRadius={2}
-            {waypoints}
-            onChange={handleWaypointChange}
-            onDelete={handleWaypointDelete}
+            droneName={$selectedDrone ? $selectedDrone.drone_id : '드론 선택'}
+            altitudeType={waypointSettings.altitudeType}
+            missionAltitude={waypointSettings.missionAltitude}
+            acceptanceRadius={waypointSettings.acceptanceRadius}
+            waypoints={currentWaypoints}
+            onChange={(newWaypoints) => {
+                console.log('Waypoints changed:', newWaypoints);
+                droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
+                currentWaypoints = newWaypoints;
+                updateWaypointMarkers();
+            }}
+            onDelete={(index) => {
+                console.log('Deleting waypoint at index:', index);
+                const newWaypoints = [...currentWaypoints];
+                newWaypoints.splice(index, 1);
+                droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
+                currentWaypoints = newWaypoints;
+                updateWaypointMarkers();
+            }}
         />
     </div>
 </div>
