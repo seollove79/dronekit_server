@@ -1,4 +1,7 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+  const dispatch = createEventDispatcher();
+
   export let droneName = 'drone#01';
   export let altitudeType = 'relative';
   export let missionAltitude = 10;
@@ -7,9 +10,12 @@
   export let onChange = () => {};
   export let onDelete = () => {};
   export let onSettingsChange = () => {};
+  export let onSelect;
 
   const altitudeTypes = ['relative', 'absolute', 'agl'];
   const commands = ['waypoint', 'takeoff', 'land'];
+
+  let selectedIndex = null;
 
   // 설정값 변경 처리
   $: if (altitudeType || missionAltitude || acceptanceRadius) {
@@ -18,6 +24,13 @@
       missionAltitude,
       acceptanceRadius
     });
+  }
+
+  function handleSelect(index) {
+    selectedIndex = index;
+    if (onSelect) {
+      onSelect(index);
+    }
   }
 
   function handleInputChange(idx, key, value) {
@@ -59,6 +72,16 @@
       onChange(newWaypoints);
     }
   }
+
+  function handleSettingsChange(field, value) {
+    const settings = {
+      altitudeType,
+      missionAltitude,
+      acceptanceRadius,
+      [field]: value
+    };
+    onSettingsChange(settings);
+  }
 </script>
 
 <div class="mission-table-container">
@@ -94,8 +117,8 @@
     <tbody>
       {#if waypoints && waypoints.length > 0}
         {#each waypoints as wp, i}
-          <tr>
-            <td width="7%">{i + 1}</td>
+          <tr class:selected={selectedIndex === i}>
+            <td width="7%" class="clickable" on:click={() => handleSelect(i)}>{i + 1}</td>
             <td>
               <select bind:value={wp.command} on:change={e => handleInputChange(i, 'command', e.target.value)} style="width: 100px;">
                 {#each commands as cmd}
@@ -298,5 +321,16 @@
 
 .mission-table tbody::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.5);
+}
+
+.clickable {
+  cursor: pointer;
+  color: #b2ffb2;
+}
+.clickable:hover {
+  text-decoration: underline;
+}
+.selected {
+  background-color: rgba(178, 255, 178, 0.1);
 }
 </style> 
