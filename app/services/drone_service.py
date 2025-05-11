@@ -153,6 +153,8 @@ async def upload_mission(drone_id: str, mission: list[dict]):
         # 홈 포지션 추가 (기본값)
         home_position = Command(0, 0, 1, mavutil.mavlink.MAV_FRAME_GLOBAL, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 1, 0, 0, 0, 0, vehicle.location.global_relative_frame.lat, vehicle.location.global_relative_frame.lon, 0)
         cmds.add(home_position)
+        cmds.upload()
+        cmds.clear()
 
         # 미션 추가
         for index, waypoint in enumerate(mission):
