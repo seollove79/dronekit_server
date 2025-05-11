@@ -331,8 +331,84 @@
     }
 
     // 드론에 쓰기
-    function handleWriteToDrone() {
-        // TODO: 드론에 쓰기 구현
+    async function handleWriteToDrone() {
+        if (!$selectedDrone) {
+            alert('드론을 선택해주세요.');
+            return;
+        }
+
+        if (currentWaypoints.length === 0) {
+            alert('웨이포인트가 없습니다.');
+            return;
+        }
+
+        try {
+            // 미션 데이터 준비
+            const missionData = currentWaypoints.map(waypoint => ({
+                latitude: waypoint.latitude,
+                longitude: waypoint.longitude,
+                altitude: parseFloat(waypoint.altitude),
+                altitude_type: waypoint.altitudeType,
+                command: waypoint.command,
+                acceptance_radius: waypoint.acceptanceRadius
+            }));
+
+            // API 호출
+            const response = await fetch(`/api/drones/${$selectedDrone.drone_id}/mission`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(missionData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.detail || '미션 업로드 실패');
+            }
+
+            const result = await response.json();
+            alert('미션이 성공적으로 업로드되었습니다.');
+            console.log('Mission upload result:', result);
+
+        } catch (error) {
+            console.error('미션 업로드 중 오류 발생:', error);
+            alert('미션 업로드 중 오류가 발생했습니다: ' + error.message);
+        }
+    }
+
+    // 모든 웨이포인트 엔티티 제거 함수
+    function removeAllWaypointEntities(droneId) {
+        if (!map_viewer) return;
+        
+        // 모든 엔티티를 순회하면서 웨이포인트 관련 엔티티 제거
+        const entities = map_viewer.entities.values;
+        const entitiesToRemove = [];
+        
+        // 먼저 제거할 엔티티들을 수집
+        for (let i = 0; i < entities.length; i++) {
+            const entity = entities[i];
+            if (entity.id && (
+                entity.id.startsWith('waypoint-') ||
+                entity.id.startsWith('line-') ||
+                entity.id.startsWith('connection-')
+            )) {
+                entitiesToRemove.push(entity);
+            }
+        }
+        
+        // 수집된 엔티티들을 제거
+        entitiesToRemove.forEach(entity => {
+            try {
+                map_viewer.entities.remove(entity);
+            } catch (error) {
+                console.warn('엔티티 제거 실패:', error);
+            }
+        });
+        
+        // 마커 배열 초기화
+        waypointMarkers.set(droneId, []);
     }
 
     // 웨이포인트 마커 생성 함수
@@ -341,6 +417,17 @@
             console.error('map_viewer가 초기화되지 않았습니다.');
             return;
         }
+
+        // 기존 엔티티 제거
+        const existingMarker = map_viewer.entities.getById(`waypoint-${index}`);
+        const existingLine = map_viewer.entities.getById(`line-${index}`);
+        const existingConnectionLine = map_viewer.entities.getById(`connection-${index-1}-${index}`);
+        const existingNextConnectionLine = map_viewer.entities.getById(`connection-${index}-${index+1}`);
+
+        if (existingMarker) map_viewer.entities.remove(existingMarker);
+        if (existingLine) map_viewer.entities.remove(existingLine);
+        if (existingConnectionLine) map_viewer.entities.remove(existingConnectionLine);
+        if (existingNextConnectionLine) map_viewer.entities.remove(existingNextConnectionLine);
 
         // 선택된 드론의 홈 포지션 고도 가져오기
         let homeAltitude = 0;
@@ -487,38 +574,6 @@
         const markers = waypointMarkers.get(droneId) || [];
         markers[index] = { marker, line, connectionLine, nextConnectionLine };
         waypointMarkers.set(droneId, markers);
-    }
-
-    // 모든 웨이포인트 엔티티 제거 함수
-    function removeAllWaypointEntities(droneId) {
-        if (!map_viewer) return;
-        
-        const waypoints = droneWaypoints.get(droneId) || [];
-        const count = waypoints.length;
-        
-        // 모든 가능한 엔티티 ID에 대해 제거 시도
-        for (let i = 0; i < count; i++) {
-            // 웨이포인트 마커와 선 제거
-            const marker = map_viewer.entities.getById(`waypoint-${i}`);
-            const line = map_viewer.entities.getById(`line-${i}`);
-            if (marker) map_viewer.entities.remove(marker);
-            if (line) map_viewer.entities.remove(line);
-            
-            // 이전 웨이포인트와의 연결선 제거
-            if (i > 0) {
-                const connectionLine = map_viewer.entities.getById(`connection-${i-1}-${i}`);
-                if (connectionLine) map_viewer.entities.remove(connectionLine);
-            }
-            
-            // 다음 웨이포인트와의 연결선 제거
-            if (i < count - 1) {
-                const nextConnectionLine = map_viewer.entities.getById(`connection-${i}-${i+1}`);
-                if (nextConnectionLine) map_viewer.entities.remove(nextConnectionLine);
-            }
-        }
-        
-        // 마커 배열 초기화
-        waypointMarkers.set(droneId, []);
     }
 
     // 웨이포인트 삭제 시 마커도 함께 삭제
