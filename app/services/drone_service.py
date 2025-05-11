@@ -361,3 +361,45 @@ async def set_home_position(drone_id: str, request: HomePositionRequest):
             
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+async def get_mission(drone_id: str):
+    """
+    드론의 현재 미션을 읽어오는 함수
+    """
+    # 드론이 연결되어 있는지 확인
+    if drone_id not in connected_drones:
+        raise HTTPException(status_code=404, detail="드론이 연결되어 있지 않습니다.")
+    try:
+        # 드론 객체 가져오기
+        vehicle = connected_drones[drone_id]
+        
+        # 미션 명령 가져오기
+        cmds = vehicle.commands
+        cmds.download()
+        cmds.wait_ready()
+        
+        # 미션 데이터 변환
+        mission_items = []
+        for cmd in cmds:
+            mission_item = {
+                "index": cmd.seq,
+                "current": cmd.current,
+                "autocontinue": cmd.autocontinue,
+                "frame": cmd.frame,
+                "command": cmd.command,
+                "param1": cmd.param1,
+                "param2": cmd.param2,
+                "param3": cmd.param3,
+                "param4": cmd.param4,
+                "latitude": cmd.x,
+                "longitude": cmd.y,
+                "altitude": cmd.z
+            }
+            mission_items.append(mission_item)
+            
+        return {
+            "drone_id": drone_id,
+            "mission_items": mission_items
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"미션을 읽어오는데 실패했습니다: {str(e)}")

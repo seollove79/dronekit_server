@@ -105,3 +105,11 @@ async def set_home_position(drone_id: str, request: HomePositionRequest):
     :param request: 홈 포지션 정보 (위도, 경도, 고도) 또는 현재 위치 설정 여부
     """
     return await drone_service.set_home_position(drone_id, request)
+
+# 드론의 현재 미션을 읽어오는 API
+@router.get("/{drone_id}/mission", response_model=dict)
+async def get_drone_mission(drone_id: str):
+    """
+    드론의 현재 미션을 읽어오는 API
+    """
+    return await drone_service.get_mission(drone_id)

@@ -551,3 +551,20 @@
 2025-05-12 02:50:02,765 - autopilot.drone1 - INFO - [drone1] - Flight plan received
 2025-05-12 02:50:25,046 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
 2025-05-12 02:50:25,047 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:06:12,889 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-12 03:06:12,889 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-12 03:06:12,889 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-12 03:06:40,698 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:06:40,698 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:06:40,781 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:06:40,781 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:06:54,257 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:06:54,257 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:06:54,339 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:06:54,366 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:06:54,471 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:06:54,471 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:16:53,635 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-12 03:16:53,636 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-12 03:16:53,636 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-12 03:17:27,988 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
