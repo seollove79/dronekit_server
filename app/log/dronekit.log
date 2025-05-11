@@ -622,3 +622,9 @@
 2025-05-12 03:45:31,783 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
 2025-05-12 03:45:31,804 - autopilot.drone1 - INFO - [drone1] - Flight plan received
 2025-05-12 03:50:23,618 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-12 03:56:59,119 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-05-12 03:57:05,746 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-05-12 03:57:05,746 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-05-12 03:57:10,338 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-05-12 03:57:10,338 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-05-12 03:57:15,913 - autopilot.drone1 - INFO - [drone1] - Reached command #3

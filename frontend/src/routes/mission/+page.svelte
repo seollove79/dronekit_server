@@ -477,20 +477,23 @@
         const waypointAltitude = parseFloat(waypoint.altitude);
         const altitude = isNaN(waypointAltitude) ? waypointSettings.missionAltitude : waypointAltitude;
 
+        // 고도 타입에 따른 최종 고도 계산
+        const finalAltitude = waypoint.altitudeType === 'absolute' ? altitude : altitude + homeAltitude;
+
         let marker = null;
         let line = null;
         let connectionLine = null;
         let nextConnectionLine = null;
         
         try {
-            // 구형 마커 생성 (홈 포지션 고도 더하기)
+            // 구형 마커 생성
             marker = map_viewer.entities.add({
                 id: `waypoint-${index}`,
                 name: 'position-marker',
                 position: Cesium.Cartesian3.fromDegrees(
                     waypoint.longitude, 
                     waypoint.latitude, 
-                    altitude + homeAltitude
+                    finalAltitude
                 ),
                 point: {
                     pixelSize: 10,
@@ -520,7 +523,7 @@
                         Cesium.Cartesian3.fromDegrees(
                             waypoint.longitude, 
                             waypoint.latitude, 
-                            altitude + homeAltitude
+                            finalAltitude
                         ),
                         Cesium.Cartesian3.fromDegrees(
                             waypoint.longitude, 
@@ -543,6 +546,7 @@
                 const prevWaypoint = waypoints[index - 1];
                 const prevAltitude = parseFloat(prevWaypoint.altitude);
                 const prevWaypointAltitude = isNaN(prevAltitude) ? waypointSettings.missionAltitude : prevAltitude;
+                const prevFinalAltitude = prevWaypoint.altitudeType === 'absolute' ? prevWaypointAltitude : prevWaypointAltitude + homeAltitude;
 
                 connectionLine = map_viewer.entities.add({
                     id: `connection-${index-1}-${index}`,
@@ -552,12 +556,12 @@
                             Cesium.Cartesian3.fromDegrees(
                                 prevWaypoint.longitude,
                                 prevWaypoint.latitude,
-                                prevWaypointAltitude + homeAltitude
+                                prevFinalAltitude
                             ),
                             Cesium.Cartesian3.fromDegrees(
                                 waypoint.longitude,
                                 waypoint.latitude,
-                                altitude + homeAltitude
+                                finalAltitude
                             )
                         ],
                         width: 2,
@@ -575,6 +579,7 @@
                 const nextWaypoint = waypoints[index + 1];
                 const nextAltitude = parseFloat(nextWaypoint.altitude);
                 const nextWaypointAltitude = isNaN(nextAltitude) ? waypointSettings.missionAltitude : nextAltitude;
+                const nextFinalAltitude = nextWaypoint.altitudeType === 'absolute' ? nextWaypointAltitude : nextWaypointAltitude + homeAltitude;
 
                 nextConnectionLine = map_viewer.entities.add({
                     id: `connection-${index}-${index+1}`,
@@ -584,12 +589,12 @@
                             Cesium.Cartesian3.fromDegrees(
                                 waypoint.longitude,
                                 waypoint.latitude,
-                                altitude + homeAltitude
+                                finalAltitude
                             ),
                             Cesium.Cartesian3.fromDegrees(
                                 nextWaypoint.longitude,
                                 nextWaypoint.latitude,
-                                nextWaypointAltitude + homeAltitude
+                                nextFinalAltitude
                             )
                         ],
                         width: 2,
