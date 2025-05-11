@@ -568,3 +568,57 @@
 2025-05-12 03:16:53,636 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
 2025-05-12 03:16:53,636 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
 2025-05-12 03:17:27,988 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-12 03:32:34,361 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:32:34,363 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:32:34,446 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:32:34,446 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:32:34,546 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:32:34,546 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:35:18,098 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-12 03:35:26,812 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-12 03:35:26,812 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-12 03:35:48,697 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-05-12 03:35:53,735 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-05-12 03:35:53,735 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-05-12 03:35:56,365 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-05-12 03:35:56,365 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-05-12 03:35:59,115 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-05-12 03:35:59,115 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-05-12 03:36:02,036 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-12 03:36:03,647 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-05-12 03:36:03,648 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-05-12 03:36:07,479 - autopilot.drone1 - INFO - [drone1] - Reached command #5
+2025-05-12 03:36:41,604 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-05-12 03:36:49,400 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-05-12 03:36:49,400 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-05-12 03:36:52,063 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-05-12 03:36:52,063 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-05-12 03:36:54,849 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-05-12 03:36:54,849 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-05-12 03:36:59,413 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-05-12 03:36:59,413 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-05-12 03:37:03,234 - autopilot.drone1 - INFO - [drone1] - Reached command #5
+2025-05-12 03:37:39,726 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:37:39,726 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:37:39,829 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:37:39,829 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:37:39,949 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:37:39,951 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:38:11,238 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-05-12 03:38:17,539 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-05-12 03:38:17,539 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-05-12 03:38:20,232 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-05-12 03:38:20,232 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-05-12 03:38:23,205 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-05-12 03:38:23,205 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-05-12 03:38:25,633 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-05-12 03:38:25,633 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-05-12 03:38:29,606 - autopilot.drone1 - INFO - [drone1] - Reached command #5
+2025-05-12 03:38:37,272 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-12 03:45:31,594 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:45:31,594 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:45:31,672 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:45:31,700 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:45:31,783 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 03:45:31,804 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 03:50:23,618 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!

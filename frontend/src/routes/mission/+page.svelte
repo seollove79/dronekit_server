@@ -6,6 +6,7 @@
     import { drones } from '$lib/stores/drones';
     import MissionWaypointTable from '$lib/components/mission/MissionWaypointTable.svelte';
     import { mapViewer } from "$lib/stores/map";
+    import { getDroneMission } from '$lib/api/drone';
 
     // 웨이포인트 설정값
     let waypointSettings = {
@@ -326,8 +327,43 @@
     }
 
     // 드론에서 읽기
-    function handleReadFromDrone() {
-        // TODO: 드론에서 읽기 구현
+    async function handleReadFromDrone() {
+        if (!$selectedDrone) {
+            alert('드론을 선택해주세요.');
+            return;
+        }
+
+        try {
+            const missionData = await getDroneMission($selectedDrone.drone_id);
+            if (missionData && missionData.mission_items) {
+                // 미션 아이템을 웨이포인트 형식으로 변환
+                const waypoints = missionData.mission_items.map(item => ({
+                    command: 'waypoint',
+                    delay: item.param1,
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                    altitude: item.altitude,
+                    altitudeType: item.frame === 0 ? 'absolute' : (item.frame === 3 ? 'relative' : 'relative'),  // 기본값은 relative
+                    acceptanceRadius: item.param2
+                }));
+
+                droneWaypoints.set($selectedDrone.drone_id, waypoints);
+                currentWaypoints = [...waypoints];
+
+                // 웨이포인트 마커 업데이트
+                removeAllWaypointEntities($selectedDrone.drone_id);
+                waypoints.forEach((waypoint, index) => {
+                    createWaypointMarker(waypoint, index, $selectedDrone.drone_id);
+                });
+
+                alert('미션을 성공적으로 읽어왔습니다.');
+            } else {
+                alert('미션 데이터가 없습니다.');
+            }
+        } catch (error) {
+            console.error('미션 읽기 실패:', error);
+            alert('미션을 읽어오는데 실패했습니다: ' + error.message);
+        }
     }
 
     // 드론에 쓰기
