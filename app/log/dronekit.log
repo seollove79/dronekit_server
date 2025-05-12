@@ -661,3 +661,9 @@
 2025-05-12 16:16:14,324 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
 2025-05-12 16:16:28,945 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
 2025-05-12 16:16:28,948 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 17:12:13,347 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 17:12:13,378 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 17:12:44,440 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 17:12:44,443 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-12 17:16:35,800 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-12 17:16:35,830 - autopilot.drone1 - INFO - [drone1] - Flight plan received

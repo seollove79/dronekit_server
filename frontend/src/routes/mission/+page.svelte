@@ -30,6 +30,9 @@
     let homePositionMarker = null;
     let waypointMarkers = new Map();  // Map<droneId, markers[]>
     let currentWaypoints = [];  // 초기값 설정
+    let selectedDroneId = ''; // 선택된 드론 ID를 저장할 변수
+    let fileInput; // 파일 입력 요소에 대한 참조
+    let uploadStatus = ''; // 업로드 상태 메시지를 저장할 변수
 
     // 현재 선택된 드론의 웨이포인트 가져오기
     $: {
@@ -318,11 +321,57 @@
 
     // 파일 불러오기
     function handleFileLoad() {
-        // TODO: 파일 불러오기 구현
+        try {
+            if (!$selectedDrone) {
+                alert('드론을 선택해주세요.');
+                return;
+            }
+
+            // 파일 입력 요소 생성 및 클릭
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.waypoints';
+            input.style.display = 'none';
+            document.body.appendChild(input);
+
+            input.onchange = async (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                try {
+                    const response = await fetch(`/api/drones/${$selectedDrone.drone_id}/upload-mission-file`, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    alert('미션 파일이 성공적으로 업로드되었습니다.');
+                    console.log('Upload success:', result);
+                } catch (error) {
+                    console.error('Upload failed:', error);
+                    alert(`업로드 실패: ${error.message}`);
+                }
+
+                // 사용이 끝난 input 요소 제거
+                document.body.removeChild(input);
+            };
+
+            input.click();
+        } catch (error) {
+            console.error('File save error:', error);
+            alert(`파일 저장 중 오류가 발생했습니다: ${error.message}`);
+        }
     }
 
     // 파일 저장하기
-    function handleFileSave() {
+    async function handleFileSave() {
         // TODO: 파일 저장하기 구현
     }
 
