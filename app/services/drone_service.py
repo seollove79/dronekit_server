@@ -1,9 +1,10 @@
 from app.libs.dronekit import connect, Command, LocationGlobalRelative, LocationGlobal
-from fastapi import HTTPException
+from fastapi import HTTPException, UploadFile
 import asyncio
 from pymavlink import mavutil
 import os
 from app.models import GPSPosition, HomePositionRequest
+from datetime import datetime
 
 # 연결된 드론을 저장하는 딕셔너리
 connected_drones = {}
@@ -403,3 +404,58 @@ async def get_mission(drone_id: str):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"미션을 읽어오는데 실패했습니다: {str(e)}")
+
+# 미션 파일 저장 함수 추가
+async def save_mission_file(drone_id: str, file: UploadFile) -> dict:
+    """
+    드론 ID와 미션 파일을 받아, 현재 날짜와 시간으로 파일명을 생성하고 서버의 missions 디렉토리에 저장합니다.
+    .waypoints 파일이면 파싱 후 해당 드론에 미션을 업로드합니다.
+    :param drone_id: 드론의 고유 ID
+    :param file: 업로드된 미션 파일 (UploadFile 객체)
+    :return: 저장 성공 메시지와 저장 경로를 포함한 dict
+    """
+    current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+    file_extension = os.path.splitext(file.filename)[1]
+    save_path = os.path.join("missions", f"{current_time}_mission{file_extension}")
+
+    # 파일 저장
+    with open(save_path, "wb") as buffer:
+        buffer.write(await file.read())
+
+    # .waypoints 파일이면 파싱 및 업로드
+    if file_extension == ".waypoints":
+        if drone_id not in connected_drones:
+            raise HTTPException(status_code=404, detail="드론이 연결되어 있지 않습니다.")
+        vehicle = connected_drones[drone_id]
+        missionlist = []
+        with open(save_path) as f:
+            for i, line in enumerate(f):
+                if i == 0:
+                    if not line.startswith('QGC WPL 110'):
+                        raise HTTPException(status_code=400, detail='File is not supported WP version')
+                else:
+                    linearray = line.split('\t')
+                    ln_index = int(linearray[0])
+                    ln_currentwp = int(linearray[1])
+                    ln_frame = int(linearray[2])
+                    ln_command = int(linearray[3])
+                    ln_param1 = float(linearray[4])
+                    ln_param2 = float(linearray[5])
+                    ln_param3 = float(linearray[6])
+                    ln_param4 = float(linearray[7])
+                    ln_param5 = float(linearray[8])
+                    ln_param6 = float(linearray[9])
+                    ln_param7 = float(linearray[10])
+                    ln_autocontinue = int(linearray[11].strip())
+                    cmd = Command(0, 0, 0, ln_frame, ln_command, ln_currentwp, ln_autocontinue,
+                                  ln_param1, ln_param2, ln_param3, ln_param4, ln_param5, ln_param6, ln_param7)
+                    missionlist.append(cmd)
+        # 미션 업로드
+        cmds = vehicle.commands
+        cmds.clear()
+        for command in missionlist:
+            cmds.add(command)
+        cmds.upload()
+        return {"message": "Mission file uploaded and mission set to drone successfully", "file_path": save_path}
+
+    return {"message": "Mission file uploaded successfully", "file_path": save_path}

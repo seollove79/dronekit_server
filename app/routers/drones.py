@@ -1,6 +1,7 @@
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, UploadFile, File
 from app.models import DroneConnectionRequest, TelemetryResponse, CommandRequest, FlightModeRequest, GPSPosition, HomePositionRequest
 from app.services import drone_service
+import os
 
 # 드론 관련 API 라우터 생성
 router = APIRouter(prefix="/drones", tags=["drones"])
@@ -113,3 +114,14 @@ async def get_drone_mission(drone_id: str):
     드론의 현재 미션을 읽어오는 API
     """
     return await drone_service.get_mission(drone_id)
+
+# 드론 미션 파일 업로드 및 저장 엔드포인트
+@router.post("/{drone_id}/upload-mission-file")
+async def upload_mission_file(drone_id: str, file: UploadFile = File(...)):
+    """
+    드론 ID와 미션 파일을 업로드 받아 서버에 저장하는 API
+    :param drone_id: 드론의 고유 ID
+    :param file: 업로드할 미션 파일
+    """
+    # 파일 저장 로직을 drone_service로 이동
+    return await drone_service.save_mission_file(drone_id, file)
