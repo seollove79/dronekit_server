@@ -165,6 +165,7 @@ async def upload_mission(drone_id: str, mission: list[dict]):
             alt_type = waypoint.get("altitude_type", "relative")  # 기본값: relative
             delay = waypoint.get("delay", 0)
             radius = waypoint.get("radius", 0)
+            command = waypoint.get("command", "waypoint")
 
             if lat is None or lon is None or alt is None:
                 raise HTTPException(status_code=400, detail="Invalid mission format")
@@ -178,10 +179,19 @@ async def upload_mission(drone_id: str, mission: list[dict]):
                 frame = mavutil.mavlink.MAV_FRAME_GLOBAL_TERRAIN_ALT
             else:
                 raise HTTPException(status_code=400, detail="Invalid altitude type")
+            
+            if command == "waypoint":
+                command_type = mavutil.mavlink.MAV_CMD_NAV_WAYPOINT
+            elif command == "takeoff":
+                command_type = mavutil.mavlink.MAV_CMD_NAV_TAKEOFF
+            elif command == "land":
+                command_type = mavutil.mavlink.MAV_CMD_NAV_LAND
+            elif command == "do_set_servo":
+                command_type = mavutil.mavlink.MAV_CMD_DO_SET_SERVO
 
             # 명령 생성 및 추가
             cmds.add(
-                Command(index + 1, 0, 0, frame, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 1, delay, radius, 0, 0, lat, lon, alt)
+                Command(index + 1, 0, 0, frame, command_type, 0, 1, delay, radius, 0, 0, lat, lon, alt)
             )
 
         # 미션 업로드
@@ -433,6 +443,8 @@ async def save_mission_file(drone_id: str, file: UploadFile) -> dict:
                 if i == 0:
                     if not line.startswith('QGC WPL 110'):
                         raise HTTPException(status_code=400, detail='File is not supported WP version')
+                elif i == 1:
+                    pass
                 else:
                     linearray = line.split('\t')
                     ln_index = int(linearray[0])
@@ -450,11 +462,23 @@ async def save_mission_file(drone_id: str, file: UploadFile) -> dict:
                     cmd = Command(0, 0, 0, ln_frame, ln_command, ln_currentwp, ln_autocontinue,
                                   ln_param1, ln_param2, ln_param3, ln_param4, ln_param5, ln_param6, ln_param7)
                     missionlist.append(cmd)
-        # 미션 업로드
+
+        # 미션 초기화
         cmds = vehicle.commands
         cmds.clear()
-        for command in missionlist:
+        vehicle.flush()
+
+        # 홈 포지션 추가 (기본값)
+        home_position = Command(0, 0, 1, mavutil.mavlink.MAV_FRAME_GLOBAL, mavutil.mavlink.MAV_CMD_NAV_WAYPOINT, 0, 1, 0, 0, 0, 0, vehicle.location.global_relative_frame.lat, vehicle.location.global_relative_frame.lon, 0)
+        cmds.add(home_position)
+        cmds.upload()
+        cmds.clear()
+
+        # 미션 추가
+        for index, command in enumerate(missionlist):
             cmds.add(command)
+
+        # 미션 업로드
         cmds.upload()
         return {"message": "Mission file uploaded and mission set to drone successfully", "file_path": save_path}
 
