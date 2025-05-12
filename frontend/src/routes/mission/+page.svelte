@@ -48,31 +48,17 @@
     $: if ($selectedDrone) {
         // 이전 드론의 마커 제거
         if (waypointMarkers.size > 0) {
-            // 모든 드론의 웨이포인트 엔티티 제거
-            waypointMarkers.forEach((markers, droneId) => {
-                removeAllWaypointEntities(droneId);
-            });
-            waypointMarkers.clear();
+            removeAllWaypointEntities($selectedDrone.drone_id);
         }
 
         // 선택된 드론의 웨이포인트 마커 생성
         const waypoints = droneWaypoints.get($selectedDrone.drone_id) || [];
-        
-        // currentWaypoints 업데이트
         currentWaypoints = [...waypoints];
-        
-        // 마커 생성
-        waypoints.forEach((waypoint, index) => {
-            createWaypointMarker(waypoint, index, $selectedDrone.drone_id);
-        });
+        createAllWaypointEntities($selectedDrone.drone_id);
     } else {
         // 드론이 선택되지 않은 경우 마커 제거
         if (waypointMarkers.size > 0) {
-            // 모든 드론의 웨이포인트 엔티티 제거
-            waypointMarkers.forEach((markers, droneId) => {
-                removeAllWaypointEntities(droneId);
-            });
-            waypointMarkers.clear();
+            removeAllWaypointEntities($selectedDrone.drone_id);
         }
         currentWaypoints = [];
     }
@@ -387,6 +373,7 @@
             if (missionData && missionData.mission_items) {
                 // 미션 아이템을 웨이포인트 형식으로 변환
                 const waypoints = missionData.mission_items.map(item => ({
+                    index: item.index,
                     command: item.command === 16 ? 'waypoint' : (item.command === 22 ? 'takeoff' : (item.command === 183 ? 'do_set_servo' : 'unknown')),
                     delay: item.param1,
                     latitude: item.latitude,
@@ -400,10 +387,7 @@
                 currentWaypoints = [...waypoints];
 
                 // 웨이포인트 마커 업데이트
-                removeAllWaypointEntities($selectedDrone.drone_id);
-                waypoints.forEach((waypoint, index) => {
-                    createWaypointMarker(waypoint, index, $selectedDrone.drone_id);
-                });
+                createAllWaypointEntities($selectedDrone.drone_id);
 
                 alert('미션을 성공적으로 읽어왔습니다.');
             } else {
@@ -463,7 +447,7 @@
         }
     }
 
-    // 모든 웨이포인트 엔티티 제거 함수
+    // 웨이포인트 엔티티 관리 함수들
     function removeAllWaypointEntities(droneId) {
         if (!map_viewer) return;
         
@@ -491,58 +475,32 @@
                 console.warn('엔티티 제거 실패:', error);
             }
         });
-        
-        // 마커 배열 초기화
-        waypointMarkers.set(droneId, []);
     }
 
-    // 웨이포인트 마커 생성 함수
-    function createWaypointMarker(waypoint, index, droneId) {
-        if (!map_viewer) {
-            console.error('map_viewer가 초기화되지 않았습니다.');
-            return;
-        }
+    // 모든 웨이포인트 엔티티를 한 번에 생성하는 함수
+    function createAllWaypointEntities(droneId) {
+        if (!map_viewer || !$selectedDrone) return;
 
-        // command가 'waypoint'가 아닌 경우 마커를 생성하지 않음
-        if (waypoint.command !== 'waypoint') {
-            console.log('마커 생성 건너뜀:', waypoint.command);
-            return;
-        }
+        const waypoints = droneWaypoints.get(droneId) || [];
+        const homeAltitude = parseFloat(getDroneTelemetry(droneId).home_altitude) || 0;
 
-        // 기존 엔티티 제거
-        const existingMarker = map_viewer.entities.getById(`waypoint-${index}`);
-        const existingLine = map_viewer.entities.getById(`line-${index}`);
-        const existingConnectionLine = map_viewer.entities.getById(`connection-${index-1}-${index}`);
-        const existingNextConnectionLine = map_viewer.entities.getById(`connection-${index}-${index+1}`);
+        // 먼저 모든 기존 엔티티 제거
+        removeAllWaypointEntities(droneId);
 
-        if (existingMarker) map_viewer.entities.remove(existingMarker);
-        if (existingLine) map_viewer.entities.remove(existingLine);
-        if (existingConnectionLine) map_viewer.entities.remove(existingConnectionLine);
-        if (existingNextConnectionLine) map_viewer.entities.remove(existingNextConnectionLine);
+        // waypoint 타입의 웨이포인트만 필터링
+        const waypointIndices = waypoints
+            .map((wp, idx) => ({ wp, idx }))
+            .filter(({ wp }) => wp.command === 'waypoint')
+            .map(({ idx }) => idx);
 
-        // 선택된 드론의 홈 포지션 고도 가져오기
-        let homeAltitude = 0;
+        // 각 웨이포인트에 대해 마커와 연결선 생성
+        waypointIndices.forEach((index, arrayIndex) => {
+            const waypoint = waypoints[index];
+            const altitude = parseFloat(waypoint.altitude);
+            const finalAltitude = waypoint.altitudeType === 'absolute' ? altitude : altitude + homeAltitude;
 
-        if ($selectedDrone) {
-            const telemetry = getDroneTelemetry($selectedDrone.drone_id);
-            homeAltitude = parseFloat(telemetry.home_altitude) || 0;
-        }
-
-        // 웨이포인트 고도값 검증 및 기본값 설정
-        const waypointAltitude = parseFloat(waypoint.altitude);
-        const altitude = isNaN(waypointAltitude) ? waypointSettings.missionAltitude : waypointAltitude;
-
-        // 고도 타입에 따른 최종 고도 계산
-        const finalAltitude = waypoint.altitudeType === 'absolute' ? altitude : altitude + homeAltitude;
-
-        let marker = null;
-        let line = null;
-        let connectionLine = null;
-        let nextConnectionLine = null;
-
-        try {
-            // 구형 마커 생성
-            marker = map_viewer.entities.add({
+            // 웨이포인트 마커 생성
+            map_viewer.entities.add({
                 id: `waypoint-${index}`,
                 name: 'position-marker',
                 position: Cesium.Cartesian3.fromDegrees(
@@ -557,7 +515,7 @@
                     outlineWidth: 2,
                 },
                 label: {
-                    text: `${index + 1}`,
+                    text: `${waypoint.index}`,
                     font: '14px sans-serif',
                     fillColor: Cesium.Color.WHITE,
                     outlineColor: Cesium.Color.BLACK,
@@ -570,7 +528,7 @@
             });
 
             // 지표면까지의 점선 생성
-            line = map_viewer.entities.add({
+            map_viewer.entities.add({
                 id: `line-${index}`,
                 name: 'position-line',
                 polyline: {
@@ -596,110 +554,37 @@
             });
 
             // 이전 웨이포인트와의 연결선 생성
-            const waypoints = droneWaypoints.get(droneId) || [];
-            if (index > 0) {
-                // 이전 waypoint 찾기
-                let prevIndex = index - 1;
-                while (prevIndex >= 0 && waypoints[prevIndex].command !== 'waypoint') {
-                    prevIndex--;
-                }
-                
-                if (prevIndex >= 0) {
-                    const prevWaypoint = waypoints[prevIndex];
-                    const prevAltitude = parseFloat(prevWaypoint.altitude);
-                    const prevWaypointAltitude = isNaN(prevAltitude) ? waypointSettings.missionAltitude : prevAltitude;
-                    const prevFinalAltitude = prevWaypoint.altitudeType === 'absolute' ? prevWaypointAltitude : prevWaypointAltitude + homeAltitude;
+            if (arrayIndex > 0) {
+                const prevIndex = waypointIndices[arrayIndex - 1];
+                const prevWaypoint = waypoints[prevIndex];
+                const prevAltitude = parseFloat(prevWaypoint.altitude);
+                const prevFinalAltitude = prevWaypoint.altitudeType === 'absolute' ? prevAltitude : prevAltitude + homeAltitude;
 
-                    connectionLine = map_viewer.entities.add({
-                        id: `connection-${prevIndex}-${index}`,
-                        name: 'connection-line',
-                        polyline: {
-                            positions: [
-                                Cesium.Cartesian3.fromDegrees(
-                                    prevWaypoint.longitude,
-                                    prevWaypoint.latitude,
-                                    prevFinalAltitude
-                                ),
-                                Cesium.Cartesian3.fromDegrees(
-                                    waypoint.longitude,
-                                    waypoint.latitude,
-                                    finalAltitude
-                                )
-                            ],
-                            width: 2,
-                            material: new Cesium.PolylineDashMaterialProperty({
-                                color: Cesium.Color.WHITE.withAlpha(0.7),
-                                dashLength: 16.0,
-                                dashPattern: parseInt('1111', 2)
-                            })
-                        }
-                    });
-                }
+                map_viewer.entities.add({
+                    id: `connection-${prevIndex}-${index}`,
+                    name: 'connection-line',
+                    polyline: {
+                        positions: [
+                            Cesium.Cartesian3.fromDegrees(
+                                prevWaypoint.longitude,
+                                prevWaypoint.latitude,
+                                prevFinalAltitude
+                            ),
+                            Cesium.Cartesian3.fromDegrees(
+                                waypoint.longitude,
+                                waypoint.latitude,
+                                finalAltitude
+                            )
+                        ],
+                        width: 2,
+                        material: new Cesium.PolylineDashMaterialProperty({
+                            color: Cesium.Color.WHITE.withAlpha(0.7),
+                            dashLength: 16.0,
+                            dashPattern: parseInt('1111', 2)
+                        })
+                    }
+                });
             }
-
-            // 다음 웨이포인트와의 연결선 생성
-            if (index < waypoints.length - 1) {
-                // 다음 waypoint 찾기
-                let nextIndex = index + 1;
-                while (nextIndex < waypoints.length && waypoints[nextIndex].command !== 'waypoint') {
-                    nextIndex++;
-                }
-                
-                if (nextIndex < waypoints.length) {
-                    const nextWaypoint = waypoints[nextIndex];
-                    const nextAltitude = parseFloat(nextWaypoint.altitude);
-                    const nextWaypointAltitude = isNaN(nextAltitude) ? waypointSettings.missionAltitude : nextAltitude;
-                    const nextFinalAltitude = nextWaypoint.altitudeType === 'absolute' ? nextWaypointAltitude : nextWaypointAltitude + homeAltitude;
-
-                    nextConnectionLine = map_viewer.entities.add({
-                        id: `connection-${index}-${nextIndex}`,
-                        name: 'connection-line',
-                        polyline: {
-                            positions: [
-                                Cesium.Cartesian3.fromDegrees(
-                                    waypoint.longitude,
-                                    waypoint.latitude,
-                                    finalAltitude
-                                ),
-                                Cesium.Cartesian3.fromDegrees(
-                                    nextWaypoint.longitude,
-                                    nextWaypoint.latitude,
-                                    nextFinalAltitude
-                                )
-                            ],
-                            width: 2,
-                            material: new Cesium.PolylineDashMaterialProperty({
-                                color: Cesium.Color.WHITE.withAlpha(0.7),
-                                dashLength: 16.0,
-                                dashPattern: parseInt('1111', 2)
-                            })
-                        }
-                    });
-                }
-            }
-
-        } catch (error) {
-            console.error('엔티티 생성 실패:', error);
-        }
-
-        // 드론별 마커 저장
-        const markers = waypointMarkers.get(droneId) || [];
-        markers[index] = { marker, line, connectionLine, nextConnectionLine };
-        waypointMarkers.set(droneId, markers);
-    }
-
-    // 웨이포인트 삭제 시 마커도 함께 삭제
-    function handleDeleteWaypoint(index) {
-        console.log('Deleting waypoint at index:', index);
-        const newWaypoints = [...currentWaypoints];
-        newWaypoints.splice(index, 1);
-        droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
-        currentWaypoints = [...newWaypoints];
-        
-        // 모든 엔티티 제거 후 다시 생성
-        removeAllWaypointEntities($selectedDrone.drone_id);
-        newWaypoints.forEach((waypoint, i) => {
-            createWaypointMarker(waypoint, i, $selectedDrone.drone_id);
         });
     }
 
@@ -710,12 +595,17 @@
         console.log('Waypoints changed:', newWaypoints);
         droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
         currentWaypoints = [...newWaypoints];
-        
-        // 모든 엔티티 제거 후 다시 생성
-        removeAllWaypointEntities($selectedDrone.drone_id);
-        newWaypoints.forEach((waypoint, index) => {
-            createWaypointMarker(waypoint, index, $selectedDrone.drone_id);
-        });
+        createAllWaypointEntities($selectedDrone.drone_id);
+    }
+
+    // 웨이포인트 삭제 시 마커도 함께 삭제
+    function handleDeleteWaypoint(index) {
+        console.log('Deleting waypoint at index:', index);
+        const newWaypoints = [...currentWaypoints];
+        newWaypoints.splice(index, 1);
+        droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
+        currentWaypoints = [...newWaypoints];
+        createAllWaypointEntities($selectedDrone.drone_id);
     }
 </script>
 
