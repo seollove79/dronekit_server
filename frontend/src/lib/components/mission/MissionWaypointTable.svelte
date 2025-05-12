@@ -13,7 +13,7 @@
   export let onSelect;
 
   const altitudeTypes = ['relative', 'absolute', 'agl'];
-  const commands = ['waypoint', 'takeoff', 'land'];
+  const commands = ['waypoint', 'takeoff', 'land', 'do_set_servo'];
 
   let selectedIndex = null;
   let tbody;

@@ -387,7 +387,7 @@
             if (missionData && missionData.mission_items) {
                 // 미션 아이템을 웨이포인트 형식으로 변환
                 const waypoints = missionData.mission_items.map(item => ({
-                    command: 'waypoint',
+                    command: item.command === 16 ? 'waypoint' : (item.command === 22 ? 'takeoff' : (item.command === 183 ? 'do_set_servo' : 'unknown')),
                     delay: item.param1,
                     latitude: item.latitude,
                     longitude: item.longitude,
@@ -503,6 +503,12 @@
             return;
         }
 
+        // command가 'waypoint'가 아닌 경우 마커를 생성하지 않음
+        if (waypoint.command !== 'waypoint') {
+            console.log('마커 생성 건너뜀:', waypoint.command);
+            return;
+        }
+
         // 기존 엔티티 제거
         const existingMarker = map_viewer.entities.getById(`waypoint-${index}`);
         const existingLine = map_viewer.entities.getById(`line-${index}`);
@@ -533,7 +539,7 @@
         let line = null;
         let connectionLine = null;
         let nextConnectionLine = null;
-        
+
         try {
             // 구형 마커 생성
             marker = map_viewer.entities.add({
@@ -592,68 +598,84 @@
             // 이전 웨이포인트와의 연결선 생성
             const waypoints = droneWaypoints.get(droneId) || [];
             if (index > 0) {
-                const prevWaypoint = waypoints[index - 1];
-                const prevAltitude = parseFloat(prevWaypoint.altitude);
-                const prevWaypointAltitude = isNaN(prevAltitude) ? waypointSettings.missionAltitude : prevAltitude;
-                const prevFinalAltitude = prevWaypoint.altitudeType === 'absolute' ? prevWaypointAltitude : prevWaypointAltitude + homeAltitude;
+                // 이전 waypoint 찾기
+                let prevIndex = index - 1;
+                while (prevIndex >= 0 && waypoints[prevIndex].command !== 'waypoint') {
+                    prevIndex--;
+                }
+                
+                if (prevIndex >= 0) {
+                    const prevWaypoint = waypoints[prevIndex];
+                    const prevAltitude = parseFloat(prevWaypoint.altitude);
+                    const prevWaypointAltitude = isNaN(prevAltitude) ? waypointSettings.missionAltitude : prevAltitude;
+                    const prevFinalAltitude = prevWaypoint.altitudeType === 'absolute' ? prevWaypointAltitude : prevWaypointAltitude + homeAltitude;
 
-                connectionLine = map_viewer.entities.add({
-                    id: `connection-${index-1}-${index}`,
-                    name: 'connection-line',
-                    polyline: {
-                        positions: [
-                            Cesium.Cartesian3.fromDegrees(
-                                prevWaypoint.longitude,
-                                prevWaypoint.latitude,
-                                prevFinalAltitude
-                            ),
-                            Cesium.Cartesian3.fromDegrees(
-                                waypoint.longitude,
-                                waypoint.latitude,
-                                finalAltitude
-                            )
-                        ],
-                        width: 2,
-                        material: new Cesium.PolylineDashMaterialProperty({
-                            color: Cesium.Color.WHITE.withAlpha(0.7),
-                            dashLength: 16.0,
-                            dashPattern: parseInt('1111', 2)
-                        })
-                    }
-                });
+                    connectionLine = map_viewer.entities.add({
+                        id: `connection-${prevIndex}-${index}`,
+                        name: 'connection-line',
+                        polyline: {
+                            positions: [
+                                Cesium.Cartesian3.fromDegrees(
+                                    prevWaypoint.longitude,
+                                    prevWaypoint.latitude,
+                                    prevFinalAltitude
+                                ),
+                                Cesium.Cartesian3.fromDegrees(
+                                    waypoint.longitude,
+                                    waypoint.latitude,
+                                    finalAltitude
+                                )
+                            ],
+                            width: 2,
+                            material: new Cesium.PolylineDashMaterialProperty({
+                                color: Cesium.Color.WHITE.withAlpha(0.7),
+                                dashLength: 16.0,
+                                dashPattern: parseInt('1111', 2)
+                            })
+                        }
+                    });
+                }
             }
 
             // 다음 웨이포인트와의 연결선 생성
             if (index < waypoints.length - 1) {
-                const nextWaypoint = waypoints[index + 1];
-                const nextAltitude = parseFloat(nextWaypoint.altitude);
-                const nextWaypointAltitude = isNaN(nextAltitude) ? waypointSettings.missionAltitude : nextAltitude;
-                const nextFinalAltitude = nextWaypoint.altitudeType === 'absolute' ? nextWaypointAltitude : nextWaypointAltitude + homeAltitude;
+                // 다음 waypoint 찾기
+                let nextIndex = index + 1;
+                while (nextIndex < waypoints.length && waypoints[nextIndex].command !== 'waypoint') {
+                    nextIndex++;
+                }
+                
+                if (nextIndex < waypoints.length) {
+                    const nextWaypoint = waypoints[nextIndex];
+                    const nextAltitude = parseFloat(nextWaypoint.altitude);
+                    const nextWaypointAltitude = isNaN(nextAltitude) ? waypointSettings.missionAltitude : nextAltitude;
+                    const nextFinalAltitude = nextWaypoint.altitudeType === 'absolute' ? nextWaypointAltitude : nextWaypointAltitude + homeAltitude;
 
-                nextConnectionLine = map_viewer.entities.add({
-                    id: `connection-${index}-${index+1}`,
-                    name: 'connection-line',
-                    polyline: {
-                        positions: [
-                            Cesium.Cartesian3.fromDegrees(
-                                waypoint.longitude,
-                                waypoint.latitude,
-                                finalAltitude
-                            ),
-                            Cesium.Cartesian3.fromDegrees(
-                                nextWaypoint.longitude,
-                                nextWaypoint.latitude,
-                                nextFinalAltitude
-                            )
-                        ],
-                        width: 2,
-                        material: new Cesium.PolylineDashMaterialProperty({
-                            color: Cesium.Color.WHITE.withAlpha(0.7),
-                            dashLength: 16.0,
-                            dashPattern: parseInt('1111', 2)
-                        })
-                    }
-                });
+                    nextConnectionLine = map_viewer.entities.add({
+                        id: `connection-${index}-${nextIndex}`,
+                        name: 'connection-line',
+                        polyline: {
+                            positions: [
+                                Cesium.Cartesian3.fromDegrees(
+                                    waypoint.longitude,
+                                    waypoint.latitude,
+                                    finalAltitude
+                                ),
+                                Cesium.Cartesian3.fromDegrees(
+                                    nextWaypoint.longitude,
+                                    nextWaypoint.latitude,
+                                    nextFinalAltitude
+                                )
+                            ],
+                            width: 2,
+                            material: new Cesium.PolylineDashMaterialProperty({
+                                color: Cesium.Color.WHITE.withAlpha(0.7),
+                                dashLength: 16.0,
+                                dashPattern: parseInt('1111', 2)
+                            })
+                        }
+                    });
+                }
             }
 
         } catch (error) {
