@@ -44,6 +44,11 @@
         }
     }
 
+    // currentWaypoints가 변경될 때마다 마커를 다시 그리는 반응형 선언
+    $: if ($selectedDrone && currentWaypoints) {
+        createAllWaypointEntities($selectedDrone.drone_id);
+    }
+
     // 드론 선택 시 해당 드론의 웨이포인트 마커 표시
     $: if ($selectedDrone) {
         // 이전 드론의 마커 제거
@@ -169,17 +174,11 @@
                         };
                         droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
                         currentWaypoints = [...newWaypoints];
-
-                        // 모든 엔티티 제거 후 다시 생성
-                        removeAllWaypointEntities($selectedDrone.drone_id);
-                        newWaypoints.forEach((waypoint, i) => {
-                            createWaypointMarker(waypoint, i, $selectedDrone.drone_id);
-                        });
-                        
                         selectedWaypoint = null;  // 선택 해제
                     } else {
                         // 새로운 웨이포인트 추가
                         const newWaypoint = {
+                            index: currentWaypoints.length + 1,
                             command: 'waypoint',
                             delay: 0,
                             latitude: correctedLatitude,
@@ -192,12 +191,6 @@
                         const newWaypoints = [...currentWaypoints, newWaypoint];
                         droneWaypoints.set($selectedDrone.drone_id, newWaypoints);
                         currentWaypoints = [...newWaypoints];
-
-                        // 모든 엔티티 제거 후 다시 생성
-                        removeAllWaypointEntities($selectedDrone.drone_id);
-                        newWaypoints.forEach((waypoint, i) => {
-                            createWaypointMarker(waypoint, i, $selectedDrone.drone_id);
-                        });
                     }
                 }
             } else {
