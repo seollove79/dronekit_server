@@ -13,11 +13,25 @@
   export let onSelect;
 
   const altitudeTypes = ['relative', 'absolute', 'agl'];
-  const commands = ['waypoint', 'takeoff', 'land', 'do_set_servo'];
+  const commands = ['waypoint', 'takeoff', 'land', 'do_set_servo', 'do_change_speed'];
 
   let selectedIndex = null;
   let tbody;
   let prevWaypointsLength = 0;
+
+  let tableTitleDefault = ['No', 'commnad', 'P1', 'P2', 'P3', 'P4', 'Lat', 'Long', 'Alt', 'Frame', '순서', '삭제'];
+  let tableTitleWaypoint = ['No', 'commnad', 'Delay', 'P2', 'P3', 'P4', 'Lat', 'Long', 'Alt', 'Frame', '순서', '삭제'];
+  let tableTitleDoSetServo = ['No', 'commnad', 'SerNo', 'PWM', 'P3', 'P4', 'Lat', 'Long', 'Alt', 'Frame', '순서', '삭제'];
+  let tableTitleDoChangeSpeed = ['No', 'commnad', 'Type', 'Speed', '', '', '', '', '', 'Frame', '순서', '삭제'];
+  let tableTitleLand = ['No', 'commnad', '', '', '', '', '', '', '', 'Frame', '순서', '삭제'];
+
+  // 현재 선택된 웨이포인트의 command에 따라 테이블 제목 결정
+  $: currentTableTitle = selectedIndex !== null && waypoints[selectedIndex] ? 
+    (waypoints[selectedIndex].command === 'waypoint' ? tableTitleWaypoint :
+     waypoints[selectedIndex].command === 'do_set_servo' ? tableTitleDoSetServo :
+     waypoints[selectedIndex].command === 'do_change_speed' ? tableTitleDoChangeSpeed :
+     waypoints[selectedIndex].command === 'land' ? tableTitleLand :
+     tableTitleDefault) : tableTitleDefault;
 
   // 웨이포인트가 추가될 때만 스크롤
   $: if (waypoints && waypoints.length > prevWaypointsLength) {
@@ -116,49 +130,49 @@
   <table class="mission-table">
     <thead>
       <tr>
-        <th width="7%">No</th>
-        <th>commnad</th>
-        <th>Delay</th>
-        <th width="15%">Latitude</th>
-        <th width="15%">Longitude</th>
-        <th>altitude</th>
-        <th>고도타입</th>
-        <th>순서</th>
-        <th width="10%">삭제</th>
+        <th width="6%">{currentTableTitle[0]}</th>
+        <th width="12%">{currentTableTitle[1]}</th>
+        <th width="7%">{currentTableTitle[2]}</th>
+        <th width="7%">{currentTableTitle[3]}</th>
+        <th width="7%">{currentTableTitle[4]}</th>
+        <th width="7%">{currentTableTitle[5]}</th>
+        <th width="12%">{currentTableTitle[6]}</th>
+        <th width="12%">{currentTableTitle[7]}</th>
+        <th width="6%">{currentTableTitle[8]}</th>
+        <th width="9%">{currentTableTitle[9]}</th>
+        <th width="8%">{currentTableTitle[10]}</th>
+        <th width="7%">{currentTableTitle[11]}</th>
       </tr>
     </thead>
     <tbody bind:this={tbody}>
       {#if waypoints && waypoints.length > 0}
         {#each waypoints as wp, i}
           <tr class:selected={selectedIndex === i}>
-            <td width="7%" class="clickable" on:click={() => handleSelect(i)}>{i + 1}</td>
-            <td>
+            <td width="6%" class="clickable" on:click={() => handleSelect(i)}>{i + 1}</td>
+            <td width="12%">
               <select bind:value={wp.command} on:change={e => handleInputChange(i, 'command', e.target.value)} style="width: 100px;">
                 {#each commands as cmd}
                   <option value={cmd}>{cmd}</option>
                 {/each}
               </select>
             </td>
-            <td>
-              <input type="number" bind:value={wp.delay} min="0" on:input={e => handleInputChange(i, 'delay', e.target.value)} style="width: 60px;" />
-            </td>
-            <td width="15%">
-              <input type="number" bind:value={wp.latitude} step="0.000001" on:input={e => handleInputChange(i, 'latitude', e.target.value)} style="width: 110px;" />
-            </td>
-            <td width="15%">
-              <input type="number" bind:value={wp.longitude} step="0.000001" on:input={e => handleInputChange(i, 'longitude', e.target.value)} style="width: 110px;"/>
-            </td>
-            <td>
+            <td width="7%"><input type="number" bind:value={wp.param1} min="0" on:input={e => handleInputChange(i, 'param1', e.target.value)} style="width: 60px;" /></td>
+            <td width="7%"><input type="number" bind:value={wp.param2} min="0" on:input={e => handleInputChange(i, 'param2', e.target.value)} style="width: 60px;" /></td>
+            <td width="7%"><input type="number" bind:value={wp.param3} min="0" on:input={e => handleInputChange(i, 'param3', e.target.value)} style="width: 60px;" /></td>
+            <td width="7%"><input type="number" bind:value={wp.param4} min="0" on:input={e => handleInputChange(i, 'param4', e.target.value)} style="width: 60px;" /></td>
+            <td width="12%"><input type="number" bind:value={wp.latitude} step="0.000001" on:input={e => handleInputChange(i, 'latitude', e.target.value)} style="width: 110px;" /></td>
+            <td width="12%"><input type="number" bind:value={wp.longitude} step="0.000001" on:input={e => handleInputChange(i, 'longitude', e.target.value)} style="width: 110px;"/></td>
+            <td width="6%">
               <input type="number" bind:value={wp.altitude} min="0" on:input={e => handleInputChange(i, 'altitude', e.target.value)}  style="width: 60px;"/>
             </td>
-            <td>
+            <td width="9%">
               <select bind:value={wp.altitudeType} on:change={e => handleInputChange(i, 'altitudeType', e.target.value)}>
                 {#each altitudeTypes as type}
                   <option value={type}>{type}</option>
                 {/each}
               </select>
             </td>
-            <td>
+            <td width="8%">
               <div class="order-buttons">
                 <button class="order-btn" on:click={() => handleMoveUp(i)} disabled={i === 0} aria-label="위로 이동">
                   <i class="fas fa-chevron-up"></i>
@@ -168,7 +182,7 @@
                 </button>
               </div>
             </td>
-            <td width="10%">
+            <td width="7%">
               <button class="delete-btn" on:click={() => handleDelete(i)}>삭제</button>
             </td>
           </tr>
@@ -190,7 +204,7 @@
   border-radius: 14px;
   padding: 10px 10px 10px 10px;
   color: #fff;
-  width: 1000px;
+  width: 1100px;
   margin: 0 auto 0 auto;
   box-shadow: 0 2px 12px rgba(0,0,0,0.3);
   max-height: 38vh;

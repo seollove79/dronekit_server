@@ -808,3 +808,382 @@
 2025-05-13 11:46:12,359 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
 2025-05-13 11:46:12,391 - autopilot.drone1 - INFO - [drone1] - Flight plan received
 2025-05-13 11:46:15,337 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 13:50:54,764 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 13:50:54,765 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 13:50:54,765 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 13:51:10,006 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 15:36:41,275 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 15:38:06,845 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 15:39:29,113 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 15:54:24,920 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 15:54:24,920 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 15:54:25,010 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 15:54:25,010 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 15:54:25,131 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 15:54:25,162 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:01:42,416 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:01:42,417 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:01:42,514 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:01:42,514 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:01:42,632 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:01:42,662 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:04:30,758 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:04:30,758 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:04:30,879 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:04:30,879 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:04:30,970 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:04:31,000 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:06:53,994 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:06:53,994 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:06:54,085 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:06:54,086 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:06:54,205 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:06:54,206 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:07:39,059 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 16:09:11,089 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:09:11,089 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:09:11,209 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:09:11,210 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:09:11,301 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:09:11,302 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:14:51,873 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:14:51,873 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:14:51,873 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:15:02,843 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 16:15:25,420 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:15:25,420 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:15:25,512 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:15:25,514 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:15:25,632 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:15:25,634 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:16:36,060 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 16:17:20,654 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:17:20,654 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:17:20,748 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:17:20,748 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:17:20,869 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:17:20,870 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:18:54,370 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:18:54,370 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:18:54,370 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:19:17,590 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:19:17,590 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:19:17,681 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:19:17,683 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:33:24,063 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:33:24,063 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:33:24,064 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:34:30,715 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:34:30,715 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:34:30,807 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:31,057 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:34:31,809 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:32,813 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:33,813 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:34,816 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:35,820 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:36,822 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:37,822 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:34:38,795 - autopilot.drone1 - WARNING - [drone1] - Mission upload timeout
+2025-05-13 16:38:11,771 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:38:11,772 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:38:11,772 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:38:34,425 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:38:34,425 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:38:34,516 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:38:34,517 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:38:40,950 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:38:40,950 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:38:41,042 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:38:41,042 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:38:41,134 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:41,140 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:38:42,141 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:43,144 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:44,150 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:45,152 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:46,155 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:47,156 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:48,160 - dronekit.drone1 - ERROR - [drone1] - Exception in message handler for MISSION_REQUEST
+Traceback (most recent call last):
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1631, in notify_message_listeners
+    fn(self, name, msg)
+  File "D:\devwork\dronekit_server\app\libs\dronekit\__init__.py", line 1381, in listener
+    self._master.mav.send(wp)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v20\ardupilotmega.py", line 20626, in send
+    buf = mavmsg.pack(self, force_mavlink1=force_mavlink1)
+  File "C:\Users\seoll\.conda\envs\dronekit_server\lib\site-packages\pymavlink\dialects\v10\ardupilotmega.py", line 9742, in pack
+    return self._pack(mav, self.crc_extra, self.unpacker.pack(self.param1, self.param2, self.param3, self.param4, self.x, self.y, self.z, self.seq, self.command, self.target_system, self.target_component, self.frame, self.current, self.autocontinue), force_mavlink1=force_mavlink1)
+struct.error: required argument is not a float
+2025-05-13 16:38:49,131 - autopilot.drone1 - WARNING - [drone1] - Mission upload timeout
+2025-05-13 16:41:29,029 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:41:29,030 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:41:29,030 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:41:47,466 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:41:47,466 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:41:47,556 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:41:47,558 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:42:12,185 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:42:12,185 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:42:12,278 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:42:12,279 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:42:12,399 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:42:12,403 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:46:47,669 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:46:47,669 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:46:47,669 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:51:09,788 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 16:51:09,789 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 16:51:09,789 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 16:56:20,685 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 16:58:19,704 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:19,704 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:19,824 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:19,824 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:19,915 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:19,946 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:34,873 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:34,873 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:34,996 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:34,996 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:35,090 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:35,094 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:45,749 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:45,749 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:45,869 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:45,870 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:58:45,960 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 16:58:45,992 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 16:59:17,830 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 17:00:49,834 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-13 17:00:49,834 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-13 17:00:49,834 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-13 17:01:19,549 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 17:01:19,549 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 17:01:19,640 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 17:01:19,671 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 17:01:22,755 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-13 17:01:46,552 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-13 17:01:54,160 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-13 17:01:54,160 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-13 17:02:01,864 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-05-13 17:04:55,402 - autopilot.drone1 - INFO - [drone1] - Reached command #1
+2025-05-13 17:04:55,402 - autopilot.drone1 - INFO - [drone1] - Mission: 2 WP
+2025-05-13 17:08:17,309 - autopilot.drone1 - INFO - [drone1] - Reached command #2
+2025-05-13 17:08:17,309 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-05-13 17:09:59,165 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-05-13 17:09:59,165 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-05-13 17:10:44,842 - autopilot.drone1 - INFO - [drone1] - SIM Hit ground at 1.426478 m/s
+2025-05-13 17:10:56,711 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-05-13 17:10:56,711 - autopilot.drone1 - INFO - [drone1] - Mission: 1 WP
+2025-05-13 17:14:12,818 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 17:14:12,818 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 17:14:12,912 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 17:14:12,912 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-13 17:14:13,034 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-13 17:14:13,037 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 00:31:31,207 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.7.0-dev (cf2714ed)
+2025-05-16 00:31:31,208 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-16 00:31:31,208 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-16 00:33:50,747 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-16 00:33:50,747 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-16 00:33:50,748 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-16 01:27:01,873 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-16 01:27:01,873 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-16 01:27:01,873 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-16 01:27:24,348 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-16 01:31:11,728 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.5.7 (b7207551)
+2025-05-16 01:31:11,728 - autopilot.drone1 - INFO - [drone1] - intosky_gcs_01
+2025-05-16 01:31:11,728 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-05-16 01:34:05,237 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:34:05,237 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:34:05,343 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:34:05,343 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:34:05,453 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:34:05,476 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:34:44,273 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:34:44,273 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:34:44,374 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:34:44,374 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:34:44,483 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:34:44,528 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:35:18,891 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-16 01:35:40,345 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:35:40,345 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:35:40,444 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:35:40,444 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:35:40,568 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:35:40,591 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:36:18,126 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:36:18,126 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:36:18,227 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:36:18,227 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:36:18,345 - autopilot.drone1 - WARNING - [drone1] - got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+2025-05-16 01:36:18,376 - autopilot.drone1 - INFO - [drone1] - Flight plan received
+2025-05-16 01:36:21,209 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-05-16 01:37:13,071 - autopilot.drone1 - INFO - [drone1] - Arming motors
+2025-05-16 01:37:24,311 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-05-16 01:37:24,311 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-05-16 01:37:47,538 - autopilot.drone1 - INFO - [drone1] - Mission: 1 ChangeSpeed
+2025-05-16 01:37:47,538 - autopilot.drone1 - INFO - [drone1] - Mission: 2 Takeoff
+2025-05-16 01:37:47,538 - autopilot.drone1 - INFO - [drone1] - Mission: 3 WP
+2025-05-16 01:40:41,093 - autopilot.drone1 - INFO - [drone1] - Reached command #3
+2025-05-16 01:40:41,093 - autopilot.drone1 - INFO - [drone1] - Mission: 4 WP
+2025-05-16 01:44:03,023 - autopilot.drone1 - INFO - [drone1] - Reached command #4
+2025-05-16 01:44:03,023 - autopilot.drone1 - INFO - [drone1] - Mission: 5 WP
+2025-05-16 01:45:44,858 - autopilot.drone1 - INFO - [drone1] - Reached command #5
+2025-05-16 01:45:44,858 - autopilot.drone1 - INFO - [drone1] - Mission: 6 WP
+2025-05-16 01:46:30,516 - autopilot.drone1 - INFO - [drone1] - SIM Hit ground at 1.424219 m/s
+2025-05-16 01:46:42,337 - autopilot.drone1 - INFO - [drone1] - Disarming motors
+2025-05-16 01:46:42,337 - autopilot.drone1 - INFO - [drone1] - Mission: 1 ChangeSpeed
+2025-05-16 01:46:42,337 - autopilot.drone1 - INFO - [drone1] - Mission: 2 Takeoff

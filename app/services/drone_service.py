@@ -138,7 +138,7 @@ async def execute_command(drone_id: str, request):
 
 # 드론 자동비행 미션 업로드 함수
 async def upload_mission(drone_id: str, mission: list[dict]):
-    #TODO: 미션 하나더 올라가는 것 해결 해야 함
+
     # 드론이 연결되어 있는지 확인
     if drone_id not in connected_drones:
         raise HTTPException(status_code=404, detail="Drone not connected")
@@ -163,8 +163,10 @@ async def upload_mission(drone_id: str, mission: list[dict]):
             lon = waypoint.get("longitude")
             alt = waypoint.get("altitude")
             alt_type = waypoint.get("altitude_type", "relative")  # 기본값: relative
-            delay = waypoint.get("delay", 0)
-            radius = waypoint.get("radius", 0)
+            param1 = waypoint.get("param1", 0)
+            param2 = waypoint.get("param2", 0)
+            param3 = waypoint.get("param3", 0)
+            param4 = waypoint.get("param4", 0)
             command = waypoint.get("command", "waypoint")
 
             if lat is None or lon is None or alt is None:
@@ -188,10 +190,14 @@ async def upload_mission(drone_id: str, mission: list[dict]):
                 command_type = mavutil.mavlink.MAV_CMD_NAV_LAND
             elif command == "do_set_servo":
                 command_type = mavutil.mavlink.MAV_CMD_DO_SET_SERVO
+            elif command == "do_change_speed":
+                command_type = mavutil.mavlink.MAV_CMD_DO_CHANGE_SPEED
+            elif command == "land":
+                command_type = mavutil.mavlink.MAV_CMD_NAV_LAND
 
             # 명령 생성 및 추가
             cmds.add(
-                Command(index + 1, 0, 0, frame, command_type, 0, 1, delay, radius, 0, 0, lat, lon, alt)
+                Command(index + 1, 0, 0, frame, command_type, 0, 1, param1, param2, param3, param4, lat, lon, alt)
             )
 
         # 미션 업로드

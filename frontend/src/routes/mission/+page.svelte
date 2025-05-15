@@ -180,7 +180,10 @@
                         const newWaypoint = {
                             index: currentWaypoints.length + 1,
                             command: 'waypoint',
-                            delay: 0,
+                            param1: 0,
+                            param2: 0,
+                            param3: 0,
+                            param4: 0,
                             latitude: correctedLatitude,
                             longitude: correctedLongitude,
                             altitude: waypointSettings.missionAltitude,
@@ -367,13 +370,15 @@
                 // 미션 아이템을 웨이포인트 형식으로 변환
                 const waypoints = missionData.mission_items.map(item => ({
                     index: item.index,
-                    command: item.command === 16 ? 'waypoint' : (item.command === 22 ? 'takeoff' : (item.command === 183 ? 'do_set_servo' : 'unknown')),
-                    delay: item.param1,
+                    command: item.command === 16 ? 'waypoint' : (item.command === 22 ? 'takeoff' : (item.command === 183 ? 'do_set_servo' : (item.command === 178 ? 'do_change_speed' : (item.command === 21 ? 'land' : 'unknown')))),
+                    param1: item.param1,
+                    param2: item.param2,
+                    param3: item.param3,
+                    param4: item.param4,
                     latitude: item.latitude,
                     longitude: item.longitude,
                     altitude: item.altitude,
                     altitudeType: item.frame === 0 ? 'absolute' : (item.frame === 3 ? 'relative' : 'relative'),  // 기본값은 relative
-                    acceptanceRadius: item.param2
                 }));
 
                 droneWaypoints.set($selectedDrone.drone_id, waypoints);
@@ -405,10 +410,15 @@
         }
 
         try {
+            console.log('currentWaypoints:', currentWaypoints);
             // 미션 데이터 준비
             const missionData = currentWaypoints.map(waypoint => ({
                 latitude: waypoint.latitude,
                 longitude: waypoint.longitude,
+                param1: parseFloat(waypoint.param1),
+                param2: parseFloat(waypoint.param2),
+                param3: parseFloat(waypoint.param3),
+                param4: parseFloat(waypoint.param4),
                 altitude: parseFloat(waypoint.altitude),
                 altitude_type: waypoint.altitudeType,
                 command: waypoint.command,
