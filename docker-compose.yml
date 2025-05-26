@@ -6,8 +6,6 @@ services:
       - "80"
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./static:/var/www/intodelivery-backend/static
-      - ./media:/var/www/intodelivery-backend/media
     networks:
       - dronekit_network
     depends_on:
