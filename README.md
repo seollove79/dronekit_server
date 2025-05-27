@@ -141,8 +141,8 @@ npm run dev
 ```
 
 3. API 문서 확인:
-- Swagger UI: `http://localhost:8000/docs`
-- ReDoc: `http://localhost:8000/redoc`
+- Swagger UI: `https://dronekit.vandi.kr/docs`
+- ReDoc: `https://drone.kt.vandi.kr/redoc`
 
 4. 프론트엔드 접속:
 - 개발 서버: `http://localhost:5173`

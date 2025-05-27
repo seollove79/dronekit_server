@@ -1,6 +1,6 @@
 // API 기본 설정
 export const API_CONFIG = {
-    BASE_URL: 'http://localhost:8000',  // FastAPI 서버 주소
+    BASE_URL: 'https://dronekit.vandi.kr',  // FastAPI 서버 주소
     ENDPOINTS: {
         DRONES: {
             BASE: '/drones',
