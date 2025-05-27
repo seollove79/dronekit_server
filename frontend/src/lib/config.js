@@ -3,7 +3,7 @@ export const API_CONFIG = {
     BASE_URL: 'https://dronekit.vandi.kr',  // FastAPI 서버 주소
     ENDPOINTS: {
         DRONES: {
-            BASE: '/drones',
+            BASE: '/drones/',
             CONNECT: '/drones/connect',
             TELEMETRY: (droneId) => `/drones/${droneId}/telemetry`,
             ARM: (droneId) => `/drones/${droneId}/arm`,
