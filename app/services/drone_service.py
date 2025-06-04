@@ -224,7 +224,7 @@ async def get_telemetry(drone_id: str):
             "longitude": vehicle.location.global_relative_frame.lon,
             "altitude": vehicle.location.global_relative_frame.alt,  # 상대 고도
             "altitude_asl": vehicle.location.global_frame.alt,  # 해수면 고도 (ASL)
-            "battery": vehicle.battery.level,
+            "battery": vehicle.battery.voltage,
             "airspeed": vehicle.airspeed,
             "groundspeed": vehicle.groundspeed,
             "heading": vehicle.heading,

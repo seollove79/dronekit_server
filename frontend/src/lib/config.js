@@ -1,6 +1,8 @@
 // API 기본 설정
 export const API_CONFIG = {
-    BASE_URL: 'https://dronekit.vandi.kr',  // FastAPI 서버 주소
+    BASE_URL: process.env.NODE_ENV === 'development' 
+        ? 'http://localhost:8000'  // 개발 환경
+        : 'https://dronekit.vandi.kr',  // 프로덕션 환경
     ENDPOINTS: {
         DRONES: {
             BASE: '/drones/',

@@ -8,7 +8,7 @@ app = FastAPI()
 # CORS 미들웨어 설정
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://gcs.vandi.kr"],  # 프론트엔드 개발 서버
+    allow_origins=["https://gcs.vandi.kr", "http://localhost:5173"],  # 프론트엔드 개발 서버와 로컬 개발 환경
     allow_credentials=True,
     allow_methods=["*"],  # 모든 HTTP 메서드 허용
     allow_headers=["*"],  # 모든 헤더 허용
