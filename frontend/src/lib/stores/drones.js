@@ -203,3 +203,14 @@ export async function setHomePosition(droneId, position) {
         throw new Error(`홈 위치 설정 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
     }
 } 
+
+// 미션 목록 조회
+export async function getMissionList(droneId) {
+    try {
+        const missionList = await droneApi.downloadMission(droneId);
+        return missionList;
+    } catch (error) {
+        console.error('미션 목록 조회 실패:', error);
+        throw error;
+    }
+}

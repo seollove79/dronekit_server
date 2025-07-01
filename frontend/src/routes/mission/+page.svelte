@@ -2,11 +2,10 @@
     import { onMount } from 'svelte';
     import { browser } from '$app/environment';
     import DroneList from '$lib/components/DroneList.svelte';
-    import { selectedDrone, getDroneTelemetry } from '$lib/stores/drones';
+    import { selectedDrone, getDroneTelemetry, getMissionList } from '$lib/stores/drones';
     import { drones } from '$lib/stores/drones';
     import MissionWaypointTable from '$lib/components/mission/MissionWaypointTable.svelte';
     import { mapViewer } from "$lib/stores/map";
-    import { getDroneMission } from '$lib/api/drone';
 
     // 웨이포인트 설정값
     let waypointSettings = {
@@ -365,10 +364,9 @@
         }
 
         try {
-            const missionData = await getDroneMission($selectedDrone.drone_id);
-            if (missionData && missionData.mission_items) {
-                // 미션 아이템을 웨이포인트 형식으로 변환
-                const waypoints = missionData.mission_items.map(item => ({
+            const missionList = await getMissionList($selectedDrone.drone_id);
+            if(missionList && missionList.mission_items) {
+                const waypoints = missionList.mission_items.map(item => ({
                     index: item.index,
                     command: item.command === 16 ? 'waypoint' : (item.command === 22 ? 'takeoff' : (item.command === 183 ? 'do_set_servo' : (item.command === 178 ? 'do_change_speed' : (item.command === 21 ? 'land' : 'unknown')))),
                     param1: item.param1,
@@ -392,8 +390,7 @@
                 alert('미션 데이터가 없습니다.');
             }
         } catch (error) {
-            console.error('미션 읽기 실패:', error);
-            alert('미션을 읽어오는데 실패했습니다: ' + error.message);
+            console.error('미션 목록 조회 실패:', error);
         }
     }
 

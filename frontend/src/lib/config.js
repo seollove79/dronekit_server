@@ -19,11 +19,11 @@ export const API_CONFIG = {
             FLY_TO: (droneId) => `/drones/${droneId}/fly-to`,
             HOME_POSITION: (droneId) => `/drones/${droneId}/home-position`
         },
-        MISSION: {
-            CREATE: '/mission/create',
-            UPDATE: '/mission/update',
-            DELETE: '/mission/delete',
-            LIST: '/mission/list'
-        }
+        // MISSION: {
+        //     CREATE: '/mission/create',
+        //     UPDATE: '/mission/update',
+        //     DELETE: '/mission/delete',
+        //     LIST: '/mission/list'
+        // }
     }
 }; 

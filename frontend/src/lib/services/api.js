@@ -113,14 +113,6 @@ export const droneApi = {
         });
     },
 
-    // 드론 미션 업로드
-    uploadMission: async (droneId, mission) => {
-        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.MISSION(droneId), {
-            method: 'POST',
-            body: JSON.stringify(mission),
-        });
-    },
-
     // 드론 비행 모드 변경
     changeFlightMode: async (droneId, mode) => {
         return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.MODE(droneId), {
@@ -154,35 +146,19 @@ export const droneApi = {
             }),
         });
     },
-};
 
-// 미션 관련 API 서비스
-export const missionApi = {
-    // 미션 생성
-    create: async (missionData) => {
-        return await fetchApi(API_CONFIG.ENDPOINTS.MISSION.CREATE, {
+    // 드론 미션 업로드
+    uploadMission: async (droneId, mission) => {
+        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.MISSION(droneId), {
             method: 'POST',
-            body: JSON.stringify(missionData),
+            body: JSON.stringify(mission),
         });
     },
 
-    // 미션 수정
-    update: async (missionId, missionData) => {
-        return await fetchApi(`${API_CONFIG.ENDPOINTS.MISSION.UPDATE}/${missionId}`, {
-            method: 'PUT',
-            body: JSON.stringify(missionData),
+    // 드론 미션 다운로드
+    downloadMission: async (droneId) => {
+        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.MISSION(droneId), {
+            method: 'GET',
         });
     },
-
-    // 미션 삭제
-    delete: async (missionId) => {
-        return await fetchApi(`${API_CONFIG.ENDPOINTS.MISSION.DELETE}/${missionId}`, {
-            method: 'DELETE',
-        });
-    },
-
-    // 미션 목록 조회
-    getList: async () => {
-        return await fetchApi(API_CONFIG.ENDPOINTS.MISSION.LIST);
-    },
-}; 
+};

@@ -1232,3 +1232,55 @@ struct.error: required argument is not a float
 2025-06-04 11:22:31,311 - autopilot.drone1 - CRITICAL - [drone1] - PreArm: Need Alt Estimate
 2025-06-04 11:23:02,312 - autopilot.drone1 - CRITICAL - [drone1] - PreArm: Need Alt Estimate
 2025-06-04 11:23:17,074 - dronekit.drone1 - WARNING - [drone1] - Link timeout, no heartbeat in last 5 seconds
+2025-07-01 13:56:10,894 - fastapi - ERROR - [system] - Form data requires "python-multipart" to be installed. 
+You can install "python-multipart" with: 
+
+pip install python-multipart
+
+2025-07-01 13:58:08,935 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.7.0-dev (149b176a)
+2025-07-01 13:58:08,935 - autopilot.drone1 - INFO - [drone1] - seol_desktop
+2025-07-01 13:58:08,935 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-07-01 13:59:04,936 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:00:02,576 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:01:12,044 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:01:38,369 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:02:11,639 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:02:42,866 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:06:05,902 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:07:40,967 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:09:13,121 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:11:39,451 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:33:55,821 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:36:04,733 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:36:31,488 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:42:17,776 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:44:03,199 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:45:28,246 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:51:01,042 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:56:42,868 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 14:58:28,803 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:00:26,559 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:01:36,520 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:02:04,281 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:02:32,295 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:03:00,570 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:03:44,269 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:05:07,224 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:05:37,291 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:32:53,011 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:33:30,054 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:34:22,577 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:35:07,047 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:35:44,116 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:52:03,345 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:53:00,103 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:53:49,740 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 15:58:18,593 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 16:22:04,693 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 16:24:26,341 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-01 18:26:58,501 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.7.0-dev (149b176a)
+2025-07-01 18:26:58,501 - autopilot.drone1 - INFO - [drone1] - seol_desktop
+2025-07-01 18:26:58,502 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-07-01 18:27:14,715 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 is using GPS
+2025-07-01 18:27:14,901 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 is using GPS
+2025-07-01 18:33:00,372 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
