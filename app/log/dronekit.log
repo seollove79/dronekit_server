@@ -1284,3 +1284,4 @@ pip install python-multipart
 2025-07-01 18:27:14,715 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 is using GPS
 2025-07-01 18:27:14,901 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 is using GPS
 2025-07-01 18:33:00,372 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
+2025-07-15 20:00:26,269 - dronekit.drone_001 - WARNING - [drone_001] - Link timeout, no heartbeat in last 5 seconds

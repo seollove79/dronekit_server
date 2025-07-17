@@ -3,6 +3,10 @@ import { droneApi } from '../services/api';
 
 // 드론 목록을 저장할 스토어 생성
 export const drones = writable([]);
+
+// 소켓서버 connection 관리용 스토어 생성
+export const wsConnection = writable(null);
+
 // 선택된 드론을 저장할 스토어 생성
 export const selectedDrone = writable(null);
 // 각 드론의 텔레메트리 데이터를 저장할 Map
@@ -58,9 +62,29 @@ export async function refreshDrones() {
 }
 
 // 드론 연결
-export async function connectDrone(droneId, connectionString) {
+export async function connectDrone(droneId, connectionString, connectionType) {
     try {
-        await droneApi.connect(droneId, connectionString);
+        if (connectionType === 'socket') {
+            // 소켓 연결 로직
+            const existingDrones = get(drones_socket);
+            const existingDrone = existingDrones.find(d => d.id === droneId);
+
+            const socket = new WebSocket(connectionString);
+            console.log(socket);
+
+            // socket.onopen = () => {
+            //     console.log(`드론 ${drone_id} 소켓 연결 성공`);
+            // };
+            // // 소켓 연결 실패 시 에러 처리
+            // socket.onerror = (error) => {
+            //     console.error(`드론 ${drone_id} 소켓 연결 실패:`, error);
+            //     throw new ApiError(0, `드론 ${drone_id} 소켓 연결 실패: ${error.message}`);
+            // }
+            // 연결 성공 후 드론 ID와 소켓을 저장
+            
+        } else {
+            await droneApi.connect(droneId, connectionString);
+        }
         await refreshDrones(); // 목록 새로고침
     } catch (error) {
         console.error('드론 연결 실패:', error);

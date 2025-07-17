@@ -4,7 +4,7 @@
     import DroneList from "$lib/components/DroneList.svelte";
     import FlyToCoordinatesModal from "$lib/components/FlyToCoordinatesModal.svelte";
     import FlyToAltitudeModal from "$lib/components/FlyToAltitudeModal.svelte";
-    import { connectDrone, selectedDrone, flyToPosition, telemetryData, setHomePosition } from "$lib/stores/drones";
+    import { connectDrone, selectedDrone, flyToPosition, telemetryData, setHomePosition, wsConnection } from "$lib/stores/drones";
     import { mapViewer } from "$lib/stores/map";
 
     let mapController;
@@ -54,9 +54,18 @@
         try {
             isConnecting = true;
             errorMessage = "";
+            let connectionString = "";
+
+            if (connectionType == "tcp") {
+                connectionString = `${connectionType}:${ipAddress}:${port}`;
+            } else if (connectionType == "socket") {
+                connectionString = `ws://${ipAddress}:${port}`;
+            } else {
+                errorMessage = '지원하지 않는 연결 유형입니다.';
+                return;
+            }
             
-            const connectionString = `${connectionType}:${ipAddress}:${port}`;
-            await connectDrone(droneId, connectionString);
+            await connectDrone(droneId, connectionString, connectionType);
 
             showAddDroneModal = false;
         } catch (error) {
@@ -269,6 +278,65 @@
         removePositionEntities();
     }
 
+    // 소켓서버 연결
+    async function connectSocketServer() {
+        if (!wsConnection) {
+            return;
+        }
+        
+        const maxRetries = 3;
+        const retryDelay = 2000; // 2초
+        
+        for (let attempt = 1; attempt <= maxRetries; attempt++) {
+            try {
+                console.log(`소켓 서버 연결 시도 ${attempt}/${maxRetries}`);
+                
+                const socket = new WebSocket('ws://127.0.01:8765');
+                
+                // Promise로 연결 결과를 기다림
+                const connectionResult = await new Promise((resolve, reject) => {
+                    const timeout = setTimeout(() => {
+                        socket.close();
+                        reject(new Error('연결 시간 초과'));
+                    }, 5000); // 5초 타임아웃
+                    
+                    socket.onopen = () => {
+                        clearTimeout(timeout);
+                        console.log('소켓 서버에 연결되었습니다.');
+                        wsConnection.set(socket);
+                        resolve(socket);
+                    };
+                    
+                    socket.onerror = (error) => {
+                        clearTimeout(timeout);
+                        console.error(`소켓 서버 연결 오류 (시도 ${attempt}):`, error);
+                        reject(error);
+                    };
+                    
+                    socket.onclose = () => {
+                        console.log('소켓 서버 연결이 종료되었습니다.');
+                        wsConnection.set(null);
+                    };
+                });
+                
+                // 연결 성공시 루프 종료
+                return connectionResult;
+                
+            } catch (error) {
+                console.error(`연결 시도 ${attempt} 실패:`, error.message);
+                
+                // 마지막 시도가 아니면 재시도 대기
+                if (attempt < maxRetries) {
+                    console.log(`${retryDelay / 1000}초 후 재시도합니다...`);
+                    await new Promise(resolve => setTimeout(resolve, retryDelay));
+                } else {
+                    console.error('모든 연결 시도가 실패했습니다.');
+                    errorMessage = '소켓 서버 연결에 실패했습니다. 모든 재시도가 완료되었습니다.';
+                }
+            }
+        }
+    }
+
     onMount(async () => {
         if (!browser) return;
 
@@ -383,6 +451,9 @@
         window.addEventListener('contextmenu', preventContextMenu, true);
         
         document.addEventListener('click', handleClickOutside);
+
+        // 소켓서버 연결
+        await connectSocketServer();
     });
 
     // 컴포넌트가 제거될 때 이벤트 핸들러 정리
@@ -447,6 +518,7 @@
             <div class="input-group">
                 <select bind:value={connectionType} disabled={isConnecting}>
                     <option value="tcp">TCP</option>
+                    <option value="socket">SOCKET</option>
                 </select>
             </div>
             <div class="input-group">
