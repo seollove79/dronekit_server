@@ -1,5 +1,5 @@
 <script>
-    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, selectedDrone } from '../stores/drones';
+    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, getDroneTelemetrySocket, selectedDrone } from '../stores/drones';
     import TakeoffModal from './TakeoffModal.svelte';
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     export let drone;
@@ -33,6 +33,8 @@
     // 드론 위치 및 자세 업데이트 함수
     function updateDronePosition(droneId, telemetryData) {
         if (!telemetryData) return;
+
+        console.log(`Updating position for drone ${droneId}:`, telemetryData);
 
         const position = Cesium.Cartesian3.fromDegrees(
             telemetryData.longitude,
@@ -181,7 +183,14 @@
     // 텔레메트리 데이터 업데이트 함수
     async function updateTelemetry() {
         try {
-            const newData = await getDroneTelemetry(drone.drone_id);
+            let newData = {};
+            if (drone.drone_type === 'socket') {
+                newData = await getDroneTelemetrySocket(drone.drone_id);
+            }
+            else {
+                newData = await getDroneTelemetry(drone.drone_id);
+            }
+            //const newData = await getDroneTelemetry(drone.drone_id);
             telemetryData = newData;
             dispatch('telemetryUpdate', newData);
             updateDronePosition(drone.drone_id, newData);
@@ -282,6 +291,7 @@
 
     // 드론 연결 해제 이벤트 발생
     function handleDisconnect() {
+        console.log(`드론 ${drone.drone_id} 연결 해제 요청`);
         dispatch('disconnect', { droneId: drone.drone_id });
     }
 </script>

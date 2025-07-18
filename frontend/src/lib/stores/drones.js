@@ -10,6 +10,12 @@ export const drones_socket = writable([]);
 // 소켓서버 connection 관리용 스토어 생성
 export const wsConnection = writable(null);
 
+// socket드론의 텔레메트리 데이터 Map을 저장할 스토어 생성
+const telemetryMapSocket = writable(new Map());
+
+// 소켓 텔레메트리 데이터를 외부에서 사용할 수 있도록 export
+export const telemetryDataSocket = derived(telemetryMapSocket, $telemetryMapSocket => $telemetryMapSocket);
+
 // 소켓 메시지 처리 루프
 export async function handleSocketMessages() {
     const socket = get(wsConnection);
@@ -20,9 +26,53 @@ export async function handleSocketMessages() {
     socket.onmessage = (event) => {
         const message = JSON.parse(event.data);
         if (message.type === 'client_list') {
+            let socketDrones = [];
             let droneList = message.drones;
-            drones_socket.set(droneList);
+            for (const drone of droneList) {
+                let newDrone = {
+                    id: drone,
+                    type: 'socket',
+                };
+                socketDrones.push(newDrone);
+            }
+            drones_socket.set(socketDrones);
         }
+
+        if (message.type === 'drone_status') {
+            console.log('드론 상태 메시지 수신:', message);
+            let telemetryData = {
+                drone_id: message.drone,
+                airspeed: 0,
+                altitude: message.position.altitude_relative,
+                altitude_asl: message.position.altitude,
+                armed: message.status.armed,
+                battery: message.status.battery_voltage,
+                groundspeed: message.status.groundspeed,
+                heading: message.status.heading,
+                home_altitude: 0,
+                home_latitude: 0,
+                home_longitude: 0,
+                latitude: message.position.latitude,
+                longitude: message.position.longitude,
+                mode: message.status.mode,
+                pitch: message.status.pitch,
+                roll: message.status.roll,
+                signal_strength: 0,
+                yaw: message.status.yaw,
+            };
+
+            // telemetryMapSocket에 모든 소켓 드론 데이터 누적
+            telemetryMapSocket.update(currentMap => {
+                const newMap = new Map(currentMap);
+                newMap.set(message.drone, telemetryData);
+                return newMap;
+            });
+
+            // console.log('텔레메트리 데이터 업데이트:', telemetryData);
+            // console.log('telemetryMapSocket 현재 상태:', get(telemetryMapSocket));
+        }
+
+        
     };
     socket.onerror = (error) => {
         console.error('소켓 오류:', error);
@@ -53,13 +103,16 @@ export async function updateTelemetry() {
             console.error('텔레메트리 데이터 조회 실패:', error);
         }
     }
-
     telemetryMap.set(newTelemetryMap);
 }
 
 // 특정 드론의 텔레메트리 데이터 가져오기
 export function getDroneTelemetry(droneId) {
     return get(telemetryMap).get(droneId);
+}
+
+export function getDroneTelemetrySocket(droneId) {
+    return get(telemetryMapSocket).get(droneId);
 }
 
 // 텔레메트리 데이터 스토어

@@ -1,6 +1,6 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    import { drones, drones_socket, selectedDrone, refreshDrones, disconnectDrone, telemetryData, updateTelemetry } from '../stores/drones';
+    import { drones, drones_socket, selectedDrone, refreshDrones, disconnectDrone, telemetryData, updateTelemetry, telemetryDataSocket } from '../stores/drones';
     import DroneCard from './DroneCard.svelte';
     import DroneStatus from './DroneStatus.svelte';
 
@@ -88,17 +88,17 @@
             <p class="no-drones">연결된 드론이 없습니다.</p>
         {:else}
             <div class="drone-cards">
-                {#each $drones as drone (drone.id)}
+                {#each $drones as drone}
                     <DroneCard 
                         drone={{ drone_id: drone.id }}
                         isSelected={$selectedDrone?.drone_id === drone.id}
                         onSelect={(drone) => selectDrone(drone)}
                     />
                 {/each}
-                {#each $drones_socket as droneId (droneId)}
+                {#each $drones_socket as drone}
                     <DroneCard 
-                        drone={{ drone_id: droneId }}
-                        isSelected={$selectedDrone?.drone_id === droneId}
+                        drone={{ drone_id: drone.id }}
+                        isSelected={$selectedDrone?.drone_id === drone.id}
                         onSelect={(drone) => selectDrone(drone)}
                     />
                 {/each}
@@ -109,18 +109,18 @@
     {#each $drones as drone}
         <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === drone.id}>
             <DroneStatus 
-                drone={{ drone_id: drone.id }} 
+                drone={{ drone_id: drone.id, drone_type: drone.type }} 
                 telemetryData={$telemetryData.get(drone.id)}
-                on:disconnect={({ detail }) => handleDisconnect(detail.drone.id)}
+                on:disconnect={() => handleDisconnect(drone.id)}
             />
         </div>
     {/each}
-    {#each $drones_socket as droneId}
-        <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === droneId}>
+    {#each $drones_socket as drone}
+        <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === drone.id}>
             <DroneStatus 
-                drone={{ drone_id: droneId }} 
-                telemetryData={$telemetryData.get(droneId)}
-                on:disconnect={({ detail }) => handleDisconnect(detail.droneId)}
+                drone={{ drone_id: drone.id, drone_type: drone.type }} 
+                telemetryData={$telemetryDataSocket.get(drone.id)}
+                on:disconnect={({ detail }) => handleDisconnect(detail.drone.id)}
             />
         </div>
     {/each}
