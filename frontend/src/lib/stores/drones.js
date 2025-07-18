@@ -1,11 +1,39 @@
 import { writable, derived, get } from 'svelte/store';
 import { droneApi } from '../services/api';
 
-// 드론 목록을 저장할 스토어 생성
+// restAPI 통해서 가지고온 드론 목록을 저장할 스토어 생성
 export const drones = writable([]);
+
+// 소켓 연결된 드론 목록을 저장할 스토어 생성
+export const drones_socket = writable([]);
 
 // 소켓서버 connection 관리용 스토어 생성
 export const wsConnection = writable(null);
+
+// 소켓 메시지 처리 루프
+export async function handleSocketMessages() {
+    const socket = get(wsConnection);
+    if (!socket) {
+        console.error('소켓 연결이 없습니다.');
+        return;
+    }
+    socket.onmessage = (event) => {
+        const message = JSON.parse(event.data);
+        if (message.type === 'client_list') {
+            let droneList = message.drones;
+            drones_socket.set(droneList);
+        }
+    };
+    socket.onerror = (error) => {
+        console.error('소켓 오류:', error);
+        // 오류 처리 로직 추가
+    };
+    socket.onclose = () => {
+        console.log('소켓 연결이 종료되었습니다.');
+        // 연결 종료 처리 로직 추가
+        wsConnection.set(null); // 연결 상태 초기화
+    };
+};
 
 // 선택된 드론을 저장할 스토어 생성
 export const selectedDrone = writable(null);
@@ -25,8 +53,6 @@ export async function updateTelemetry() {
             console.error('텔레메트리 데이터 조회 실패:', error);
         }
     }
-
-    //nsole.log(newTelemetryMap);
 
     telemetryMap.set(newTelemetryMap);
 }
@@ -53,6 +79,17 @@ export function clearSelectedDrone() {
 export async function refreshDrones() {
     try {
         const droneList = await droneApi.getList();
+        // let restDrones=[];
+        // for (const drone of droneList) {
+        //     let newDrone = {
+        //         id: drone,
+        //         type: 'rest',
+        //     }
+        //     restDrones.push(newDrone);
+        // }
+
+        // console.log('드론 목록:', restDrones);
+        // drones.set(restDrones)
         drones.set(droneList);
         return droneList;
     } catch (error) {
@@ -71,16 +108,6 @@ export async function connectDrone(droneId, connectionString, connectionType) {
 
             const socket = new WebSocket(connectionString);
             console.log(socket);
-
-            // socket.onopen = () => {
-            //     console.log(`드론 ${drone_id} 소켓 연결 성공`);
-            // };
-            // // 소켓 연결 실패 시 에러 처리
-            // socket.onerror = (error) => {
-            //     console.error(`드론 ${drone_id} 소켓 연결 실패:`, error);
-            //     throw new ApiError(0, `드론 ${drone_id} 소켓 연결 실패: ${error.message}`);
-            // }
-            // 연결 성공 후 드론 ID와 소켓을 저장
             
         } else {
             await droneApi.connect(droneId, connectionString);

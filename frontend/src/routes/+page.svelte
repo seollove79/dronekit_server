@@ -4,7 +4,7 @@
     import DroneList from "$lib/components/DroneList.svelte";
     import FlyToCoordinatesModal from "$lib/components/FlyToCoordinatesModal.svelte";
     import FlyToAltitudeModal from "$lib/components/FlyToAltitudeModal.svelte";
-    import { connectDrone, selectedDrone, flyToPosition, telemetryData, setHomePosition, wsConnection } from "$lib/stores/drones";
+    import { connectDrone, selectedDrone, flyToPosition, telemetryData, setHomePosition, wsConnection, handleSocketMessages } from "$lib/stores/drones";
     import { mapViewer } from "$lib/stores/map";
 
     let mapController;
@@ -17,6 +17,8 @@
     let errorMessage = "";
     let map_viewer;
     let handler;
+    let ipAddressEnabled = true;
+    let portEnabled = true;
     
     // 컨텍스트 메뉴 관련 변수
     let showContextMenu = false;
@@ -58,14 +60,17 @@
 
             if (connectionType == "tcp") {
                 connectionString = `${connectionType}:${ipAddress}:${port}`;
+                await connectDrone(droneId, connectionString, connectionType);
             } else if (connectionType == "socket") {
-                connectionString = `ws://${ipAddress}:${port}`;
+                if (wsConnection) {
+                    
+                }
             } else {
                 errorMessage = '지원하지 않는 연결 유형입니다.';
                 return;
             }
             
-            await connectDrone(droneId, connectionString, connectionType);
+            
 
             showAddDroneModal = false;
         } catch (error) {
@@ -269,6 +274,20 @@
         }
     }
 
+    // 연결 버튼 비활성화 조건 체크
+    function isConnectButtonDisabled() {
+        if (isConnecting) return true;
+        if (!droneId) return true;
+        
+        if (connectionType === 'tcp') {
+            if (!ipAddress || !port) return true;
+        } else if (connectionType === 'socket') {
+            if (!$wsConnection) return true;
+        }
+        
+        return false;
+    }
+
     // 다른 곳 클릭시 메뉴 닫기
     function handleClickOutside(event) {
         if (event.target.closest('.context-menu')) {
@@ -291,7 +310,7 @@
             try {
                 console.log(`소켓 서버 연결 시도 ${attempt}/${maxRetries}`);
                 
-                const socket = new WebSocket('ws://127.0.01:8765');
+                const socket = new WebSocket('ws://127.0.0.1:9876');
                 
                 // Promise로 연결 결과를 기다림
                 const connectionResult = await new Promise((resolve, reject) => {
@@ -304,6 +323,15 @@
                         clearTimeout(timeout);
                         console.log('소켓 서버에 연결되었습니다.');
                         wsConnection.set(socket);
+                        // 연결 성공시 등록 데이터 전송
+                        socket.send(JSON.stringify({
+                            role: 'gcs',
+                            name: 'gcs_001'
+                        }));
+                        
+                        // 소켓 메시지 처리 핸들러 설정
+                        handleSocketMessages();
+                        
                         resolve(socket);
                     };
                     
@@ -516,7 +544,15 @@
                 <div class="error-message" role="alert">{errorMessage}</div>
             {/if}
             <div class="input-group">
-                <select bind:value={connectionType} disabled={isConnecting}>
+                <select bind:value={connectionType} disabled={isConnecting} on:change={() => {
+                    if (connectionType === 'socket') {
+                        ipAddressEnabled = false;
+                        portEnabled = false;
+                    }
+                    else if (connectionType === 'tcp') {
+                        ipAddressEnabled = true;
+                        portEnabled = true;
+                    }}}>
                     <option value="tcp">TCP</option>
                     <option value="socket">SOCKET</option>
                 </select>
@@ -533,7 +569,7 @@
                 <input type="text" 
                     placeholder="드론 IP 주소 *" 
                     bind:value={ipAddress}
-                    disabled={isConnecting}
+                    disabled={isConnecting || !ipAddressEnabled}
                     required
                     aria-label="드론 IP 주소">
             </div>
@@ -541,7 +577,7 @@
                 <input type="text" 
                     placeholder="포트 번호 *" 
                     bind:value={port}
-                    disabled={isConnecting}
+                    disabled={isConnecting || !portEnabled}
                     required
                     aria-label="포트 번호">
             </div>
@@ -552,7 +588,7 @@
                 disabled={isConnecting}>취소</button>
             <button class="connect-button" 
                 on:click={handleConnect}
-                disabled={isConnecting || !droneId || !ipAddress || !port}>
+                disabled={isConnectButtonDisabled()}>
                 {isConnecting ? '연결 중...' : '연결'}
             </button>
         </div>

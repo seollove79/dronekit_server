@@ -1285,3 +1285,217 @@ pip install python-multipart
 2025-07-01 18:27:14,901 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 is using GPS
 2025-07-01 18:33:00,372 - autopilot.drone1 - WARNING - [drone1] - got MISSION_REQUEST; use MISSION_REQUEST_INT!
 2025-07-15 20:00:26,269 - dronekit.drone_001 - WARNING - [drone_001] - Link timeout, no heartbeat in last 5 seconds
+2025-07-18 16:12:02,189 - autopilot.drone_002 - INFO - [drone_002] - ArduCopter V4.7.0-dev (b18aae35)
+2025-07-18 16:12:02,189 - autopilot.drone_002 - INFO - [drone_002] - seol_desktop
+2025-07-18 16:12:02,189 - autopilot.drone_002 - INFO - [drone_002] - Frame: QUAD/PLUS
+2025-07-18 16:47:48,778 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 16:47:48,778 - autopilot.tcp_001 - INFO - [tcp_001] - seol_desktop
+2025-07-18 16:47:48,778 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-18 16:48:08,584 - dronekit.tcp_002 - WARNING - [tcp_002] - Link timeout, no heartbeat in last 5 seconds
+2025-07-18 16:48:32,824 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 16:48:32,824 - autopilot.tcp_001 - INFO - [tcp_001] - teol_desktop
+2025-07-18 16:48:32,824 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-18 16:48:33,034 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 16:48:33,064 - autopilot.tcp_001 - INFO - [tcp_001] - teol_desktop
+2025-07-18 16:48:33,064 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-18 16:48:51,261 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-18 16:48:56,834 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-18 16:49:15,895 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-18 16:49:25,890 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-18 16:50:50,497 - autopilot.tcp_002 - INFO - [tcp_002] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 16:50:50,498 - autopilot.tcp_002 - INFO - [tcp_002] - ueol_desktop
+2025-07-18 16:50:50,498 - autopilot.tcp_002 - INFO - [tcp_002] - Frame: QUAD/PLUS
+2025-07-18 16:50:50,499 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 16:50:50,499 - autopilot.tcp_001 - INFO - [tcp_001] - ueol_desktop
+2025-07-18 16:50:50,499 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-18 16:52:00,752 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:52:00,767 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:52:19,934 - autopilot.tcp_002 - INFO - [tcp_002] - Arming motors
+2025-07-18 16:52:19,949 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-18 16:52:29,853 - autopilot.tcp_002 - INFO - [tcp_002] - Disarming motors
+2025-07-18 16:52:29,854 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-18 16:52:31,746 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:52:31,774 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:53:02,762 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:53:02,778 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:53:33,738 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:53:33,753 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:54:04,739 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:54:04,753 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:54:35,739 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:54:35,768 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:55:06,739 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:55:06,769 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:55:37,767 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:55:37,768 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:56:08,768 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:56:08,784 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:56:39,762 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:56:39,763 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:57:10,763 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:57:10,779 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:57:41,769 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:57:41,770 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:58:12,773 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:58:12,774 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:58:43,754 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:58:43,784 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:59:14,773 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:59:14,774 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 16:59:45,770 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 16:59:45,785 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:00:16,763 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:00:16,778 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:00:47,758 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:00:47,774 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:01:18,772 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:01:18,774 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:01:49,750 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:01:49,764 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:02:20,753 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:02:20,781 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:02:51,750 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:02:51,765 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:03:22,765 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:03:22,781 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:03:53,765 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:03:53,767 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:04:24,778 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:04:24,778 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:04:55,770 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:04:55,772 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:05:26,775 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:05:26,777 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:05:57,758 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:05:57,789 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:06:28,777 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:06:28,778 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:06:59,783 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:06:59,783 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:07:30,763 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:07:30,792 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:08:01,771 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:08:01,786 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:08:32,775 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:08:32,790 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:09:03,779 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:09:03,794 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:09:34,768 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:09:34,798 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:10:05,782 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:10:05,798 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:10:36,759 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:10:36,774 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:11:07,767 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:11:07,782 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:11:38,783 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:11:38,798 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:12:09,774 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:12:09,789 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:12:40,789 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:12:40,806 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:13:11,764 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:13:11,778 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:13:42,774 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:13:42,789 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:14:13,788 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:14:13,788 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:14:44,772 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:14:44,802 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:15:15,781 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:15:15,783 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:15:46,790 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:15:46,791 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:16:17,768 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:16:17,795 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:16:48,773 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:16:48,790 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:17:19,775 - autopilot.tcp_002 - CRITICAL - [tcp_002] - PreArm: Mode requires mission
+2025-07-18 17:17:19,790 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-18 17:17:44,525 - autopilot.tcp_002 - INFO - [tcp_002] - Arming motors
+2025-07-18 17:17:44,534 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-18 17:17:58,910 - autopilot.tcp_002 - INFO - [tcp_002] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-18 17:17:58,910 - autopilot.tcp_002 - INFO - [tcp_002] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 17:17:58,939 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-18 17:17:58,939 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 17:19:33,937 - autopilot.tcp_002 - INFO - [tcp_002] - Arming motors
+2025-07-18 17:19:33,967 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-18 17:19:46,992 - autopilot.tcp_002 - INFO - [tcp_002] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-18 17:19:46,992 - autopilot.tcp_002 - INFO - [tcp_002] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 17:19:46,993 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-18 17:19:46,993 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 17:21:06,715 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-18 17:21:06,743 - autopilot.tcp_002 - INFO - [tcp_002] - Arming motors
+2025-07-18 17:21:23,222 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-18 17:21:23,223 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 17:21:23,251 - autopilot.tcp_002 - INFO - [tcp_002] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-18 17:21:23,251 - autopilot.tcp_002 - INFO - [tcp_002] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 17:40:51,254 - autopilot.drone_001 - INFO - [drone_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 17:40:51,255 - autopilot.drone_001 - INFO - [drone_001] - seol_desktop
+2025-07-18 17:40:51,255 - autopilot.drone_001 - INFO - [drone_001] - Frame: QUAD/PLUS
+2025-07-18 17:41:20,556 - dronekit.drone_002 - WARNING - [drone_002] - Link timeout, no heartbeat in last 5 seconds
+2025-07-18 17:42:26,308 - dronekit.drone_002 - WARNING - [drone_002] - Link timeout, no heartbeat in last 5 seconds
+2025-07-18 17:42:58,076 - autopilot.drone_002 - INFO - [drone_002] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 17:42:58,076 - autopilot.drone_002 - INFO - [drone_002] - ueol_desktop
+2025-07-18 17:42:58,076 - autopilot.drone_002 - INFO - [drone_002] - Frame: QUAD/PLUS
+2025-07-18 17:43:43,363 - dronekit.drone_003 - WARNING - [drone_003] - Link timeout, no heartbeat in last 5 seconds
+2025-07-18 17:45:13,559 - dronekit.drone_003 - WARNING - [drone_003] - Link timeout, no heartbeat in last 5 seconds
+2025-07-18 17:59:52,673 - autopilot.drone_001 - INFO - [drone_001] - ArduCopter V4.7.0-dev (080c5982)
+2025-07-18 17:59:52,674 - autopilot.drone_001 - INFO - [drone_001] - seollove-laptop
+2025-07-18 17:59:52,674 - autopilot.drone_001 - INFO - [drone_001] - Frame: QUAD/PLUS
+2025-07-18 18:00:13,636 - autopilot.drone_002 - INFO - [drone_002] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 18:00:13,637 - autopilot.drone_002 - INFO - [drone_002] - seol_desktop
+2025-07-18 18:00:13,637 - autopilot.drone_002 - INFO - [drone_002] - Frame: QUAD/PLUS
+2025-07-18 18:02:06,497 - autopilot.drone_001 - INFO - [drone_001] - Arming motors
+2025-07-18 18:06:05,496 - autopilot.drone_001 - INFO - [drone_001] - ArduCopter V4.7.0-dev (080c5982)
+2025-07-18 18:06:05,497 - autopilot.drone_001 - INFO - [drone_001] - seollove-laptop
+2025-07-18 18:06:05,497 - autopilot.drone_001 - INFO - [drone_001] - Frame: QUAD/PLUS
+2025-07-18 18:06:06,355 - autopilot.drone_001 - INFO - [drone_001] - Barometer 1 calibration complete
+2025-07-18 18:06:06,355 - autopilot.drone_001 - INFO - [drone_001] - Barometer 2 calibration complete
+2025-07-18 18:06:06,892 - autopilot.drone_001 - INFO - [drone_001] - ArduPilot Ready
+2025-07-18 18:06:06,893 - autopilot.drone_001 - INFO - [drone_001] - AHRS: DCM active
+2025-07-18 18:06:07,181 - autopilot.drone_001 - INFO - [drone_001] - RC7: SaveWaypoint LOW
+2025-07-18 18:06:08,551 - autopilot.drone_001 - INFO - [drone_001] - Mission Planner 1.3.82
+2025-07-18 18:06:08,552 - autopilot.drone_001 - INFO - [drone_001] - Mission Planner 1.3.82
+2025-07-18 18:06:08,552 - autopilot.drone_001 - INFO - [drone_001] - Mission Planner 1.3.82
+2025-07-18 18:06:08,900 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 initialised
+2025-07-18 18:06:08,900 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 initialised
+2025-07-18 18:06:08,900 - autopilot.drone_001 - INFO - [drone_001] - AHRS: EKF3 active
+2025-07-18 18:06:10,236 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 tilt alignment complete
+2025-07-18 18:06:10,237 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 tilt alignment complete
+2025-07-18 18:06:10,331 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 MAG0 initial yaw alignment complete
+2025-07-18 18:06:10,331 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 MAG0 initial yaw alignment complete
+2025-07-18 18:06:14,255 - autopilot.drone_001 - INFO - [drone_001] - GPS 1: probing for u-blox at 230400 baud
+2025-07-18 18:06:14,256 - autopilot.drone_001 - INFO - [drone_001] - GPS 1: detected u-blox
+2025-07-18 18:06:24,461 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 origin set
+2025-07-18 18:06:24,491 - autopilot.drone_001 - INFO - [drone_001] - Field Elevation Set: 4m
+2025-07-18 18:06:24,652 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 origin set
+2025-07-18 18:06:34,917 - autopilot.drone_001 - CRITICAL - [drone_001] - PreArm: Need Position Estimate
+2025-07-18 18:06:37,757 - autopilot.drone_001 - CRITICAL - [drone_001] - Arm: Need Position Estimate
+2025-07-18 18:08:52,098 - autopilot.drone_001 - INFO - [drone_001] - ArduCopter V4.7.0-dev (080c5982)
+2025-07-18 18:08:52,098 - autopilot.drone_001 - INFO - [drone_001] - seollove-laptop
+2025-07-18 18:08:52,098 - autopilot.drone_001 - INFO - [drone_001] - Frame: QUAD/PLUS
+2025-07-18 18:08:54,922 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 is using GPS
+2025-07-18 18:08:55,115 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 is using GPS
+2025-07-18 18:09:04,365 - autopilot.drone_001 - INFO - [drone_001] - Arming motors
+2025-07-18 18:10:24,938 - autopilot.drone_001 - INFO - [drone_001] - ArduCopter V4.7.0-dev (080c5982)
+2025-07-18 18:10:24,938 - autopilot.drone_001 - INFO - [drone_001] - seollove-laptop
+2025-07-18 18:10:24,938 - autopilot.drone_001 - INFO - [drone_001] - Frame: QUAD/PLUS
+2025-07-18 18:10:27,660 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 origin set
+2025-07-18 18:10:27,692 - autopilot.drone_001 - INFO - [drone_001] - Field Elevation Set: 8m
+2025-07-18 18:10:27,853 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 origin set
+2025-07-18 18:10:43,089 - autopilot.drone_001 - CRITICAL - [drone_001] - PreArm: Need Position Estimate
+2025-07-18 18:10:49,057 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU0 is using GPS
+2025-07-18 18:10:49,247 - autopilot.drone_001 - INFO - [drone_001] - EKF3 IMU1 is using GPS
+2025-07-18 18:11:09,995 - autopilot.drone_001 - INFO - [drone_001] - Arming motors
+2025-07-18 19:25:06,519 - autopilot.drone_001 - INFO - [drone_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 19:25:06,520 - autopilot.drone_001 - INFO - [drone_001] - seol_desktop
+2025-07-18 19:25:06,520 - autopilot.drone_001 - INFO - [drone_001] - Frame: QUAD/PLUS
+2025-07-18 19:25:26,357 - autopilot.drone_002 - INFO - [drone_002] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-18 19:25:26,358 - autopilot.drone_002 - INFO - [drone_002] - seollove-laptop
+2025-07-18 19:25:26,358 - autopilot.drone_002 - INFO - [drone_002] - Frame: QUAD/PLUS
+2025-07-18 19:25:43,624 - autopilot.drone_002 - INFO - [drone_002] - SIM Hit ground at 2.448640 m/s
+2025-07-18 19:25:55,531 - autopilot.drone_002 - INFO - [drone_002] - Disarming motors
+2025-07-18 19:26:07,955 - autopilot.drone_002 - INFO - [drone_002] - Arming motors
+2025-07-18 19:26:15,275 - autopilot.drone_002 - INFO - [drone_002] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-18 19:26:15,275 - autopilot.drone_002 - INFO - [drone_002] - EKF3 IMU0 MAG0 in-flight yaw alignment complete

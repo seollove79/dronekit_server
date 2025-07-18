@@ -1,6 +1,6 @@
 <script>
     import { onMount, onDestroy } from 'svelte';
-    import { drones, selectedDrone, refreshDrones, disconnectDrone, telemetryData, updateTelemetry } from '../stores/drones';
+    import { drones, drones_socket, selectedDrone, refreshDrones, disconnectDrone, telemetryData, updateTelemetry } from '../stores/drones';
     import DroneCard from './DroneCard.svelte';
     import DroneStatus from './DroneStatus.svelte';
 
@@ -84,11 +84,18 @@
 
 <div class="drone-list-container" style="right: {rightOffset}px;">
     <div class="drone-list">
-        {#if $drones.length === 0}
+        {#if $drones.length === 0 && $drones_socket.length === 0}
             <p class="no-drones">연결된 드론이 없습니다.</p>
         {:else}
             <div class="drone-cards">
                 {#each $drones as droneId (droneId)}
+                    <DroneCard 
+                        drone={{ drone_id: droneId }}
+                        isSelected={$selectedDrone?.drone_id === droneId}
+                        onSelect={(drone) => selectDrone(drone)}
+                    />
+                {/each}
+                {#each $drones_socket as droneId (droneId)}
                     <DroneCard 
                         drone={{ drone_id: droneId }}
                         isSelected={$selectedDrone?.drone_id === droneId}
@@ -100,6 +107,15 @@
     </div>
 
     {#each $drones as droneId}
+        <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === droneId}>
+            <DroneStatus 
+                drone={{ drone_id: droneId }} 
+                telemetryData={$telemetryData.get(droneId)}
+                on:disconnect={({ detail }) => handleDisconnect(detail.droneId)}
+            />
+        </div>
+    {/each}
+    {#each $drones_socket as droneId}
         <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === droneId}>
             <DroneStatus 
                 drone={{ drone_id: droneId }} 
