@@ -45,10 +45,10 @@ export async function updateTelemetry() {
     const currentDrones = get(drones);
     const newTelemetryMap = new Map();
     
-    for (const droneId of currentDrones) {
+    for (const drone of currentDrones) {
         try {
-            const data = await droneApi.getTelemetry(droneId);
-            newTelemetryMap.set(droneId, data);
+            const data = await droneApi.getTelemetry(drone.id);
+            newTelemetryMap.set(drone.id, data);
         } catch (error) {
             console.error('텔레메트리 데이터 조회 실패:', error);
         }
@@ -79,18 +79,15 @@ export function clearSelectedDrone() {
 export async function refreshDrones() {
     try {
         const droneList = await droneApi.getList();
-        // let restDrones=[];
-        // for (const drone of droneList) {
-        //     let newDrone = {
-        //         id: drone,
-        //         type: 'rest',
-        //     }
-        //     restDrones.push(newDrone);
-        // }
-
-        // console.log('드론 목록:', restDrones);
-        // drones.set(restDrones)
-        drones.set(droneList);
+        let restDrones=[];
+        for (const drone of droneList) {
+            let newDrone = {
+                id: drone,
+                type: 'rest',
+            }
+            restDrones.push(newDrone);
+        }
+        drones.set(restDrones)
         return droneList;
     } catch (error) {
         console.error('드론 목록 조회 실패:', error);

@@ -88,10 +88,10 @@
             <p class="no-drones">연결된 드론이 없습니다.</p>
         {:else}
             <div class="drone-cards">
-                {#each $drones as droneId (droneId)}
+                {#each $drones as drone (drone.id)}
                     <DroneCard 
-                        drone={{ drone_id: droneId }}
-                        isSelected={$selectedDrone?.drone_id === droneId}
+                        drone={{ drone_id: drone.id }}
+                        isSelected={$selectedDrone?.drone_id === drone.id}
                         onSelect={(drone) => selectDrone(drone)}
                     />
                 {/each}
@@ -106,12 +106,12 @@
         {/if}
     </div>
 
-    {#each $drones as droneId}
-        <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === droneId}>
+    {#each $drones as drone}
+        <div class="drone-status-wrapper" class:visible={showStatus && $selectedDrone?.drone_id === drone.id}>
             <DroneStatus 
-                drone={{ drone_id: droneId }} 
-                telemetryData={$telemetryData.get(droneId)}
-                on:disconnect={({ detail }) => handleDisconnect(detail.droneId)}
+                drone={{ drone_id: drone.id }} 
+                telemetryData={$telemetryData.get(drone.id)}
+                on:disconnect={({ detail }) => handleDisconnect(detail.drone.id)}
             />
         </div>
     {/each}
