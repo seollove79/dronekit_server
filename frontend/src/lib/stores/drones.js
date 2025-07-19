@@ -39,10 +39,9 @@ export async function handleSocketMessages() {
         }
 
         if (message.type === 'drone_status') {
-            console.log('드론 상태 메시지 수신:', message);
             let telemetryData = {
                 drone_id: message.drone,
-                airspeed: 0,
+                airspeed: message.status.airspeed,
                 altitude: message.position.altitude_relative,
                 altitude_asl: message.position.altitude,
                 armed: message.status.armed,
@@ -170,9 +169,13 @@ export async function connectDrone(droneId, connectionString, connectionType) {
 }
 
 // 드론 연결 해제
-export async function disconnectDrone(droneId) {
+export async function disconnectDrone(drone) {
+    if (drone.type === 'socket') {
+        alert('소켓 드론은 연결 해제 기능이 없습니다.');
+        return;
+    }
     try {
-        await droneApi.disconnect(droneId);
+        await droneApi.disconnect(drone.id);
         await refreshDrones(); // 목록 새로고침
     } catch (error) {
         console.error('드론 연결 해제 실패:', error);

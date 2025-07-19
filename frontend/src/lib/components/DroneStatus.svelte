@@ -34,8 +34,6 @@
     function updateDronePosition(droneId, telemetryData) {
         if (!telemetryData) return;
 
-        console.log(`Updating position for drone ${droneId}:`, telemetryData);
-
         const position = Cesium.Cartesian3.fromDegrees(
             telemetryData.longitude,
             telemetryData.latitude,

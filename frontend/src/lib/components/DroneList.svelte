@@ -18,18 +18,20 @@
 
     // 드론 선택
     function selectDrone(drone) {
-        console.log('Selecting drone:', drone);
         if ($selectedDrone?.drone_id === drone.drone_id) {
             // 이미 선택된 드론을 다시 클릭하면 선택 해제
-            console.log('Deselecting drone:', drone.drone_id);
             selectedDrone.set(null);
         } else {
             // 새로운 드론 선택
-            console.log('Selecting new drone:', drone.drone_id);
             selectedDrone.set(drone);
             
             // 선택된 드론의 텔레메트리 데이터로 카메라 이동
-            const telemetry = $telemetryData.get(drone.drone_id);
+            let telemetry;
+            if (drone.type === 'socket') {
+                telemetry = $telemetryDataSocket.get(drone.drone_id);
+            } else {
+                telemetry = $telemetryData.get(drone.drone_id);
+            }
             if (telemetry) {
                 const position = Cesium.Cartesian3.fromDegrees(
                     telemetry.longitude,
@@ -58,10 +60,11 @@
     }
 
     // 드론 연결 해제
-    async function handleDisconnect(droneId) {
+    async function handleDisconnect(drone) {
+        console.log('드론 연결 해제:', drone);
         try {
-            await disconnectDrone(droneId);
-            if ($selectedDrone?.drone_id === droneId) {
+            await disconnectDrone(drone);
+            if ($selectedDrone?.drone_id === drone.id) {
                 selectedDrone.set(null);
             }
         } catch (error) {
@@ -90,14 +93,14 @@
             <div class="drone-cards">
                 {#each $drones as drone}
                     <DroneCard 
-                        drone={{ drone_id: drone.id }}
+                        drone={{ drone_id: drone.id, type: drone.type }}
                         isSelected={$selectedDrone?.drone_id === drone.id}
                         onSelect={(drone) => selectDrone(drone)}
                     />
                 {/each}
                 {#each $drones_socket as drone}
                     <DroneCard 
-                        drone={{ drone_id: drone.id }}
+                        drone={{ drone_id: drone.id, type: drone.type }}
                         isSelected={$selectedDrone?.drone_id === drone.id}
                         onSelect={(drone) => selectDrone(drone)}
                     />
@@ -120,7 +123,7 @@
             <DroneStatus 
                 drone={{ drone_id: drone.id, drone_type: drone.type }} 
                 telemetryData={$telemetryDataSocket.get(drone.id)}
-                on:disconnect={({ detail }) => handleDisconnect(detail.drone.id)}
+                on:disconnect={() => handleDisconnect(drone)}
             />
         </div>
     {/each}
