@@ -10,6 +10,25 @@ export const drones_socket = writable([]);
 // 소켓서버 connection 관리용 스토어 생성
 export const wsConnection = writable(null);
 
+// 소켓서버로 명령 보내는 메소드 생성
+export function sendSocketCommand(target_drone, command, parameters = {}) {
+    const socket = get(wsConnection);
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        const message = JSON.stringify(
+            { 
+                type: "command",
+                target_drone: target_drone,
+                command: command,
+                parameters: parameters
+            }
+        );
+        console.log('소켓 명령 전송:', message);
+        socket.send(message);
+    } else {
+        console.error('소켓이 열려 있지 않습니다. 명령을 보낼 수 없습니다.');
+    }
+}
+
 // socket드론의 텔레메트리 데이터 Map을 저장할 스토어 생성
 const telemetryMapSocket = writable(new Map());
 
@@ -184,9 +203,15 @@ export async function disconnectDrone(drone) {
 }
 
 // 드론 시동
-export async function armDrone(droneId) {
+export async function armDrone(drone) {
     try {
-        await droneApi.arm(droneId);
+        if (drone.drone_type === 'socket') {
+            // 소켓드론 시동 처리
+            sendSocketCommand(drone.drone_id, 'arm');
+            return;
+        } else {
+            await droneApi.arm(drone.drone_id);
+        }
     } catch (error) {
         console.error('드론 시동 실패:', error);
         throw error;
@@ -246,9 +271,15 @@ export async function landDrone(droneId) {
 }
 
 // 드론 비행 모드 변경
-export async function changeFlightMode(droneId, mode) {
+export async function changeFlightMode(drone, mode) {
     try {
-        await droneApi.changeFlightMode(droneId, mode);
+        if (drone.drone_type === 'rest') {
+            await droneApi.changeFlightMode(drone.drone_id, mode);
+        }
+        else if (drone.drone_type === 'socket') {
+            // 소켓 드론의 경우 소켓 명령으로 처리
+            sendSocketCommand(drone.drone_id, 'set_mode', { mode: mode });
+        }
     } catch (error) {
         console.error('비행 모드 변경 실패:', {
             message: error.message,

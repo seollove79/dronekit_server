@@ -1,5 +1,5 @@
 <script>
-    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, getDroneTelemetrySocket, selectedDrone } from '../stores/drones';
+    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, getDroneTelemetrySocket, selectedDrone, sendSocketCommand } from '../stores/drones';
     import TakeoffModal from './TakeoffModal.svelte';
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     export let drone;
@@ -233,10 +233,10 @@
 
     async function handleArmDisarm() {
         try {
-            if (!telemetryData.armed) {
-                await armDrone(drone.drone_id);
+            if(!telemetryData.armed) {
+                await armDrone(drone);
             } else {
-                await disarmDrone(drone.drone_id);
+                await disarmDrone(drone);
             }
         } catch (error) {
             console.error('시동/종료 실패:', error);
@@ -279,7 +279,7 @@
 
     async function handleFlightModeChange() {
         try {
-            await changeFlightMode(drone.drone_id, selectedMode);
+            await changeFlightMode(drone, selectedMode);
         } catch (error) {
             console.error(`${selectedMode} 모드 변경 실패:`, error);
             const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
