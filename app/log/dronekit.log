@@ -1501,3 +1501,45 @@ pip install python-multipart
 2025-07-18 19:26:15,275 - autopilot.drone_002 - INFO - [drone_002] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
 2025-07-18 22:04:47,021 - autopilot.drone_001 - INFO - [drone_001] - Mission: 1 Takeoff
 2025-07-18 22:04:47,021 - autopilot.drone_001 - INFO - [drone_001] - Mission: 2 WP
+2025-07-21 12:28:12,953 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-21 12:28:12,955 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-21 12:28:12,955 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-21 12:28:24,513 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 12:28:34,474 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 12:30:11,856 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 12:30:21,892 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 12:36:34,527 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 12:36:44,438 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 14:33:25,641 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 14:33:33,652 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-21 14:33:33,652 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-21 14:36:33,778 - autopilot.tcp_001 - INFO - [tcp_001] - SIM Hit ground at 0.497596 m/s
+2025-07-21 14:36:35,882 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 14:48:49,170 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-21 14:49:20,177 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-21 14:49:51,183 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-21 14:50:22,176 - autopilot.tcp_001 - CRITICAL - [tcp_001] - PreArm: Mode requires mission
+2025-07-21 14:50:31,197 - autopilot.tcp_001 - CRITICAL - [tcp_001] - Arm: Mode requires mission
+2025-07-21 14:50:50,998 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 14:50:53,141 - autopilot.tcp_001 - WARNING - [tcp_001] - Mode change to AUTO failed: init failed
+2025-07-21 14:50:53,141 - autopilot.tcp_001 - WARNING - [tcp_001] - Mode change to AUTO failed: init failed
+2025-07-21 14:50:53,141 - autopilot.tcp_001 - WARNING - [tcp_001] - Mode change to AUTO failed: init failed
+2025-07-21 14:51:00,915 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 14:51:12,376 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 14:51:14,465 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-21 14:51:22,421 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 14:51:22,421 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-21 14:51:42,681 - autopilot.tcp_001 - CRITICAL - [tcp_001] - Arm: AUTO mode not armable
+2025-07-21 14:52:02,322 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 14:52:05,122 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-21 14:52:05,122 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-21 14:52:08,483 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-21 14:52:08,483 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-21 14:52:21,108 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-21 14:52:34,199 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #2
+2025-07-21 15:12:49,466 - autopilot.tcp_001 - INFO - [tcp_001] - SIM Hit ground at 0.498553 m/s
+2025-07-21 15:12:51,546 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 15:13:07,965 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 15:13:17,900 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-21 15:16:50,974 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-21 15:17:00,905 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors

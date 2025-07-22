@@ -1,5 +1,5 @@
 <script>
-    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, getDroneTelemetrySocket, selectedDrone, sendSocketCommand } from '../stores/drones';
+    import { armDrone, disarmDrone, takeoffDrone, landDrone, changeFlightMode, getDroneTelemetry, getDroneTelemetrySocket, selectedDrone, sendSocketCommand, startMission } from '../stores/drones';
     import TakeoffModal from './TakeoffModal.svelte';
     import { onMount, onDestroy, createEventDispatcher } from 'svelte';
     export let drone;
@@ -255,7 +255,7 @@
     async function handleTakeoff(event) {
         try {
             const { altitude } = event.detail;
-            await takeoffDrone(drone.drone_id, altitude);
+            await takeoffDrone(drone, altitude);
         } catch (error) {
             console.error('이륙 실패:', error);
             const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
@@ -269,7 +269,7 @@
                 alert('드론의 시동이 꺼져있습니다.');
                 return;
             }
-            await landDrone(drone.drone_id);
+            await landDrone(drone);
         } catch (error) {
             console.error('착륙 실패:', error);
             const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
@@ -291,6 +291,12 @@
     function handleDisconnect() {
         console.log(`드론 ${drone.drone_id} 연결 해제 요청`);
         dispatch('disconnect', { droneId: drone.drone_id });
+    }
+
+    // 자동 비행 시작 이벤트 발생
+    function missionStart() {
+        console.log(`드론 ${drone.drone_id} 자동 비행 시작`);
+        
     }
 </script>
 
@@ -519,17 +525,27 @@
                 연결종료
             </button>
         </div>
-    </div>
-
-    <div class="control-section">
-        <div class="section-title">비행계획</div>
         <div class="button-grid">
-            <button class="control-button">계획모드활성화</button>
-            <button class="control-button">계획전송</button>
-            <button class="control-button">자동비행시작</button>
-            <button class="control-button">읽어오기</button>
-            <button class="control-button">회편조기화</button>
-            <button class="control-button">자동비행중지</button>
+            <button 
+                class="control-button"
+                on:click={() => missionStart()}
+                disabled={!telemetryData}>
+                자동비행 시작
+            </button>
+            <button 
+                class="control-button"
+                on:click={() => ws3d.viewer.zoomTo(droneEntities.get(drone.drone_id))}
+                disabled={!telemetryData}
+            >
+                RTL
+            </button>
+            <button 
+                class="control-button"
+                on:click={() => ws3d.viewer.flyTo(droneEntities.get(drone.drone_id))}
+                disabled={!telemetryData}
+            >
+                드론 비행
+            </button>
         </div>
     </div>
 </div>

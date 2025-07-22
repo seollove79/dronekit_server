@@ -229,9 +229,16 @@ export async function disarmDrone(droneId) {
 }
 
 // 드론 이륙
-export async function takeoffDrone(droneId, altitude = 3) {  // 기본 고도 3m
+export async function takeoffDrone(drone, altitude = 3) {  // 기본 고도 3m
     try {
-        await droneApi.takeoff(droneId, altitude);
+        if (drone.drone_type === 'socket') {
+            // 소켓 드론의 경우 소켓 명령으로 처리
+            sendSocketCommand(drone.drone_id, 'takeoff', { altitude: altitude });
+        }
+        else if (drone.drone_type === 'rest') {
+            // REST API를 사용하는 드론의 경우
+            await droneApi.takeoff(drone.drone_id, altitude);
+        }        
     } catch (error) {
         console.error('드론 이륙 실패:', {
             message: error.message,
@@ -250,9 +257,15 @@ export async function takeoffDrone(droneId, altitude = 3) {  // 기본 고도 3m
 }
 
 // 드론 착륙
-export async function landDrone(droneId) {
+export async function landDrone(drone) {
     try {
-        await droneApi.land(droneId);
+        if (drone.drone_type === 'socket') {
+            // 소켓 드론의 경우 소켓 명령으로 처리
+            sendSocketCommand(drone.drone_id, 'land');
+        } else if (drone.drone_type === 'rest') {
+            // REST API를 사용하는 드론의 경우
+            await droneApi.land(drone.drone_id);
+        }
     } catch (error) {
         console.error('드론 착륙 실패:', {
             message: error.message,
@@ -338,6 +351,22 @@ export async function setHomePosition(droneId, position) {
         throw new Error(`홈 위치 설정 실패: ${error.message || '알 수 없는 오류가 발생했습니다'}`);
     }
 } 
+
+// 자동비행 시작
+export async function startMission(drone) {
+    try {
+        if (drone.drone_type === 'socket') {
+            // 소켓 드론의 경우 소켓 명령으로 처리
+            sendSocketCommand(drone.drone_id, 'start_mission');
+        } else if (drone.drone_type === 'rest') {
+            // REST API를 사용하는 드론의 경우
+            // await droneApi.startMission(droneId.drone_id, mission);
+        }
+    } catch (error) {
+        console.error('미션 시작 실패:', error);
+        throw error;
+    }
+}
 
 // 미션 목록 조회
 export async function getMissionList(droneId) {
