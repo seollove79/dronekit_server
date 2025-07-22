@@ -208,7 +208,7 @@
         // 컴포넌트가 마운트될 때 텔레메트리 데이터 업데이트 시작
         updateTelemetry();
         // 1초마다 텔레메트리 데이터 업데이트
-        updateInterval = setInterval(updateTelemetry, 500);
+        updateInterval = setInterval(updateTelemetry, 600);
         
         // 드론이 선택되면 카메라 이동
         flyToDrone();
@@ -297,6 +297,16 @@
         }
     }
 
+    async function handelStopMission() {
+        try {
+            await changeFlightMode(drone, 'GUIDED');
+        } catch (error) {
+            console.error('GUIDED 모드 변경 실패:', error);
+            const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
+            alert(`GUIDED 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
+        }
+    }
+
     // 드론 연결 해제 이벤트 발생
     function handleDisconnect() {
         console.log(`드론 ${drone.drone_id} 연결 해제 요청`);
@@ -304,9 +314,15 @@
     }
 
     // 자동 비행 시작 이벤트 발생
-    function missionStart() {
+    async function missionStart() {
         console.log(`드론 ${drone.drone_id} 자동 비행 시작`);
-        
+        try {
+            await startMission(drone);
+        } catch (error) {
+            console.error('자동 비행 시작 실패:', error);
+            const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
+            alert(`자동 비행 시작에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
+        }
     }
 </script>
 
@@ -540,7 +556,14 @@
                 class="control-button"
                 on:click={() => missionStart()}
                 disabled={!telemetryData}>
-                자동비행 시작
+                미션 시작
+            </button>
+            <button 
+                class="control-button"
+                on:click={handelStopMission}
+                disabled={!telemetryData}
+            >
+                미션 중지
             </button>
             <button 
                 class="control-button"
@@ -548,13 +571,6 @@
                 disabled={!telemetryData}
             >
                 RTL
-            </button>
-            <button 
-                class="control-button"
-                on:click={() => ws3d.viewer.flyTo(droneEntities.get(drone.drone_id))}
-                disabled={!telemetryData}
-            >
-                드론 비행
             </button>
         </div>
     </div>

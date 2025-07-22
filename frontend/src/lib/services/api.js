@@ -161,4 +161,11 @@ export const droneApi = {
             method: 'GET',
         });
     },
+
+    // 드론 미션 시작
+    startMission: async (droneId) => {
+        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.START_MISSION(droneId), {
+            method: 'POST',
+        });
+    }
 };

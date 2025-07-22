@@ -360,7 +360,7 @@ export async function startMission(drone) {
             sendSocketCommand(drone.drone_id, 'start_mission');
         } else if (drone.drone_type === 'rest') {
             // REST API를 사용하는 드론의 경우
-            // await droneApi.startMission(droneId.drone_id, mission);
+            await droneApi.startMission(drone.drone_id);
         }
     } catch (error) {
         console.error('미션 시작 실패:', error);

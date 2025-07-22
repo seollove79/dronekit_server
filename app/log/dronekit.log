@@ -1543,3 +1543,170 @@ pip install python-multipart
 2025-07-21 15:13:17,900 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
 2025-07-21 15:16:50,974 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
 2025-07-21 15:17:00,905 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 11:14:24,753 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 11:14:24,754 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 11:14:24,754 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 11:19:00,357 - autopilot.tcp_001 - INFO - [tcp_001] - SIM Hit ground at 0.499050 m/s
+2025-07-22 11:19:02,437 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 11:55:24,598 - autopilot.tcp_001 - CRITICAL - [tcp_001] - Arm: RTL mode not armable
+2025-07-22 11:55:30,770 - autopilot.tcp_001 - CRITICAL - [tcp_001] - Arm: RTL mode not armable
+2025-07-22 11:55:39,463 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 11:55:41,294 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 11:55:41,294 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 11:55:45,082 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-22 11:55:45,175 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-22 11:55:57,772 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 11:56:18,157 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 11:56:18,157 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 11:56:21,979 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #2
+2025-07-22 11:56:21,979 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 3 WP
+2025-07-22 11:56:29,977 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #3
+2025-07-22 11:56:29,977 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 11:56:36,903 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #4
+2025-07-22 11:56:36,904 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 5 WP
+2025-07-22 11:56:42,529 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #5
+2025-07-22 11:56:42,529 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:56:52,351 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:56:52,351 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:57:00,413 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #6
+2025-07-22 11:57:00,413 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 7 WP
+2025-07-22 11:57:06,829 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #7
+2025-07-22 11:57:06,829 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 8 WP
+2025-07-22 11:57:17,857 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #8
+2025-07-22 11:57:36,152 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 11:57:36,152 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 11:57:36,152 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 11:57:49,558 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #2
+2025-07-22 11:57:49,558 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 3 WP
+2025-07-22 11:57:56,560 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #3
+2025-07-22 11:57:56,560 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 11:58:03,509 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #4
+2025-07-22 11:58:03,509 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 5 WP
+2025-07-22 11:58:09,138 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #5
+2025-07-22 11:58:09,138 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:58:13,922 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:58:13,922 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:58:23,554 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #6
+2025-07-22 11:58:23,554 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 7 WP
+2025-07-22 11:58:29,711 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #7
+2025-07-22 11:58:29,712 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 8 WP
+2025-07-22 11:58:40,785 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #8
+2025-07-22 11:58:49,061 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 11:58:49,061 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 11:58:49,061 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 11:59:02,445 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #2
+2025-07-22 11:59:02,445 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 3 WP
+2025-07-22 11:59:09,459 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #3
+2025-07-22 11:59:09,460 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 11:59:16,403 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #4
+2025-07-22 11:59:16,403 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 5 WP
+2025-07-22 11:59:22,023 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #5
+2025-07-22 11:59:22,023 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 11:59:29,109 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #6
+2025-07-22 11:59:29,109 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 7 WP
+2025-07-22 11:59:35,246 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #7
+2025-07-22 11:59:35,247 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 8 WP
+2025-07-22 11:59:46,316 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #8
+2025-07-22 12:09:36,250 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 12:09:36,250 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 12:09:36,251 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 12:09:49,659 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #2
+2025-07-22 12:09:49,659 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 3 WP
+2025-07-22 12:09:56,682 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #3
+2025-07-22 12:09:56,682 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 12:10:24,474 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 12:10:24,474 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 12:10:36,058 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #4
+2025-07-22 12:10:36,058 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 5 WP
+2025-07-22 12:10:41,756 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #5
+2025-07-22 12:10:41,756 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 12:10:48,852 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #6
+2025-07-22 12:10:48,852 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 7 WP
+2025-07-22 12:10:54,971 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #7
+2025-07-22 12:10:54,971 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 8 WP
+2025-07-22 12:11:06,033 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #8
+2025-07-22 14:36:01,071 - autopilot.tcp_001 - INFO - [tcp_001] - SIM Hit ground at 0.500474 m/s
+2025-07-22 14:36:03,153 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:09:42,665 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:09:42,666 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:09:42,666 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:09:57,153 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:10:07,071 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:24:33,774 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:24:43,695 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:25:10,260 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:25:20,216 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:26:25,757 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:26:35,749 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:28:14,234 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:28:24,186 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:29:03,628 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:29:13,621 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:33:38,112 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:33:38,112 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:33:38,112 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:33:44,119 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:33:54,016 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:39:38,326 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:39:38,326 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:39:38,326 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:39:46,879 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:39:56,848 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:46:04,187 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:46:04,188 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:46:04,188 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:46:09,668 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:46:19,596 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:47:19,843 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:47:19,843 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:47:19,843 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:47:29,983 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:47:39,936 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:51:45,571 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:51:45,571 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:51:45,571 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:51:52,201 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:52:02,149 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 15:52:33,580 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 15:52:33,580 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 15:52:33,580 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 15:52:39,286 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 15:52:49,247 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 16:17:06,011 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 16:17:06,011 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 16:17:06,011 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 16:17:17,026 - autopilot.tcp_001 - CRITICAL - [tcp_001] - Arm: RTL mode not armable
+2025-07-22 16:17:27,416 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 16:17:37,315 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 16:22:21,866 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 16:22:21,866 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 16:22:21,866 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 16:22:39,147 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 16:22:41,472 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 16:22:41,472 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 16:22:44,795 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-22 16:22:44,797 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-22 16:24:21,588 - autopilot.tcp_001 - INFO - [tcp_001] - ArduCopter V4.6.2 (1ebd4d99)
+2025-07-22 16:24:21,588 - autopilot.tcp_001 - INFO - [tcp_001] - seollove-laptop
+2025-07-22 16:24:21,588 - autopilot.tcp_001 - INFO - [tcp_001] - Frame: QUAD/PLUS
+2025-07-22 16:25:37,556 - autopilot.tcp_001 - INFO - [tcp_001] - SIM Hit ground at 0.499001 m/s
+2025-07-22 16:25:39,636 - autopilot.tcp_001 - INFO - [tcp_001] - Disarming motors
+2025-07-22 16:25:52,410 - autopilot.tcp_001 - INFO - [tcp_001] - Arming motors
+2025-07-22 16:25:56,204 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 16:25:56,204 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 1 Takeoff
+2025-07-22 16:25:59,558 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU0 MAG0 in-flight yaw alignment complete
+2025-07-22 16:25:59,558 - autopilot.tcp_001 - INFO - [tcp_001] - EKF3 IMU1 MAG0 in-flight yaw alignment complete
+2025-07-22 16:26:12,198 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 2 WP
+2025-07-22 16:26:22,941 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #2
+2025-07-22 16:26:22,941 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 3 WP
+2025-07-22 16:26:29,388 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #3
+2025-07-22 16:26:29,388 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 4 WP
+2025-07-22 16:26:36,300 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #4
+2025-07-22 16:26:36,300 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 5 WP
+2025-07-22 16:26:41,930 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #5
+2025-07-22 16:26:41,930 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 6 WP
+2025-07-22 16:26:49,012 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #6
+2025-07-22 16:26:49,012 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 7 WP
+2025-07-22 16:26:55,131 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #7
+2025-07-22 16:26:55,131 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 8 WP
+2025-07-22 16:27:06,192 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #8

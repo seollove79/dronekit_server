@@ -17,7 +17,8 @@ export const API_CONFIG = {
             MISSION: (droneId) => `/drones/${droneId}/mission`,
             MODE: (droneId) => `/drones/${droneId}/mode`,
             FLY_TO: (droneId) => `/drones/${droneId}/fly-to`,
-            HOME_POSITION: (droneId) => `/drones/${droneId}/home-position`
+            HOME_POSITION: (droneId) => `/drones/${droneId}/home-position`,
+            START_MISSION: (droneId) => `/drones/${droneId}/start-mission`
         },
         // MISSION: {
         //     CREATE: '/mission/create',

@@ -125,3 +125,12 @@ async def upload_mission_file(drone_id: str, file: UploadFile = File(...)):
     """
     # 파일 저장 로직을 drone_service로 이동
     return await drone_service.save_mission_file(drone_id, file)
+
+# start mission 엔드포인트
+@router.post("/{drone_id}/start-mission")
+async def start_mission(drone_id: str):
+    """
+    드론의 자동 비행 미션을 시작하는 API
+    :param drone_id: 드론의 고유 ID
+    """
+    return await drone_service.start_mission(drone_id)

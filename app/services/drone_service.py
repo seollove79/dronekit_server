@@ -489,3 +489,36 @@ async def save_mission_file(drone_id: str, file: UploadFile) -> dict:
         return {"message": "Mission file uploaded and mission set to drone successfully", "file_path": save_path}
 
     return {"message": "Mission file uploaded successfully", "file_path": save_path}
+
+# 드론 mission start 함수
+async def start_mission(drone_id: str):
+    """
+    드론의 미션을 시작하는 함수
+    :param drone_id: 드론의 고유 ID
+    """
+    # 드론이 연결되어 있는지 확인
+
+    if drone_id not in connected_drones:
+        raise HTTPException(status_code=404, detail="드론이 연결되어 있지 않습니다.")
+    try:
+        # 드론 객체 가져오기
+        vehicle = connected_drones[drone_id]
+
+        # 현재 모드가 GUIDED인지 확인
+        if vehicle.mode.name != "GUIDED":
+            vehicle.mode = "GUIDED"  # Guided 모드로 변경
+            while vehicle.mode.name != "GUIDED":
+                await asyncio.sleep(0.5)  # 모드 변경 대기
+
+        # vehicle의 mav 객체 가져오기
+        vehicle._master.mav.command_long_send(
+            vehicle._master.target_system,
+            vehicle._master.target_component,
+            mavutil.mavlink.MAV_CMD_MISSION_START,
+            0,  # confirmation
+            0, 0, 0, 0, 0, 0, 0
+        )
+
+        return {"message": f"Mission started for drone {drone_id}."}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to start mission: {str(e)}")
