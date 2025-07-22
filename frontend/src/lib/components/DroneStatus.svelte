@@ -208,7 +208,7 @@
         // 컴포넌트가 마운트될 때 텔레메트리 데이터 업데이트 시작
         updateTelemetry();
         // 1초마다 텔레메트리 데이터 업데이트
-        updateInterval = setInterval(updateTelemetry, 1000);
+        updateInterval = setInterval(updateTelemetry, 500);
         
         // 드론이 선택되면 카메라 이동
         flyToDrone();
@@ -284,6 +284,16 @@
             console.error(`${selectedMode} 모드 변경 실패:`, error);
             const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
             alert(`${selectedMode} 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
+        }
+    }
+
+    async function handleRTLMode() {
+        try {
+            await changeFlightMode(drone, 'RTL');
+        } catch (error) {
+            console.error('RTL 모드 변경 실패:', error);
+            const errorMessage = error.message || '알 수 없는 오류가 발생했습니다';
+            alert(`RTL 모드 변경에 실패했습니다.\n\n상세 오류: ${errorMessage}`);
         }
     }
 
@@ -534,7 +544,7 @@
             </button>
             <button 
                 class="control-button"
-                on:click={() => ws3d.viewer.zoomTo(droneEntities.get(drone.drone_id))}
+                on:click={handleRTLMode}
                 disabled={!telemetryData}
             >
                 RTL
