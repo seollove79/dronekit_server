@@ -66,8 +66,8 @@ export const droneApi = {
     },
 
     // 드론 연결 해제
-    disconnect: async (droneId) => {
-        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.DISCONNECT(droneId), {
+    disconnect: async (droneID) => {
+        return await fetchApi(API_CONFIG.ENDPOINTS.DRONES.DISCONNECT(droneID), {
             method: 'DELETE',
         });
     },

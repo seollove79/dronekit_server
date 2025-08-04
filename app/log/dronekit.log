@@ -1710,3 +1710,8 @@ pip install python-multipart
 2025-07-22 16:26:55,131 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #7
 2025-07-22 16:26:55,131 - autopilot.tcp_001 - INFO - [tcp_001] - Mission: 8 WP
 2025-07-22 16:27:06,192 - autopilot.tcp_001 - INFO - [tcp_001] - Reached command #8
+2025-08-04 19:40:12,044 - autopilot.drone1 - INFO - [drone1] - ArduCopter V4.6.2 (1ebd4d99)
+2025-08-04 19:40:12,045 - autopilot.drone1 - INFO - [drone1] - seollove-laptop
+2025-08-04 19:40:12,045 - autopilot.drone1 - INFO - [drone1] - Frame: QUAD/PLUS
+2025-08-04 19:40:24,651 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU0 is using GPS
+2025-08-04 19:40:24,845 - autopilot.drone1 - INFO - [drone1] - EKF3 IMU1 is using GPS

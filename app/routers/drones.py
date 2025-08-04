@@ -37,7 +37,7 @@ async def disarm_drone(drone_id: str):
     return await drone_service.disarm_drone(drone_id)
 
 # 드론 연결 해제 엔드포인트
-@router.delete("/{drone_id}")
+@router.delete("/{drone_id}/disconnect")
 async def disconnect_drone(drone_id: str):
     # 드론 연결 해제 처리
     return await drone_service.disconnect_drone(drone_id)

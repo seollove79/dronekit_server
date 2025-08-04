@@ -310,7 +310,7 @@
     // 드론 연결 해제 이벤트 발생
     function handleDisconnect() {
         console.log(`드론 ${drone.drone_id} 연결 해제 요청`);
-        dispatch('disconnect', { droneId: drone.drone_id });
+        dispatch('disconnect', drone);
     }
 
     // 자동 비행 시작 이벤트 발생

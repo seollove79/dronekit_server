@@ -61,7 +61,7 @@
 
     // 드론 연결 해제
     async function handleDisconnect(drone) {
-        console.log('드론 연결 해제:', drone);
+        console.log('드론 연결 해제:', drone.id);
         try {
             await disconnectDrone(drone);
             if ($selectedDrone?.drone_id === drone.id) {
@@ -114,7 +114,7 @@
             <DroneStatus 
                 drone={{ drone_id: drone.id, drone_type: drone.type }} 
                 telemetryData={$telemetryData.get(drone.id)}
-                on:disconnect={() => handleDisconnect(drone.id)}
+                on:disconnect={() => handleDisconnect(drone)}
             />
         </div>
     {/each}
